@@ -22,6 +22,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 23,
+  "iteration": 1649632420278,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -86,7 +87,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.4.2",
+      "pluginVersion": "8.4.5",
       "targets": [
         {
           "datasource": {
@@ -147,7 +148,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "8.4.2",
+      "pluginVersion": "8.4.5",
       "targets": [
         {
           "datasource": {
@@ -255,7 +256,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.4.2",
+      "pluginVersion": "8.4.5",
       "targets": [
         {
           "datasource": {
@@ -327,8 +328,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               },
@@ -444,7 +444,7 @@
             },
             "showUnfilled": true
           },
-          "pluginVersion": "8.4.2",
+          "pluginVersion": "8.4.5",
           "targets": [
             {
               "datasource": {
@@ -516,7 +516,7 @@
             },
             "showUnfilled": true
           },
-          "pluginVersion": "8.4.2",
+          "pluginVersion": "8.4.5",
           "targets": [
             {
               "datasource": {
@@ -588,7 +588,7 @@
             },
             "showUnfilled": true
           },
-          "pluginVersion": "8.4.2",
+          "pluginVersion": "8.4.5",
           "targets": [
             {
               "datasource": {
@@ -660,7 +660,7 @@
             },
             "showUnfilled": true
           },
-          "pluginVersion": "8.4.2",
+          "pluginVersion": "8.4.5",
           "targets": [
             {
               "datasource": {
@@ -733,7 +733,7 @@
             },
             "showUnfilled": true
           },
-          "pluginVersion": "8.4.2",
+          "pluginVersion": "8.4.5",
           "targets": [
             {
               "datasource": {
@@ -802,7 +802,7 @@
             },
             "showUnfilled": true
           },
-          "pluginVersion": "8.4.2",
+          "pluginVersion": "8.4.5",
           "targets": [
             {
               "datasource": {
@@ -846,26 +846,25 @@
               },
               "decimals": 0,
               "mappings": [],
-              "max": 20000,
               "min": 0,
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
+                    "color": "dark-red",
                     "value": null
                   },
                   {
                     "color": "#EAB839",
-                    "value": 2000
+                    "value": 6
                   },
                   {
-                    "color": "red",
-                    "value": 5000
+                    "color": "green",
+                    "value": 100
                   }
                 ]
               },
-              "unit": "none"
+              "unit": "percent"
             },
             "overrides": []
           },
@@ -888,7 +887,7 @@
             },
             "showUnfilled": true
           },
-          "pluginVersion": "8.4.2",
+          "pluginVersion": "8.4.5",
           "targets": [
             {
               "datasource": {
@@ -896,7 +895,7 @@
                 "uid": "${datasource}"
               },
               "exemplar": true,
-              "expr": "smartmon_attr_raw_value{name=\"raw_read_error_rate\"}",
+              "expr": "smartmon_attr_value{name=\"raw_read_error_rate\"}",
               "interval": "",
               "intervalFactor": 1,
               "legendFormat": "{{device}} {{disk}}",
@@ -904,6 +903,415 @@
             }
           ],
           "title": "Raw Read Error",
+          "type": "bargauge"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "max": 100,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 30
+                  },
+                  {
+                    "color": "green",
+                    "value": 60
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 12
+          },
+          "id": 27,
+          "options": {
+            "displayMode": "gradient",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true
+          },
+          "pluginVersion": "8.4.5",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "wHZJhLrMz"
+              },
+              "exemplar": true,
+              "expr": "smartmon_attr_value{name=\"seek_error_rate\"}",
+              "interval": "",
+              "legendFormat": "{{ device }} {{disk }}",
+              "refId": "A"
+            }
+          ],
+          "title": "Seek Error Rate",
+          "type": "bargauge"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 1
+                  },
+                  {
+                    "color": "red",
+                    "value": 10
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 20
+          },
+          "id": 29,
+          "options": {
+            "displayMode": "gradient",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true
+          },
+          "pluginVersion": "8.4.5",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "wHZJhLrMz"
+              },
+              "exemplar": true,
+              "expr": "smartmon_attr_raw_value{name=\"spin_retry_count\"}",
+              "interval": "",
+              "legendFormat": "{{ device }} {{ disk }}",
+              "refId": "A"
+            }
+          ],
+          "title": "Spin Retry Count",
+          "type": "bargauge"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 1
+                  },
+                  {
+                    "color": "red",
+                    "value": 10
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 20
+          },
+          "id": 31,
+          "options": {
+            "displayMode": "gradient",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true
+          },
+          "pluginVersion": "8.4.5",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "wHZJhLrMz"
+              },
+              "exemplar": true,
+              "expr": "smartmon_attr_raw_value{name=\"command_timeout\"}",
+              "interval": "",
+              "legendFormat": "{{ device }} {{ disk }}",
+              "refId": "A"
+            }
+          ],
+          "title": "Command Timeout Count",
+          "type": "bargauge"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 1
+                  },
+                  {
+                    "color": "red",
+                    "value": 10
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 28
+          },
+          "id": 32,
+          "options": {
+            "displayMode": "gradient",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true
+          },
+          "pluginVersion": "8.4.5",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "wHZJhLrMz"
+              },
+              "exemplar": true,
+              "expr": "smartmon_attr_raw_value{name=\"current_pending_sector\"}",
+              "interval": "",
+              "legendFormat": "{{ device }} {{ disk }}",
+              "refId": "A"
+            }
+          ],
+          "title": "Current Pending Sector Count",
+          "type": "bargauge"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 1
+                  },
+                  {
+                    "color": "red",
+                    "value": 10
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 28
+          },
+          "id": 33,
+          "options": {
+            "displayMode": "gradient",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true
+          },
+          "pluginVersion": "8.4.5",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "wHZJhLrMz"
+              },
+              "exemplar": true,
+              "expr": "smartmon_attr_raw_value{name=\"offline_uncorrectable\"}",
+              "interval": "",
+              "legendFormat": "{{ device }} {{ disk }}",
+              "refId": "A"
+            }
+          ],
+          "title": "Offline Uncorrectable Sector Count",
+          "type": "bargauge"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 1
+                  },
+                  {
+                    "color": "red",
+                    "value": 10
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 36
+          },
+          "id": 34,
+          "options": {
+            "displayMode": "gradient",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true
+          },
+          "pluginVersion": "8.4.5",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "wHZJhLrMz"
+              },
+              "exemplar": true,
+              "expr": "smartmon_attr_raw_value{name=\"reported_uncorrect\"}",
+              "interval": "",
+              "legendFormat": "{{ device }} {{ disk }}",
+              "refId": "A"
+            }
+          ],
+          "title": "Reported Uncorrectable Errors",
           "type": "bargauge"
         },
         {
@@ -941,7 +1349,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 12
+            "y": 36
           },
           "id": 23,
           "options": {
@@ -956,7 +1364,7 @@
             },
             "showUnfilled": true
           },
-          "pluginVersion": "8.4.2",
+          "pluginVersion": "8.4.5",
           "targets": [
             {
               "datasource": {
@@ -1012,6 +1420,6 @@
   "timezone": "",
   "title": "S.M.A.R.T",
   "uid": "S63Dhibnz",
-  "version": 12,
+  "version": 18,
   "weekStart": ""
 }
