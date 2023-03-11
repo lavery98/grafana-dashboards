@@ -11,6 +11,7 @@ local upsStatePanel = grafana.statPanel.new(
         "ups_state",
         legendFormat="{{device}}",
         datasource="Prometheus-Internal",
+        intervalFactor=null,
         instant=true
     )
 ).addValueMapping(
@@ -51,8 +52,33 @@ local upsStateTimelinePanel = grafana.timeseriesPanel.new(
     value="1"
 );
 
-local batteryCapacity = grafana.gaugePanel.new(
+local batteryCapacityPanel = grafana.gaugePanel.new(
     "Battery Capacity"
+).addTarget(
+    grafana.prometheus.target(
+        "ups_battery_capacity",
+        legendFormat="{{device}}",
+        datasource="Prometheus-Internal",
+        intervalFactor=null,
+        instant=true
+    )
+).addThreshold({
+    "color": "red",
+    "value": null
+}).addThreshold({
+    "color": "orange",
+    "value": 50
+}).addThreshold({
+    "color": "green",
+    "value": 80
+});
+
+local batteryCapacityTimelinePanel = grafana.timeseriesPanel.new(
+    "Battery Capacity",
+    colorMode="thresholds",
+    thresholdDisplay="dashed",
+    min=0,
+    max=100
 ).addTarget(
     grafana.prometheus.target(
         "ups_battery_capacity",
@@ -60,12 +86,21 @@ local batteryCapacity = grafana.gaugePanel.new(
         datasource="Prometheus-Internal",
         intervalFactor=null
     )
+).addThreshold(
+    "red"
+).addThreshold(
+    "orange",
+    value=50
+).addThreshold(
+    "green",
+    value=80
 );
 
 // Dashboard
 
 grafana.dashboard.new(
     'UPS Status',
+    uid="ups-status-test",
     tags=['generated'],
     schemaVersion=0
 ).addPanel(upsStatePanel, gridPos={
@@ -78,8 +113,13 @@ grafana.dashboard.new(
     y: 0,
     w: 5,
     h: 8
-}).addPanel(batteryCapacity, gridPos={
+}).addPanel(batteryCapacityPanel, gridPos={
     x: 0,
+    y: 8,
+    w: 5,
+    h: 8
+}).addPanel(batteryCapacityTimelinePanel, gridPos={
+    x: 5,
     y: 8,
     w: 5,
     h: 8

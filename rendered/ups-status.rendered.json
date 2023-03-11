@@ -81,7 +81,7 @@
                "expr": "ups_state",
                "format": "time_series",
                "instant": true,
-               "intervalFactor": 2,
+               "intervalFactor": null,
                "legendFormat": "{{device}}",
                "refId": "A"
             }
@@ -209,7 +209,20 @@
                "min": 0,
                "thresholds": {
                   "mode": "absolute",
-                  "steps": [ ]
+                  "steps": [
+                     {
+                        "color": "red",
+                        "value": null
+                     },
+                     {
+                        "color": "orange",
+                        "value": 50
+                     },
+                     {
+                        "color": "green",
+                        "value": 80
+                     }
+                  ]
                },
                "unit": "percent"
             }
@@ -239,6 +252,7 @@
                "datasource": "Prometheus-Internal",
                "expr": "ups_battery_capacity",
                "format": "time_series",
+               "instant": true,
                "intervalFactor": null,
                "legendFormat": "{{device}}",
                "refId": "A"
@@ -247,6 +261,99 @@
          "title": "Battery Capacity",
          "transparent": false,
          "type": "gauge"
+      },
+      {
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "thresholds"
+               },
+               "custom": {
+                  "axisCenteredZero": false,
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineStyle": {
+                     "fill": "solid"
+                  },
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                     "group": "A",
+                     "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "dashed"
+                  }
+               },
+               "mappings": [ ],
+               "max": 100,
+               "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "red",
+                        "value": null
+                     },
+                     {
+                        "color": "orange",
+                        "value": 50
+                     },
+                     {
+                        "color": "green",
+                        "value": 80
+                     }
+                  ]
+               }
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 5,
+            "x": 5,
+            "y": 8
+         },
+         "id": 5,
+         "links": [ ],
+         "options": {
+            "legend": {
+               "calcs": [ ],
+               "displayMode": "list",
+               "placement": "bottom"
+            },
+            "tooltip": {
+               "mode": "single",
+               "sort": "none"
+            }
+         },
+         "targets": [
+            {
+               "datasource": "Prometheus-Internal",
+               "expr": "ups_battery_capacity",
+               "format": "time_series",
+               "intervalFactor": null,
+               "legendFormat": "{{device}}",
+               "refId": "A"
+            }
+         ],
+         "title": "Battery Capacity",
+         "type": "timeseries"
       }
    ],
    "refresh": "",
@@ -290,5 +397,6 @@
    },
    "timezone": "browser",
    "title": "UPS Status",
+   "uid": "ups-status-test",
    "version": 0
 }
