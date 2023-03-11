@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "dependencies": [
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/rhowe/grafonnet-lib.git",
+          "subdir": "grafonnet"
+        }
+      },
+      "version": "b924252aa4c4fc85d328d5fccfb8232006864f47",
+      "sum": "ubFxRQSfB7h5gvueNcp1b+vpSBQWgnhOcwQQk5qGcoM="
+    }
+  ],
+  "legacyImports": false
+}
