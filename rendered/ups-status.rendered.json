@@ -1,0 +1,847 @@
+{
+   "__inputs": [ ],
+   "__requires": [ ],
+   "annotations": {
+      "list": [ ]
+   },
+   "editable": false,
+   "gnetId": null,
+   "graphTooltip": 0,
+   "hideControls": false,
+   "id": null,
+   "links": [ ],
+   "panels": [
+      {
+         "datasource": null,
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "fixed"
+               },
+               "custom": {
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [
+                  {
+                     "options": {
+                        "0": {
+                           "color": "red",
+                           "index": 0,
+                           "text": "Not Normal"
+                        }
+                     },
+                     "type": "value"
+                  },
+                  {
+                     "options": {
+                        "1": {
+                           "color": "green",
+                           "index": 1,
+                           "text": "Normal"
+                        }
+                     },
+                     "type": "value"
+                  }
+               ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               }
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 0,
+            "y": 0
+         },
+         "id": 2,
+         "links": [ ],
+         "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "textMode": "auto"
+         },
+         "pluginVersion": "9.2.4",
+         "targets": [
+            {
+               "datasource": "Prometheus-Internal",
+               "expr": "ups_state",
+               "format": "time_series",
+               "instant": true,
+               "intervalFactor": null,
+               "legendFormat": "{{device}}",
+               "refId": "A"
+            }
+         ],
+         "title": "UPS State",
+         "type": "stat"
+      },
+      {
+         "datasource": null,
+         "fieldConfig": {
+            "defaults": {
+               "links": [ ],
+               "mappings": [ ],
+               "max": 100,
+               "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "red",
+                        "value": null
+                     },
+                     {
+                        "color": "orange",
+                        "value": 50
+                     },
+                     {
+                        "color": "green",
+                        "value": 80
+                     }
+                  ]
+               },
+               "unit": "percent"
+            }
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 6,
+            "y": 0
+         },
+         "id": 3,
+         "links": [ ],
+         "options": {
+            "reduceOptions": {
+               "calcs": [
+                  "mean"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true
+         },
+         "pluginVersion": "7",
+         "targets": [
+            {
+               "datasource": "Prometheus-Internal",
+               "expr": "ups_battery_capacity",
+               "format": "time_series",
+               "instant": true,
+               "intervalFactor": null,
+               "legendFormat": "{{device}}",
+               "refId": "A"
+            }
+         ],
+         "title": "Battery Capacity",
+         "transparent": false,
+         "type": "gauge"
+      },
+      {
+         "datasource": null,
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "thresholds"
+               },
+               "custom": {
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "red",
+                        "value": null
+                     },
+                     {
+                        "color": "orange",
+                        "value": 15
+                     },
+                     {
+                        "color": "green",
+                        "value": 30
+                     }
+                  ]
+               },
+               "unit": "m"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 12,
+            "y": 0
+         },
+         "id": 4,
+         "links": [ ],
+         "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "textMode": "auto"
+         },
+         "pluginVersion": "9.2.4",
+         "targets": [
+            {
+               "datasource": "Prometheus-Internal",
+               "expr": "ups_runtime_remaining",
+               "format": "time_series",
+               "instant": true,
+               "intervalFactor": null,
+               "legendFormat": "{{device}}",
+               "refId": "A"
+            }
+         ],
+         "title": "Battery Time Remaining",
+         "type": "stat"
+      },
+      {
+         "datasource": null,
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
+               "unit": "watt"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 18,
+            "y": 0
+         },
+         "id": 5,
+         "links": [ ],
+         "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "textMode": "auto"
+         },
+         "pluginVersion": "9.2.4",
+         "targets": [
+            {
+               "datasource": "Prometheus-Internal",
+               "expr": "ups_load",
+               "format": "time_series",
+               "instant": true,
+               "intervalFactor": null,
+               "legendFormat": "{{device}}",
+               "refId": "A"
+            }
+         ],
+         "title": "UPS Load",
+         "type": "stat"
+      },
+      {
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "thresholds"
+               },
+               "custom": {
+                  "axisCenteredZero": false,
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 100,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineStyle": {
+                     "fill": "solid"
+                  },
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                     "group": "A",
+                     "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [
+                  {
+                     "options": {
+                        "0": {
+                           "color": "red",
+                           "index": 0,
+                           "text": "Not Normal"
+                        }
+                     },
+                     "type": "value"
+                  },
+                  {
+                     "options": {
+                        "1": {
+                           "color": "green",
+                           "index": 1,
+                           "text": "Normal"
+                        }
+                     },
+                     "type": "value"
+                  }
+               ],
+               "max": 1,
+               "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "red",
+                        "value": null
+                     },
+                     {
+                        "color": "green",
+                        "value": "1"
+                     }
+                  ]
+               }
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 0,
+            "y": 5
+         },
+         "id": 6,
+         "links": [ ],
+         "options": {
+            "legend": {
+               "calcs": [ ],
+               "displayMode": "list",
+               "placement": "bottom"
+            },
+            "tooltip": {
+               "mode": "single",
+               "sort": "none"
+            }
+         },
+         "targets": [
+            {
+               "datasource": "Prometheus-Internal",
+               "expr": "ups_state",
+               "format": "time_series",
+               "intervalFactor": null,
+               "legendFormat": "{{device}}",
+               "refId": "A"
+            }
+         ],
+         "title": "UPS State",
+         "type": "timeseries"
+      },
+      {
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "thresholds"
+               },
+               "custom": {
+                  "axisCenteredZero": false,
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineStyle": {
+                     "fill": "solid"
+                  },
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                     "group": "A",
+                     "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "dashed"
+                  }
+               },
+               "mappings": [ ],
+               "max": 100,
+               "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "red",
+                        "value": null
+                     },
+                     {
+                        "color": "orange",
+                        "value": 50
+                     },
+                     {
+                        "color": "green",
+                        "value": 80
+                     }
+                  ]
+               }
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 6,
+            "y": 5
+         },
+         "id": 7,
+         "links": [ ],
+         "options": {
+            "legend": {
+               "calcs": [ ],
+               "displayMode": "list",
+               "placement": "bottom"
+            },
+            "tooltip": {
+               "mode": "single",
+               "sort": "none"
+            }
+         },
+         "targets": [
+            {
+               "datasource": "Prometheus-Internal",
+               "expr": "ups_battery_capacity",
+               "format": "time_series",
+               "intervalFactor": null,
+               "legendFormat": "{{device}}",
+               "refId": "A"
+            }
+         ],
+         "title": "Battery Capacity",
+         "type": "timeseries"
+      },
+      {
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "axisCenteredZero": false,
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineStyle": {
+                     "fill": "solid"
+                  },
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                     "group": "A",
+                     "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
+               "unit": "m"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 12,
+            "y": 5
+         },
+         "id": 8,
+         "links": [ ],
+         "options": {
+            "legend": {
+               "calcs": [ ],
+               "displayMode": "list",
+               "placement": "bottom"
+            },
+            "tooltip": {
+               "mode": "single",
+               "sort": "none"
+            }
+         },
+         "targets": [
+            {
+               "datasource": "Prometheus-Internal",
+               "expr": "ups_runtime_remaining",
+               "format": "time_series",
+               "intervalFactor": null,
+               "legendFormat": "{{device}}",
+               "refId": "A"
+            }
+         ],
+         "title": "Battery Time Remaining",
+         "type": "timeseries"
+      },
+      {
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "axisCenteredZero": false,
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineStyle": {
+                     "fill": "solid"
+                  },
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                     "group": "A",
+                     "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
+               "unit": "watt"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 18,
+            "y": 5
+         },
+         "id": 9,
+         "links": [ ],
+         "options": {
+            "legend": {
+               "calcs": [ ],
+               "displayMode": "list",
+               "placement": "bottom"
+            },
+            "tooltip": {
+               "mode": "single",
+               "sort": "none"
+            }
+         },
+         "targets": [
+            {
+               "datasource": "Prometheus-Internal",
+               "expr": "ups_load",
+               "format": "time_series",
+               "intervalFactor": null,
+               "legendFormat": "{{device}}",
+               "refId": "A"
+            }
+         ],
+         "title": "UPS Load",
+         "type": "timeseries"
+      },
+      {
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "axisCenteredZero": false,
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineStyle": {
+                     "fill": "solid"
+                  },
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                     "group": "A",
+                     "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
+               "unit": "volt"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 13
+         },
+         "id": 10,
+         "links": [ ],
+         "options": {
+            "legend": {
+               "calcs": [ ],
+               "displayMode": "list",
+               "placement": "bottom"
+            },
+            "tooltip": {
+               "mode": "single",
+               "sort": "none"
+            }
+         },
+         "targets": [
+            {
+               "datasource": "Prometheus-Internal",
+               "expr": "ups_in_voltage",
+               "format": "time_series",
+               "intervalFactor": null,
+               "legendFormat": "{{device}}",
+               "refId": "A"
+            }
+         ],
+         "title": "UPS Input Voltage",
+         "type": "timeseries"
+      },
+      {
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "axisCenteredZero": false,
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineStyle": {
+                     "fill": "solid"
+                  },
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                     "group": "A",
+                     "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
+               "unit": "volt"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 21
+         },
+         "id": 11,
+         "links": [ ],
+         "options": {
+            "legend": {
+               "calcs": [ ],
+               "displayMode": "list",
+               "placement": "bottom"
+            },
+            "tooltip": {
+               "mode": "single",
+               "sort": "none"
+            }
+         },
+         "targets": [
+            {
+               "datasource": "Prometheus-Internal",
+               "expr": "ups_out_voltage",
+               "format": "time_series",
+               "intervalFactor": null,
+               "legendFormat": "{{device}}",
+               "refId": "A"
+            }
+         ],
+         "title": "UPS Output Voltage",
+         "type": "timeseries"
+      }
+   ],
+   "refresh": "",
+   "rows": [ ],
+   "schemaVersion": 0,
+   "style": "dark",
+   "tags": [
+      "generated"
+   ],
+   "templating": {
+      "list": [ ]
+   },
+   "time": {
+      "from": "now-6h",
+      "to": "now"
+   },
+   "timepicker": {
+      "refresh_intervals": [
+         "5s",
+         "10s",
+         "30s",
+         "1m",
+         "5m",
+         "15m",
+         "30m",
+         "1h",
+         "2h",
+         "1d"
+      ],
+      "time_options": [
+         "5m",
+         "15m",
+         "1h",
+         "6h",
+         "12h",
+         "24h",
+         "2d",
+         "7d",
+         "30d"
+      ]
+   },
+   "timezone": "browser",
+   "title": "UPS Status",
+   "uid": "ups-status",
+   "version": 0
+}
