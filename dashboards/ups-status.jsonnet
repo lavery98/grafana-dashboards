@@ -1,11 +1,20 @@
 local grafana = import 'grafonnet/grafana.libsonnet';
 
+// Allow datasource to be easily changed for testing
+local datasourceToUse="${DS_PROMETHEUS}";
+
 // Dashboard
 grafana.dashboard.new(
     'UPS Status',
     uid="ups-status",
     tags=['generated'],
     schemaVersion=0
+).addInput(
+    name="DS_PROMETHEUS",
+    label="Prometheus",
+    type="datasource",
+    pluginId="prometheus",
+    pluginName="Prometheus"
 ).addPanel(
     grafana.statPanel.new(
         title="UPS State",
@@ -15,7 +24,7 @@ grafana.dashboard.new(
         grafana.prometheus.target(
             "ups_state",
             legendFormat="{{device}}",
-            datasource="Prometheus-Internal",
+            datasource=datasourceToUse,
             intervalFactor=null,
             instant=true
         )
@@ -36,7 +45,7 @@ grafana.dashboard.new(
         grafana.prometheus.target(
             "ups_battery_capacity",
             legendFormat="{{device}}",
-            datasource="Prometheus-Internal",
+            datasource=datasourceToUse,
             intervalFactor=null,
             instant=true
         )
@@ -60,7 +69,7 @@ grafana.dashboard.new(
         grafana.prometheus.target(
             "ups_runtime_remaining",
             legendFormat="{{device}}",
-            datasource="Prometheus-Internal",
+            datasource=datasourceToUse,
             intervalFactor=null,
             instant=true
         )
@@ -82,7 +91,7 @@ grafana.dashboard.new(
         grafana.prometheus.target(
             "ups_load",
             legendFormat="{{device}}",
-            datasource="Prometheus-Internal",
+            datasource=datasourceToUse,
             intervalFactor=null,
             instant=true
         )
@@ -99,7 +108,7 @@ grafana.dashboard.new(
         grafana.prometheus.target(
             "ups_state",
             legendFormat="{{device}}",
-            datasource="Prometheus-Internal",
+            datasource=datasourceToUse,
             intervalFactor=null
         )
     ).addValueMapping(
@@ -128,7 +137,7 @@ grafana.dashboard.new(
         grafana.prometheus.target(
             "ups_battery_capacity",
             legendFormat="{{device}}",
-            datasource="Prometheus-Internal",
+            datasource=datasourceToUse,
             intervalFactor=null
         )
     ).addThreshold(
@@ -149,7 +158,7 @@ grafana.dashboard.new(
         grafana.prometheus.target(
             "ups_runtime_remaining",
             legendFormat="{{device}}",
-            datasource="Prometheus-Internal",
+            datasource=datasourceToUse,
             intervalFactor=null
         )
     ),
@@ -162,7 +171,7 @@ grafana.dashboard.new(
         grafana.prometheus.target(
             "ups_load",
             legendFormat="{{device}}",
-            datasource="Prometheus-Internal",
+            datasource=datasourceToUse,
             intervalFactor=null
         )
     ),
@@ -175,7 +184,7 @@ grafana.dashboard.new(
         grafana.prometheus.target(
             "ups_in_voltage",
             legendFormat="{{device}}",
-            datasource="Prometheus-Internal",
+            datasource=datasourceToUse,
             intervalFactor=null
         )
     ),
@@ -188,7 +197,7 @@ grafana.dashboard.new(
         grafana.prometheus.target(
             "ups_out_voltage",
             legendFormat="{{device}}",
-            datasource="Prometheus-Internal",
+            datasource=datasourceToUse,
             intervalFactor=null
         )
     ),

@@ -1,5 +1,14 @@
 {
-   "__inputs": [ ],
+   "__inputs": [
+      {
+         "description": "",
+         "label": "Prometheus",
+         "name": "DS_PROMETHEUS",
+         "pluginId": "prometheus",
+         "pluginName": "Prometheus",
+         "type": "datasource"
+      }
+   ],
    "__requires": [ ],
    "annotations": {
       "list": [ ]
@@ -77,7 +86,7 @@
          "pluginVersion": "9.2.4",
          "targets": [
             {
-               "datasource": "Prometheus-Internal",
+               "datasource": "${DS_PROMETHEUS}",
                "expr": "ups_state",
                "format": "time_series",
                "instant": true,
@@ -139,7 +148,7 @@
          "pluginVersion": "7",
          "targets": [
             {
-               "datasource": "Prometheus-Internal",
+               "datasource": "${DS_PROMETHEUS}",
                "expr": "ups_battery_capacity",
                "format": "time_series",
                "instant": true,
@@ -211,7 +220,7 @@
          "pluginVersion": "9.2.4",
          "targets": [
             {
-               "datasource": "Prometheus-Internal",
+               "datasource": "${DS_PROMETHEUS}",
                "expr": "ups_runtime_remaining",
                "format": "time_series",
                "instant": true,
@@ -269,7 +278,7 @@
          "pluginVersion": "9.2.4",
          "targets": [
             {
-               "datasource": "Prometheus-Internal",
+               "datasource": "${DS_PROMETHEUS}",
                "expr": "ups_load",
                "format": "time_series",
                "instant": true,
@@ -380,7 +389,7 @@
          },
          "targets": [
             {
-               "datasource": "Prometheus-Internal",
+               "datasource": "${DS_PROMETHEUS}",
                "expr": "ups_state",
                "format": "time_series",
                "intervalFactor": null,
@@ -473,7 +482,7 @@
          },
          "targets": [
             {
-               "datasource": "Prometheus-Internal",
+               "datasource": "${DS_PROMETHEUS}",
                "expr": "ups_battery_capacity",
                "format": "time_series",
                "intervalFactor": null,
@@ -552,7 +561,7 @@
          },
          "targets": [
             {
-               "datasource": "Prometheus-Internal",
+               "datasource": "${DS_PROMETHEUS}",
                "expr": "ups_runtime_remaining",
                "format": "time_series",
                "intervalFactor": null,
@@ -631,7 +640,7 @@
          },
          "targets": [
             {
-               "datasource": "Prometheus-Internal",
+               "datasource": "${DS_PROMETHEUS}",
                "expr": "ups_load",
                "format": "time_series",
                "intervalFactor": null,
@@ -710,7 +719,7 @@
          },
          "targets": [
             {
-               "datasource": "Prometheus-Internal",
+               "datasource": "${DS_PROMETHEUS}",
                "expr": "ups_in_voltage",
                "format": "time_series",
                "intervalFactor": null,
@@ -789,7 +798,7 @@
          },
          "targets": [
             {
-               "datasource": "Prometheus-Internal",
+               "datasource": "${DS_PROMETHEUS}",
                "expr": "ups_out_voltage",
                "format": "time_series",
                "intervalFactor": null,
