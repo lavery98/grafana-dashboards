@@ -1,0 +1,1204 @@
+{
+   "__inputs": [
+      {
+         "description": "",
+         "label": "Prometheus",
+         "name": "DS_PROMETHEUS",
+         "pluginId": "prometheus",
+         "pluginName": "Prometheus",
+         "type": "datasource"
+      }
+   ],
+   "__requires": [ ],
+   "annotations": {
+      "list": [ ]
+   },
+   "editable": false,
+   "gnetId": null,
+   "graphTooltip": 0,
+   "hideControls": false,
+   "id": null,
+   "links": [ ],
+   "panels": [
+      {
+         "collapse": false,
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
+         },
+         "id": 2,
+         "panels": [ ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "System",
+         "titleSize": "h6",
+         "type": "row"
+      },
+      {
+         "datasource": null,
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+               },
+               "custom": {
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
+               "unit": "s"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 4,
+            "w": 6,
+            "x": 0,
+            "y": 1
+         },
+         "id": 3,
+         "links": [ ],
+         "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "textMode": "auto"
+         },
+         "pluginVersion": "9.2.4",
+         "targets": [
+            {
+               "datasource": "${DS_PROMETHEUS}",
+               "expr": "${__to:date:seconds} - max(bind_boot_time_seconds{job=\"$job\",instance=\"$instance\"})",
+               "format": "time_series",
+               "instant": true,
+               "intervalFactor": null,
+               "legendFormat": "",
+               "refId": "A"
+            }
+         ],
+         "title": "Last Restarted",
+         "type": "stat"
+      },
+      {
+         "datasource": null,
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+               },
+               "custom": {
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
+               "unit": "s"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 4,
+            "w": 6,
+            "x": 6,
+            "y": 1
+         },
+         "id": 4,
+         "links": [ ],
+         "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "textMode": "auto"
+         },
+         "pluginVersion": "9.2.4",
+         "targets": [
+            {
+               "datasource": "${DS_PROMETHEUS}",
+               "expr": "${__to:date:seconds} - max(bind_config_time_seconds{job=\"$job\",instance=\"$instance\"})",
+               "format": "time_series",
+               "instant": true,
+               "intervalFactor": null,
+               "legendFormat": "",
+               "refId": "A"
+            }
+         ],
+         "title": "Last Reconfigured",
+         "type": "stat"
+      },
+      {
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "axisCenteredZero": false,
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineStyle": {
+                     "fill": "solid"
+                  },
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                     "group": "A",
+                     "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
+               "unit": "s"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 4,
+            "w": 12,
+            "x": 12,
+            "y": 1
+         },
+         "id": 5,
+         "links": [ ],
+         "options": {
+            "legend": {
+               "calcs": [ ],
+               "displayMode": "hidden",
+               "placement": "bottom"
+            },
+            "tooltip": {
+               "mode": "single",
+               "sort": "none"
+            }
+         },
+         "targets": [
+            {
+               "datasource": "${DS_PROMETHEUS}",
+               "expr": "increase(process_cpu_seconds_total{job=\"$job\",instance=\"$instance\"}[120s])",
+               "format": "time_series",
+               "intervalFactor": 2,
+               "legendFormat": "CPU Time",
+               "refId": "A"
+            }
+         ],
+         "title": "Named CPU Time",
+         "type": "timeseries"
+      },
+      {
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "axisCenteredZero": false,
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 10,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineStyle": {
+                     "fill": "solid"
+                  },
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                     "group": "A",
+                     "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
+               "unit": "short"
+            },
+            "overrides": [
+               {
+                  "matcher": {
+                     "id": "byName",
+                     "options": "Max"
+                  },
+                  "properties": [
+                     {
+                        "id": "custom.fillOpacity",
+                        "value": 0
+                     }
+                  ]
+               }
+            ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 5
+         },
+         "id": 6,
+         "links": [ ],
+         "options": {
+            "legend": {
+               "calcs": [ ],
+               "displayMode": "list",
+               "placement": "bottom"
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "none"
+            }
+         },
+         "targets": [
+            {
+               "datasource": "${DS_PROMETHEUS}",
+               "expr": "process_max_fds{instance=\"$instance\",job=\"$job\"}",
+               "format": "time_series",
+               "intervalFactor": 2,
+               "legendFormat": "Max",
+               "refId": "A"
+            },
+            {
+               "datasource": "${DS_PROMETHEUS}",
+               "expr": "process_open_fds{instance=\"$instance\",job=\"$job\"}",
+               "format": "time_series",
+               "intervalFactor": 2,
+               "legendFormat": "Open",
+               "refId": "B"
+            }
+         ],
+         "title": "File Descriptors",
+         "type": "timeseries"
+      },
+      {
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "axisCenteredZero": false,
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 20,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineStyle": {
+                     "fill": "solid"
+                  },
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                     "group": "A",
+                     "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
+               "unit": "bytes"
+            },
+            "overrides": [
+               {
+                  "matcher": {
+                     "id": "byName",
+                     "options": "Virtual"
+                  },
+                  "properties": [
+                     {
+                        "id": "color",
+                        "value": {
+                           "fixedColor": "#0A437C",
+                           "mode": "fixed"
+                        }
+                     }
+                  ]
+               },
+               {
+                  "matcher": {
+                     "id": "byName",
+                     "options": "Resident"
+                  },
+                  "properties": [
+                     {
+                        "id": "color",
+                        "value": {
+                           "fixedColor": "#890F02",
+                           "mode": "fixed"
+                        }
+                     }
+                  ]
+               }
+            ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 5
+         },
+         "id": 7,
+         "links": [ ],
+         "options": {
+            "legend": {
+               "calcs": [ ],
+               "displayMode": "list",
+               "placement": "bottom"
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "none"
+            }
+         },
+         "targets": [
+            {
+               "datasource": "${DS_PROMETHEUS}",
+               "expr": "process_virtual_memory_bytes{instance=\"$instance\",job=\"$job\"}",
+               "format": "time_series",
+               "intervalFactor": 2,
+               "legendFormat": "Virtual",
+               "refId": "A"
+            },
+            {
+               "datasource": "${DS_PROMETHEUS}",
+               "expr": "process_resident_memory_bytes{instance=\"$instance\",job=\"$job\"}",
+               "format": "time_series",
+               "intervalFactor": 2,
+               "legendFormat": "Resident",
+               "refId": "B"
+            }
+         ],
+         "title": "Memory",
+         "type": "timeseries"
+      },
+      {
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "axisCenteredZero": false,
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 10,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineStyle": {
+                     "fill": "solid"
+                  },
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                     "group": "A",
+                     "mode": "normal"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               }
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 13
+         },
+         "id": 8,
+         "links": [ ],
+         "options": {
+            "legend": {
+               "calcs": [ ],
+               "displayMode": "list",
+               "placement": "bottom"
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "none"
+            }
+         },
+         "targets": [
+            {
+               "datasource": "${DS_PROMETHEUS}",
+               "expr": "increase(bind_query_duplicates_total{instance=\"$instance\",job=\"$job\"}[120s])",
+               "format": "time_series",
+               "intervalFactor": 2,
+               "legendFormat": "Duplicates",
+               "refId": "A"
+            },
+            {
+               "datasource": "${DS_PROMETHEUS}",
+               "expr": "increase(bind_query_errors_total{instance=\"$instance\",job=\"$job\"}[120s])",
+               "format": "time_series",
+               "intervalFactor": 2,
+               "legendFormat": "{{error}}",
+               "refId": "B"
+            },
+            {
+               "datasource": "${DS_PROMETHEUS}",
+               "expr": "increase(bind_query_recursions_total{instance=\"$instance\",job=\"$job\"}[120s])",
+               "format": "time_series",
+               "intervalFactor": 2,
+               "legendFormat": "Recursions",
+               "refId": "C"
+            }
+         ],
+         "title": "Queries",
+         "type": "timeseries"
+      },
+      {
+         "collapse": true,
+         "collapsed": true,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 21
+         },
+         "id": 9,
+         "panels": [
+            {
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "palette-classic"
+                     },
+                     "custom": {
+                        "axisCenteredZero": false,
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                           "legend": false,
+                           "tooltip": false,
+                           "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineStyle": {
+                           "fill": "solid"
+                        },
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                           "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "normal"
+                        },
+                        "thresholdsStyle": {
+                           "mode": "off"
+                        }
+                     },
+                     "mappings": [ ],
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     }
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 0,
+                  "y": 21
+               },
+               "id": 10,
+               "links": [ ],
+               "options": {
+                  "legend": {
+                     "calcs": [ ],
+                     "displayMode": "list",
+                     "placement": "bottom"
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "none"
+                  }
+               },
+               "targets": [
+                  {
+                     "datasource": "${DS_PROMETHEUS}",
+                     "expr": "increase(bind_incoming_queries_total{instance=\"$instance\",job=\"$job\"}[120s])",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{type}}",
+                     "refId": "A"
+                  }
+               ],
+               "title": "Incoming Queries",
+               "type": "timeseries"
+            },
+            {
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "palette-classic"
+                     },
+                     "custom": {
+                        "axisCenteredZero": false,
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                           "legend": false,
+                           "tooltip": false,
+                           "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineStyle": {
+                           "fill": "solid"
+                        },
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                           "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "normal"
+                        },
+                        "thresholdsStyle": {
+                           "mode": "off"
+                        }
+                     },
+                     "mappings": [ ],
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     }
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 12,
+                  "y": 21
+               },
+               "id": 11,
+               "links": [ ],
+               "options": {
+                  "legend": {
+                     "calcs": [ ],
+                     "displayMode": "list",
+                     "placement": "bottom"
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "none"
+                  }
+               },
+               "targets": [
+                  {
+                     "datasource": "${DS_PROMETHEUS}",
+                     "expr": "increase(bind_incoming_requests_total{instance=\"$instance\",job=\"$job\"}[120s])",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{opcode}}",
+                     "refId": "A"
+                  }
+               ],
+               "title": "Incoming Request Opcodes",
+               "type": "timeseries"
+            },
+            {
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "palette-classic"
+                     },
+                     "custom": {
+                        "axisCenteredZero": false,
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                           "legend": false,
+                           "tooltip": false,
+                           "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineStyle": {
+                           "fill": "solid"
+                        },
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                           "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "normal"
+                        },
+                        "thresholdsStyle": {
+                           "mode": "off"
+                        }
+                     },
+                     "mappings": [ ],
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     }
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 24,
+                  "x": 0,
+                  "y": 29
+               },
+               "id": 12,
+               "links": [ ],
+               "options": {
+                  "legend": {
+                     "calcs": [ ],
+                     "displayMode": "list",
+                     "placement": "bottom"
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "none"
+                  }
+               },
+               "targets": [
+                  {
+                     "datasource": "${DS_PROMETHEUS}",
+                     "expr": "increase(bind_responses_total{instance=\"$instance\",job=\"$job\"}[120s])",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{result}}",
+                     "refId": "A"
+                  }
+               ],
+               "title": "Response Results",
+               "type": "timeseries"
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Incoming",
+         "titleSize": "h6",
+         "type": "row"
+      },
+      {
+         "collapse": true,
+         "collapsed": true,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 37
+         },
+         "id": 13,
+         "panels": [
+            {
+               "datasource": null,
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "thresholds"
+                     },
+                     "custom": {
+                        "align": "auto",
+                        "displayMode": "auto",
+                        "inspect": false
+                     },
+                     "mappings": [ ],
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     }
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 6,
+                  "x": 0,
+                  "y": 38
+               },
+               "id": 14,
+               "links": [ ],
+               "options": {
+                  "footer": {
+                     "fields": "",
+                     "reducer": [
+                        "sum"
+                     ],
+                     "show": false
+                  },
+                  "showHeader": true
+               },
+               "pluginVersion": "9.2.1",
+               "targets": [
+                  {
+                     "datasource": "${DS_PROMETHEUS}",
+                     "expr": "bind_zone_serial{instance=\"$instance\",job=\"$job\"}",
+                     "format": "table",
+                     "instant": true,
+                     "intervalFactor": null,
+                     "legendFormat": "",
+                     "refId": "A"
+                  }
+               ],
+               "title": "Zone Serials",
+               "transformations": [
+                  {
+                     "id": "organize",
+                     "options": {
+                        "excludeByName": {
+                           "Time": true,
+                           "__name__": true,
+                           "instance": true,
+                           "job": true,
+                           "view": true
+                        },
+                        "indexByName": { },
+                        "renameByName": {
+                           "Value": "SOA Serial",
+                           "zone_name": "Zone"
+                        }
+                     }
+                  },
+                  {
+                     "id": "filterByValue",
+                     "options": {
+                        "filters": [
+                           {
+                              "config": {
+                                 "id": "greater",
+                                 "options": {
+                                    "value": 1000
+                                 }
+                              },
+                              "fieldName": "SOA Serial"
+                           }
+                        ],
+                        "match": "any",
+                        "type": "include"
+                     }
+                  }
+               ],
+               "type": "table"
+            },
+            {
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "palette-classic"
+                     },
+                     "custom": {
+                        "axisCenteredZero": false,
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                           "legend": false,
+                           "tooltip": false,
+                           "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineStyle": {
+                           "fill": "solid"
+                        },
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                           "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "normal"
+                        },
+                        "thresholdsStyle": {
+                           "mode": "off"
+                        }
+                     },
+                     "mappings": [ ],
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     }
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 18,
+                  "x": 6,
+                  "y": 38
+               },
+               "id": 15,
+               "links": [ ],
+               "options": {
+                  "legend": {
+                     "calcs": [ ],
+                     "displayMode": "list",
+                     "placement": "bottom"
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "none"
+                  }
+               },
+               "targets": [
+                  {
+                     "datasource": "${DS_PROMETHEUS}",
+                     "expr": "rate(bind_zone_serial{instance=\"$instance\",job=\"$job\"}[$__rate_interval])",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{zone_name}}",
+                     "refId": "A"
+                  }
+               ],
+               "title": "Zone Serial Changes",
+               "type": "timeseries"
+            },
+            {
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "thresholds"
+                     },
+                     "custom": {
+                        "fillOpacity": 70,
+                        "lineWidth": 1,
+                        "spanNulls": false
+                     },
+                     "displayName": "-",
+                     "mappings": [ ],
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "green",
+                              "value": null
+                           },
+                           {
+                              "color": "red",
+                              "value": 0.0001
+                           }
+                        ]
+                     }
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 0,
+                  "y": 46
+               },
+               "id": 16,
+               "links": [ ],
+               "options": {
+                  "legend": {
+                     "calcs": [ ],
+                     "displayMode": "hidden",
+                     "placement": "bottom"
+                  },
+                  "showValue": "never",
+                  "tooltip": {
+                     "mode": "none",
+                     "sort": "none"
+                  }
+               },
+               "targets": [
+                  {
+                     "datasource": "${DS_PROMETHEUS}",
+                     "expr": "rate(bind_zone_transfer_failure_total{instance=\"$instance\",job=\"$job\"}[$__rate_interval])",
+                     "format": "time_series",
+                     "intervalFactor": null,
+                     "legendFormat": "",
+                     "refId": "A"
+                  }
+               ],
+               "title": "Failed Zone Transfers",
+               "type": "state-timeline"
+            },
+            {
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "thresholds"
+                     },
+                     "custom": {
+                        "fillOpacity": 70,
+                        "lineWidth": 1,
+                        "spanNulls": false
+                     },
+                     "displayName": "-",
+                     "mappings": [ ],
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "green",
+                              "value": null
+                           },
+                           {
+                              "color": "red",
+                              "value": 0.0001
+                           }
+                        ]
+                     }
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 12,
+                  "y": 46
+               },
+               "id": 17,
+               "links": [ ],
+               "options": {
+                  "legend": {
+                     "calcs": [ ],
+                     "displayMode": "hidden",
+                     "placement": "bottom"
+                  },
+                  "showValue": "never",
+                  "tooltip": {
+                     "mode": "none",
+                     "sort": "none"
+                  }
+               },
+               "targets": [
+                  {
+                     "datasource": "${DS_PROMETHEUS}",
+                     "expr": "rate(bind_zone_transfer_rejected_total{instance=\"$instance\",job=\"$job\"}[$__rate_interval])",
+                     "format": "time_series",
+                     "intervalFactor": null,
+                     "legendFormat": "",
+                     "refId": "A"
+                  }
+               ],
+               "title": "Rejected Zone Transfers",
+               "type": "state-timeline"
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Zone",
+         "titleSize": "h6",
+         "type": "row"
+      }
+   ],
+   "refresh": "",
+   "rows": [ ],
+   "schemaVersion": 0,
+   "style": "dark",
+   "tags": [
+      "generated",
+      "bind-exporter",
+      "dns"
+   ],
+   "templating": {
+      "list": [
+         {
+            "allValue": null,
+            "current": { },
+            "datasource": "${DS_PROMETHEUS}",
+            "hide": 0,
+            "includeAll": false,
+            "label": "Job",
+            "multi": false,
+            "name": "job",
+            "options": [ ],
+            "query": "label_values(bind_up, job)",
+            "refresh": 0,
+            "regex": "",
+            "sort": 1,
+            "tagValuesQuery": "",
+            "tags": [ ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+         },
+         {
+            "allValue": null,
+            "current": { },
+            "datasource": "${DS_PROMETHEUS}",
+            "hide": 2,
+            "includeAll": false,
+            "label": null,
+            "multi": false,
+            "name": "instance",
+            "options": [ ],
+            "query": "label_values(bind_up{job=\"$job\"}, instance)",
+            "refresh": 0,
+            "regex": "",
+            "sort": 0,
+            "tagValuesQuery": "",
+            "tags": [ ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+         }
+      ]
+   },
+   "time": {
+      "from": "now-6h",
+      "to": "now"
+   },
+   "timepicker": {
+      "refresh_intervals": [
+         "5s",
+         "10s",
+         "30s",
+         "1m",
+         "5m",
+         "15m",
+         "30m",
+         "1h",
+         "2h",
+         "1d"
+      ],
+      "time_options": [
+         "5m",
+         "15m",
+         "1h",
+         "6h",
+         "12h",
+         "24h",
+         "2d",
+         "7d",
+         "30d"
+      ]
+   },
+   "timezone": "browser",
+   "title": "Bind9 Exporter",
+   "uid": "bind9-exporter",
+   "version": 0
+}

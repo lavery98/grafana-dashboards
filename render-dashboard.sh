@@ -10,7 +10,7 @@ error() {
 dashboard_jsonnet_file="${1}"
 rendered_json_file="rendered/$(basename "${dashboard_jsonnet_file%.jsonnet}").rendered.json"
 
-export JSONNET_PATH="$(realpath vendor)"
+export JSONNET_PATH="$(realpath vendor):$(realpath lib)"
 jsonnet-lint ${dashboard_jsonnet_file}
 jsonnet -o ${rendered_json_file} ${dashboard_jsonnet_file}
 
