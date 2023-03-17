@@ -1,0 +1,1268 @@
+{
+   "__inputs": [
+      {
+         "description": "",
+         "label": "Prometheus",
+         "name": "DS_PROMETHEUS",
+         "pluginId": "prometheus",
+         "pluginName": "Prometheus",
+         "type": "datasource"
+      }
+   ],
+   "__requires": [ ],
+   "annotations": {
+      "list": [ ]
+   },
+   "editable": false,
+   "gnetId": null,
+   "graphTooltip": 0,
+   "hideControls": false,
+   "id": null,
+   "links": [
+      {
+         "asDropdown": false,
+         "icon": "external link",
+         "includeVars": false,
+         "keepTime": false,
+         "tags": [ ],
+         "targetBlank": true,
+         "title": "Exporter",
+         "type": "link",
+         "url": "https://github.com/charlie-haley/omada_exporter"
+      }
+   ],
+   "panels": [
+      {
+         "collapse": false,
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
+         },
+         "id": 2,
+         "panels": [ ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Overview",
+         "titleSize": "h6",
+         "type": "row"
+      },
+      {
+         "datasource": null,
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+               },
+               "custom": {
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
+               "unit": "s"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 2,
+            "w": 4,
+            "x": 0,
+            "y": 1
+         },
+         "id": 3,
+         "links": [ ],
+         "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "textMode": "auto"
+         },
+         "pluginVersion": "9.2.4",
+         "targets": [
+            {
+               "datasource": "${DS_PROMETHEUS}",
+               "expr": "omada_controller_uptime_seconds",
+               "format": "time_series",
+               "instant": true,
+               "intervalFactor": null,
+               "legendFormat": "",
+               "refId": "A"
+            }
+         ],
+         "title": "Controller Uptime",
+         "type": "stat"
+      },
+      {
+         "datasource": null,
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+               },
+               "custom": {
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               }
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 2,
+            "w": 4,
+            "x": 4,
+            "y": 1
+         },
+         "id": 4,
+         "links": [ ],
+         "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "textMode": "auto"
+         },
+         "pluginVersion": "9.2.4",
+         "targets": [
+            {
+               "datasource": "${DS_PROMETHEUS}",
+               "expr": "omada_client_connected_total",
+               "format": "time_series",
+               "instant": true,
+               "intervalFactor": null,
+               "legendFormat": "",
+               "refId": "A"
+            }
+         ],
+         "title": "Connected Clients",
+         "type": "stat"
+      },
+      {
+         "datasource": null,
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+               },
+               "custom": {
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               }
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 2,
+            "w": 4,
+            "x": 8,
+            "y": 1
+         },
+         "id": 5,
+         "links": [ ],
+         "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "textMode": "auto"
+         },
+         "pluginVersion": "9.2.4",
+         "targets": [
+            {
+               "datasource": "${DS_PROMETHEUS}",
+               "expr": "count(omada_client_signal_dbm{wifi_mode=\"5\"})",
+               "format": "time_series",
+               "instant": true,
+               "intervalFactor": null,
+               "legendFormat": "",
+               "refId": "A"
+            }
+         ],
+         "title": "Clients on 5GHz",
+         "type": "stat"
+      },
+      {
+         "datasource": null,
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+               },
+               "custom": {
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               }
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 2,
+            "w": 4,
+            "x": 12,
+            "y": 1
+         },
+         "id": 6,
+         "links": [ ],
+         "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "textMode": "auto"
+         },
+         "pluginVersion": "9.2.4",
+         "targets": [
+            {
+               "datasource": "${DS_PROMETHEUS}",
+               "expr": "count(omada_client_signal_dbm{wifi_mode=\"4\"}) + count(omada_client_signal_dbm{wifi_mode=\"2\"})",
+               "format": "time_series",
+               "instant": true,
+               "intervalFactor": null,
+               "legendFormat": "",
+               "refId": "A"
+            }
+         ],
+         "title": "Clients on 2.4GHz",
+         "type": "stat"
+      },
+      {
+         "datasource": null,
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+               },
+               "custom": {
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
+               "unit": "binBps"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 2,
+            "w": 4,
+            "x": 16,
+            "y": 1
+         },
+         "id": 7,
+         "links": [ ],
+         "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "textMode": "auto"
+         },
+         "pluginVersion": "9.2.4",
+         "targets": [
+            {
+               "datasource": "${DS_PROMETHEUS}",
+               "expr": "sum(omada_device_rx_rate)",
+               "format": "time_series",
+               "instant": true,
+               "intervalFactor": null,
+               "legendFormat": "",
+               "refId": "A"
+            }
+         ],
+         "title": "Current Receive Rate",
+         "type": "stat"
+      },
+      {
+         "datasource": null,
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+               },
+               "custom": {
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
+               "unit": "binBps"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 2,
+            "w": 4,
+            "x": 20,
+            "y": 1
+         },
+         "id": 8,
+         "links": [ ],
+         "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "textMode": "auto"
+         },
+         "pluginVersion": "9.2.4",
+         "targets": [
+            {
+               "datasource": "${DS_PROMETHEUS}",
+               "expr": "sum(omada_device_tx_rate)",
+               "format": "time_series",
+               "instant": true,
+               "intervalFactor": null,
+               "legendFormat": "",
+               "refId": "A"
+            }
+         ],
+         "title": "Current Transmit Rate",
+         "type": "stat"
+      },
+      {
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "axisCenteredZero": false,
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineStyle": {
+                     "fill": "solid"
+                  },
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                     "group": "A",
+                     "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
+               "unit": "binBps"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 3
+         },
+         "id": 9,
+         "links": [ ],
+         "options": {
+            "legend": {
+               "calcs": [ ],
+               "displayMode": "list",
+               "placement": "right"
+            },
+            "tooltip": {
+               "mode": "single",
+               "sort": "none"
+            }
+         },
+         "targets": [
+            {
+               "datasource": "${DS_PROMETHEUS}",
+               "expr": "sum by (client, ip) (omada_client_download_activity_bytes) > 0",
+               "format": "time_series",
+               "intervalFactor": 2,
+               "legendFormat": "{{client}} - {{ip}}",
+               "refId": "A"
+            }
+         ],
+         "title": "Client Download Activity",
+         "type": "timeseries"
+      },
+      {
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "axisCenteredZero": false,
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 0,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineStyle": {
+                     "fill": "solid"
+                  },
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                     "group": "A",
+                     "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
+               "unit": "dBm"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 11
+         },
+         "id": 10,
+         "links": [ ],
+         "options": {
+            "legend": {
+               "calcs": [ ],
+               "displayMode": "list",
+               "placement": "right"
+            },
+            "tooltip": {
+               "mode": "single",
+               "sort": "none"
+            }
+         },
+         "targets": [
+            {
+               "datasource": "${DS_PROMETHEUS}",
+               "expr": "sum by (client, ip) (omada_client_signal_dbm)",
+               "format": "time_series",
+               "intervalFactor": 2,
+               "legendFormat": "{{client}} - {{ip}}",
+               "refId": "A"
+            }
+         ],
+         "title": "Client Signal Strength",
+         "type": "timeseries"
+      },
+      {
+         "collapse": true,
+         "collapsed": true,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 19
+         },
+         "id": 11,
+         "panels": [
+            {
+               "datasource": null,
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "fixedColor": "text",
+                        "mode": "fixed"
+                     },
+                     "custom": {
+                        "thresholdsStyle": {
+                           "mode": "off"
+                        }
+                     },
+                     "mappings": [ ],
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     }
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 2,
+                  "w": 4,
+                  "x": 0,
+                  "y": 20
+               },
+               "id": 12,
+               "links": [ ],
+               "options": {
+                  "colorMode": "value",
+                  "graphMode": "none",
+                  "justifyMode": "auto",
+                  "orientation": "auto",
+                  "reduceOptions": {
+                     "calcs": [
+                        "lastNotNull"
+                     ],
+                     "fields": "/^mac$/",
+                     "values": false
+                  },
+                  "textMode": "auto"
+               },
+               "pluginVersion": "9.2.4",
+               "targets": [
+                  {
+                     "datasource": "${DS_PROMETHEUS}",
+                     "expr": "omada_device_need_upgrade{device=\"$device\"}",
+                     "format": "table",
+                     "instant": true,
+                     "intervalFactor": null,
+                     "legendFormat": "",
+                     "refId": "A"
+                  }
+               ],
+               "title": "Device MAC Address",
+               "type": "stat"
+            },
+            {
+               "datasource": null,
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "fixedColor": "text",
+                        "mode": "fixed"
+                     },
+                     "custom": {
+                        "thresholdsStyle": {
+                           "mode": "off"
+                        }
+                     },
+                     "mappings": [ ],
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
+                     "unit": "s"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 2,
+                  "w": 4,
+                  "x": 4,
+                  "y": 20
+               },
+               "id": 13,
+               "links": [ ],
+               "options": {
+                  "colorMode": "value",
+                  "graphMode": "none",
+                  "justifyMode": "auto",
+                  "orientation": "auto",
+                  "reduceOptions": {
+                     "calcs": [
+                        "lastNotNull"
+                     ],
+                     "fields": "",
+                     "values": false
+                  },
+                  "textMode": "auto"
+               },
+               "pluginVersion": "9.2.4",
+               "targets": [
+                  {
+                     "datasource": "${DS_PROMETHEUS}",
+                     "expr": "omada_device_uptime_seconds{device=\"$device\"}",
+                     "format": "time_series",
+                     "instant": true,
+                     "intervalFactor": null,
+                     "legendFormat": "",
+                     "refId": "A"
+                  }
+               ],
+               "title": "Device Uptime",
+               "type": "stat"
+            },
+            {
+               "datasource": null,
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "fixedColor": "text",
+                        "mode": "fixed"
+                     },
+                     "custom": {
+                        "thresholdsStyle": {
+                           "mode": "off"
+                        }
+                     },
+                     "mappings": [ ],
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     }
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 2,
+                  "w": 4,
+                  "x": 8,
+                  "y": 20
+               },
+               "id": 14,
+               "links": [ ],
+               "options": {
+                  "colorMode": "value",
+                  "graphMode": "none",
+                  "justifyMode": "auto",
+                  "orientation": "auto",
+                  "reduceOptions": {
+                     "calcs": [
+                        "lastNotNull"
+                     ],
+                     "fields": "",
+                     "values": false
+                  },
+                  "textMode": "auto"
+               },
+               "pluginVersion": "9.2.4",
+               "targets": [
+                  {
+                     "datasource": "${DS_PROMETHEUS}",
+                     "expr": "count(omada_client_signal_dbm{ap_name=\"$device\"})",
+                     "format": "time_series",
+                     "instant": true,
+                     "intervalFactor": null,
+                     "legendFormat": "",
+                     "refId": "A"
+                  }
+               ],
+               "title": "Connected Clients",
+               "type": "stat"
+            },
+            {
+               "datasource": null,
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "fixedColor": "text",
+                        "mode": "fixed"
+                     },
+                     "custom": {
+                        "thresholdsStyle": {
+                           "mode": "off"
+                        }
+                     },
+                     "mappings": [ ],
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     }
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 2,
+                  "w": 4,
+                  "x": 12,
+                  "y": 20
+               },
+               "id": 15,
+               "links": [ ],
+               "options": {
+                  "colorMode": "value",
+                  "graphMode": "none",
+                  "justifyMode": "auto",
+                  "orientation": "auto",
+                  "reduceOptions": {
+                     "calcs": [
+                        "lastNotNull"
+                     ],
+                     "fields": "",
+                     "values": false
+                  },
+                  "textMode": "auto"
+               },
+               "pluginVersion": "9.2.4",
+               "targets": [
+                  {
+                     "datasource": "${DS_PROMETHEUS}",
+                     "expr": "count(omada_client_signal_dbm{ap_name=\"$device\",wifi_mode=\"5\"})",
+                     "format": "time_series",
+                     "instant": true,
+                     "intervalFactor": null,
+                     "legendFormat": "",
+                     "refId": "A"
+                  }
+               ],
+               "title": "Clients on 5GHz",
+               "type": "stat"
+            },
+            {
+               "datasource": null,
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "fixedColor": "text",
+                        "mode": "fixed"
+                     },
+                     "custom": {
+                        "thresholdsStyle": {
+                           "mode": "off"
+                        }
+                     },
+                     "mappings": [ ],
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     }
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 2,
+                  "w": 4,
+                  "x": 16,
+                  "y": 20
+               },
+               "id": 16,
+               "links": [ ],
+               "options": {
+                  "colorMode": "value",
+                  "graphMode": "none",
+                  "justifyMode": "auto",
+                  "orientation": "auto",
+                  "reduceOptions": {
+                     "calcs": [
+                        "lastNotNull"
+                     ],
+                     "fields": "",
+                     "values": false
+                  },
+                  "textMode": "auto"
+               },
+               "pluginVersion": "9.2.4",
+               "targets": [
+                  {
+                     "datasource": "${DS_PROMETHEUS}",
+                     "expr": "count(omada_client_signal_dbm{ap_name=\"$device\",wifi_mode=\"4\"}) + count(omada_client_signal_dbm{ap_name=\"$device\",wifi_mode=\"2\"})",
+                     "format": "time_series",
+                     "instant": true,
+                     "intervalFactor": null,
+                     "legendFormat": "",
+                     "refId": "A"
+                  }
+               ],
+               "title": "Clients on 2.4GHz",
+               "type": "stat"
+            },
+            {
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "palette-classic"
+                     },
+                     "custom": {
+                        "axisCenteredZero": false,
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                           "legend": false,
+                           "tooltip": false,
+                           "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineStyle": {
+                           "fill": "solid"
+                        },
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                           "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                           "mode": "off"
+                        }
+                     },
+                     "mappings": [ ],
+                     "max": 100,
+                     "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
+                     "unit": "percent"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 0,
+                  "y": 22
+               },
+               "id": 17,
+               "links": [ ],
+               "options": {
+                  "legend": {
+                     "calcs": [ ],
+                     "displayMode": "hidden",
+                     "placement": "bottom"
+                  },
+                  "tooltip": {
+                     "mode": "single",
+                     "sort": "none"
+                  }
+               },
+               "targets": [
+                  {
+                     "datasource": "${DS_PROMETHEUS}",
+                     "expr": "omada_device_cpu_percentage{device=\"$device\"}",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{device}}",
+                     "refId": "A"
+                  }
+               ],
+               "title": "CPU Usage",
+               "type": "timeseries"
+            },
+            {
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "palette-classic"
+                     },
+                     "custom": {
+                        "axisCenteredZero": false,
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                           "legend": false,
+                           "tooltip": false,
+                           "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineStyle": {
+                           "fill": "solid"
+                        },
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                           "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                           "mode": "off"
+                        }
+                     },
+                     "mappings": [ ],
+                     "max": 100,
+                     "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
+                     "unit": "percent"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 12,
+                  "y": 22
+               },
+               "id": 18,
+               "links": [ ],
+               "options": {
+                  "legend": {
+                     "calcs": [ ],
+                     "displayMode": "hidden",
+                     "placement": "bottom"
+                  },
+                  "tooltip": {
+                     "mode": "single",
+                     "sort": "none"
+                  }
+               },
+               "targets": [
+                  {
+                     "datasource": "${DS_PROMETHEUS}",
+                     "expr": "omada_device_mem_percentage{device=\"$device\"}",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{device}}",
+                     "refId": "A"
+                  }
+               ],
+               "title": "Memory Usage",
+               "type": "timeseries"
+            },
+            {
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "palette-classic"
+                     },
+                     "custom": {
+                        "axisCenteredZero": false,
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                           "legend": false,
+                           "tooltip": false,
+                           "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineStyle": {
+                           "fill": "solid"
+                        },
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                           "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                           "mode": "off"
+                        }
+                     },
+                     "mappings": [ ],
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
+                     "unit": "binBps"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 0,
+                  "y": 30
+               },
+               "id": 19,
+               "links": [ ],
+               "options": {
+                  "legend": {
+                     "calcs": [ ],
+                     "displayMode": "list",
+                     "placement": "right"
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "none"
+                  }
+               },
+               "targets": [
+                  {
+                     "datasource": "${DS_PROMETHEUS}",
+                     "expr": "omada_device_rx_rate{device=\"$device\"}",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{device}} receive",
+                     "refId": "A"
+                  },
+                  {
+                     "datasource": "${DS_PROMETHEUS}",
+                     "expr": "-omada_device_tx_rate{device=\"$device\"}",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{device}} transmit",
+                     "refId": "B"
+                  }
+               ],
+               "title": "Network Traffic",
+               "type": "timeseries"
+            },
+            {
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "palette-classic"
+                     },
+                     "custom": {
+                        "axisCenteredZero": false,
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                           "legend": false,
+                           "tooltip": false,
+                           "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineStyle": {
+                           "fill": "solid"
+                        },
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                           "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                           "mode": "off"
+                        }
+                     },
+                     "mappings": [ ],
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
+                     "unit": "dBm"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 12,
+                  "y": 30
+               },
+               "id": 20,
+               "links": [ ],
+               "options": {
+                  "legend": {
+                     "calcs": [ ],
+                     "displayMode": "list",
+                     "placement": "right"
+                  },
+                  "tooltip": {
+                     "mode": "single",
+                     "sort": "none"
+                  }
+               },
+               "targets": [
+                  {
+                     "datasource": "${DS_PROMETHEUS}",
+                     "expr": "sum by (client, ip) (omada_client_signal_dbm{ap_name=\"$device\"})",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{client}} - {{ip}}",
+                     "refId": "A"
+                  }
+               ],
+               "title": "Client Signal Strength",
+               "type": "timeseries"
+            }
+         ],
+         "repeat": "device",
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "$device",
+         "titleSize": "h6",
+         "type": "row"
+      }
+   ],
+   "refresh": "5s",
+   "rows": [ ],
+   "schemaVersion": 0,
+   "style": "dark",
+   "tags": [
+      "generated",
+      "omada-exporter"
+   ],
+   "templating": {
+      "list": [
+         {
+            "allValue": null,
+            "current": { },
+            "datasource": "${DS_PROMETHEUS}",
+            "hide": 2,
+            "includeAll": true,
+            "label": null,
+            "multi": false,
+            "name": "device",
+            "options": [ ],
+            "query": "omada_device_need_upgrade",
+            "refresh": 1,
+            "regex": "device_type=\"(?<text>[^\"]+)|device=\"(?<value>[^\"]+).*",
+            "sort": 0,
+            "tagValuesQuery": "",
+            "tags": [ ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+         }
+      ]
+   },
+   "time": {
+      "from": "now-6h",
+      "to": "now"
+   },
+   "timepicker": {
+      "refresh_intervals": [
+         "5s",
+         "10s",
+         "30s",
+         "1m",
+         "5m",
+         "15m",
+         "30m",
+         "1h",
+         "2h",
+         "1d"
+      ],
+      "time_options": [
+         "5m",
+         "15m",
+         "1h",
+         "6h",
+         "12h",
+         "24h",
+         "2d",
+         "7d",
+         "30d"
+      ]
+   },
+   "timezone": "browser",
+   "title": "Omada Controller Overview",
+   "uid": "omada-controller",
+   "version": 0
+}

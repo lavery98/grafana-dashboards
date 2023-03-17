@@ -7,15 +7,16 @@ Where Jsonnet is used, [Grafonnet](https://github.com/rhowe/grafonnet-lib) is us
 They can be imported into Grafana by clicking Import and pasting the JSON into the box. For all the data to appear you will also need to use the right exporter for each dashboard and use the [text collector scripts](https://github.com/lavery98/text-collectors).
 
 ## Available dashbords
-| Dashboard            | Status    | Changes |
-| -------------------- | --------- | ------- |
+| Dashboard                  | Status    | Changes |
+| -------------------------- | --------- | ------- |
 | [Bind9 Exporter DNS](https://grafana.com/grafana/dashboards/12309-bind9-exporter-dns/) | modified | Removed the queries row and added a zone row and converted to jsonnet |
-| Blackbox Exporter Quick Overview | generated |         |
-| Node exporter        |           |         |
-| Smart Status         | generated |         |
-| SNMP Interface Status | generated |         |
-| Unbound stats        |           |         |
-| UPS Status           | generated |         |
+| Blackbox Exporter Overview | generated |         |
+| Node exporter              |           |         |
+| Omada Controller Overview  | generated |         |
+| Smart Status               | generated |         |
+| SNMP Interface Status      | generated |         |
+| Unbound stats              |           |         |
+| UPS Status                 | generated |         |
 
 ## Updating dashboards
 Dashboards that do not have a corresponding Jsonnet can be refreshed in this repository by:
