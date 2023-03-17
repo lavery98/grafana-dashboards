@@ -12,6 +12,7 @@ They can be imported into Grafana by clicking Import and pasting the JSON into t
 | [Bind9 Exporter DNS](https://grafana.com/grafana/dashboards/12309-bind9-exporter-dns/) | modified | Removed the queries row and added a zone row and converted to jsonnet |
 | Node exporter        |           |         |
 | Smart Status         | generated |         |
+| SNMP Interface Status | generated |         |
 | Unbound stats        |           |         |
 | UPS Status           | generated |         |
 
