@@ -273,7 +273,7 @@
          "targets": [
             {
                "datasource": "${DS_PROMETHEUS}",
-               "expr": "count(omada_client_signal_dbm{wifi_mode=\"4\"}) + count(omada_client_signal_dbm{wifi_mode=\"2\"})",
+               "expr": "count(omada_client_signal_dbm{wifi_mode=\"4\"} or omada_client_signal_dbm{wifi_mode=\"2\"})",
                "format": "time_series",
                "instant": true,
                "intervalFactor": null,
@@ -851,7 +851,7 @@
                "targets": [
                   {
                      "datasource": "${DS_PROMETHEUS}",
-                     "expr": "count(omada_client_signal_dbm{ap_name=\"$device\",wifi_mode=\"4\"}) + count(omada_client_signal_dbm{ap_name=\"$device\",wifi_mode=\"2\"})",
+                     "expr": "count(omada_client_signal_dbm{ap_name=\"$device\",wifi_mode=\"4\"} or omada_client_signal_dbm{ap_name=\"$device\",wifi_mode=\"2\"})",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": null,

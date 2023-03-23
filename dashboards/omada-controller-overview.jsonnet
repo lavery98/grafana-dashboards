@@ -93,7 +93,7 @@ grafana.dashboard.new(
     sparkLines=false
   ).addTarget(
     grafana.prometheus.target(
-      'count(omada_client_signal_dbm{wifi_mode="4"}) + count(omada_client_signal_dbm{wifi_mode="2"})',
+      'count(omada_client_signal_dbm{wifi_mode="4"} or omada_client_signal_dbm{wifi_mode="2"})',
       datasource=datasourceToUse,
       intervalFactor=null,
       instant=true
@@ -234,7 +234,7 @@ grafana.dashboard.new(
       sparkLines=false
     ).addTarget(
       grafana.prometheus.target(
-        'count(omada_client_signal_dbm{ap_name="$device",wifi_mode="4"}) + count(omada_client_signal_dbm{ap_name="$device",wifi_mode="2"})',
+        'count(omada_client_signal_dbm{ap_name="$device",wifi_mode="4"} or omada_client_signal_dbm{ap_name="$device",wifi_mode="2"})',
         datasource=datasourceToUse,
         intervalFactor=null,
         instant=true
