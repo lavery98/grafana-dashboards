@@ -56,6 +56,7 @@ grafana.dashboard.new(
           ).addTarget(
             grafana.prometheus.target(
               'node_ipmi_speed_rpm{instance="$node", job="$job"}',
+              datasource='${DS_PROMETHEUS}',
               intervalFactor=1,
               legendFormat='{{sensor}}'
             )
@@ -76,12 +77,28 @@ grafana.dashboard.new(
           ).addTarget(
             grafana.prometheus.target(
               'node_ipmi_volts{instance="$node", job="$job"}',
+              datasource='${DS_PROMETHEUS}',
               intervalFactor=1,
               legendFormat='{{sensor}}'
             )
           ) + {
             gridPos: { x: 12, y: 53, w: 12, h: 10 },
           },
+        ],
+      },
+    ] else if id == 270 then [
+      panel {
+        panels: [
+          x {
+            targets: [
+              t {
+                expr: t.expr + ' * on (device) group_left(name) node_lvm_name{instance="$node",job="$job"} or on (device) label_replace(' + t.expr + ', "name", "$1", "device", "(.*)")',
+                legendFormat: std.strReplace(t.legendFormat, '{{device}}', '{{name}}')
+              }
+              for t in x.targets
+            ],
+          }
+          for x in panel.panels
         ],
       },
     ] else [
