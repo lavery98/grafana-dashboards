@@ -14,6 +14,7 @@ They can be imported into Grafana by clicking Import and pasting the JSON into t
 | Docker Overview            | generated |         |
 | Node exporter              |           |         |
 | Omada Controller Overview  | generated |         |
+| Power Usage Overview       | generated |         |
 | Smart Status               | generated |         |
 | SNMP Interface Status      | generated |         |
 | Unbound stats              |           |         |
