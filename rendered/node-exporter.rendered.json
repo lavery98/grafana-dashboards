@@ -18547,6 +18547,199 @@
          "type": "row"
       },
       {
+         "collapse": true,
+         "collapsed": true,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 29
+         },
+         "id": 93,
+         "panels": [
+            {
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "palette-classic"
+                     },
+                     "custom": {
+                        "axisCenteredZero": false,
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 20,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                           "legend": false,
+                           "tooltip": false,
+                           "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineStyle": {
+                           "fill": "solid"
+                        },
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                           "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                           "mode": "off"
+                        }
+                     },
+                     "mappings": [ ],
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
+                     "unit": "percent"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 10,
+                  "w": 12,
+                  "x": 0,
+                  "y": 30
+               },
+               "id": 94,
+               "links": [ ],
+               "options": {
+                  "legend": {
+                     "calcs": [ ],
+                     "displayMode": "list",
+                     "placement": "bottom"
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "none"
+                  }
+               },
+               "targets": [
+                  {
+                     "datasource": "${DS_PROMETHEUS}",
+                     "expr": "100 - ((node_physical_volume_free{instance=\"$node\",job=\"$job\"} * 100) / node_physical_volume_size{instance=\"$node\",job=\"$job\"})",
+                     "format": "time_series",
+                     "intervalFactor": 1,
+                     "legendFormat": "{{name}}",
+                     "refId": "A"
+                  }
+               ],
+               "title": "Physical Disk Space Used",
+               "type": "timeseries"
+            },
+            {
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "palette-classic"
+                     },
+                     "custom": {
+                        "axisCenteredZero": false,
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 20,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                           "legend": false,
+                           "tooltip": false,
+                           "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineStyle": {
+                           "fill": "solid"
+                        },
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                           "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "normal"
+                        },
+                        "thresholdsStyle": {
+                           "mode": "off"
+                        }
+                     },
+                     "mappings": [ ],
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
+                     "unit": "bytes"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 10,
+                  "w": 12,
+                  "x": 12,
+                  "y": 30
+               },
+               "id": 95,
+               "links": [ ],
+               "options": {
+                  "legend": {
+                     "calcs": [
+                        "mean",
+                        "lastNotNull",
+                        "max",
+                        "min"
+                     ],
+                     "displayMode": "table",
+                     "placement": "bottom"
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "none"
+                  }
+               },
+               "repeat": "volume_group",
+               "repeatDirection": "h",
+               "targets": [
+                  {
+                     "datasource": "${DS_PROMETHEUS}",
+                     "expr": "node_volume_group_free{instance=\"$node\", job=\"$job\", name=\"$volume_group\"}",
+                     "format": "time_series",
+                     "intervalFactor": 1,
+                     "legendFormat": "free",
+                     "refId": "A"
+                  },
+                  {
+                     "datasource": "${DS_PROMETHEUS}",
+                     "expr": "node_logical_volume_size{instance=\"$node\", job=\"$job\", vgroup=\"$volume_group\"}",
+                     "format": "time_series",
+                     "intervalFactor": 1,
+                     "legendFormat": "{{name}}",
+                     "refId": "B"
+                  }
+               ],
+               "title": "Logical Volume Usage for $volume_group",
+               "type": "timeseries"
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Storage LVM",
+         "titleSize": "h6",
+         "type": "row"
+      },
+      {
          "collapsed": true,
          "datasource": {
             "type": "prometheus",
@@ -18558,7 +18751,7 @@
             "x": 0,
             "y": 30
          },
-         "id": 93,
+         "id": 96,
          "panels": [
             {
                "datasource": {
@@ -18698,7 +18891,7 @@
                   "x": 0,
                   "y": 31
                },
-               "id": 94,
+               "id": 97,
                "links": [ ],
                "options": {
                   "legend": {
@@ -18828,7 +19021,7 @@
                   "x": 12,
                   "y": 31
                },
-               "id": 95,
+               "id": 98,
                "links": [ ],
                "options": {
                   "legend": {
@@ -18956,7 +19149,7 @@
                   "x": 0,
                   "y": 41
                },
-               "id": 96,
+               "id": 99,
                "links": [ ],
                "options": {
                   "legend": {
@@ -19084,7 +19277,7 @@
                   "x": 12,
                   "y": 41
                },
-               "id": 97,
+               "id": 100,
                "links": [ ],
                "options": {
                   "legend": {
@@ -19212,7 +19405,7 @@
                   "x": 0,
                   "y": 51
                },
-               "id": 98,
+               "id": 101,
                "links": [ ],
                "options": {
                   "legend": {
@@ -19328,7 +19521,7 @@
                   "x": 12,
                   "y": 51
                },
-               "id": 99,
+               "id": 102,
                "links": [ ],
                "options": {
                   "legend": {
@@ -19456,7 +19649,7 @@
                   "x": 0,
                   "y": 61
                },
-               "id": 100,
+               "id": 103,
                "links": [ ],
                "options": {
                   "legend": {
@@ -19560,7 +19753,7 @@
                   "x": 12,
                   "y": 61
                },
-               "id": 101,
+               "id": 104,
                "links": [ ],
                "options": {
                   "legend": {
@@ -19676,7 +19869,7 @@
                   "x": 0,
                   "y": 71
                },
-               "id": 102,
+               "id": 105,
                "links": [ ],
                "options": {
                   "legend": {
@@ -19800,7 +19993,7 @@
                   "x": 12,
                   "y": 71
                },
-               "id": 103,
+               "id": 106,
                "links": [ ],
                "options": {
                   "legend": {
@@ -19915,7 +20108,7 @@
                   "x": 0,
                   "y": 81
                },
-               "id": 104,
+               "id": 107,
                "links": [ ],
                "options": {
                   "legend": {
@@ -20019,7 +20212,7 @@
                   "x": 12,
                   "y": 81
                },
-               "id": 105,
+               "id": 108,
                "links": [ ],
                "options": {
                   "legend": {
@@ -20123,7 +20316,7 @@
                   "x": 0,
                   "y": 91
                },
-               "id": 106,
+               "id": 109,
                "links": [ ],
                "options": {
                   "legend": {
@@ -20227,7 +20420,7 @@
                   "x": 12,
                   "y": 91
                },
-               "id": 107,
+               "id": 110,
                "links": [ ],
                "options": {
                   "legend": {
@@ -20342,7 +20535,7 @@
                   "x": 0,
                   "y": 101
                },
-               "id": 108,
+               "id": 111,
                "links": [ ],
                "options": {
                   "legend": {
@@ -20459,7 +20652,7 @@
                   "x": 12,
                   "y": 101
                },
-               "id": 109,
+               "id": 112,
                "links": [ ],
                "options": {
                   "legend": {
@@ -20563,7 +20756,7 @@
                   "x": 0,
                   "y": 111
                },
-               "id": 110,
+               "id": 113,
                "links": [ ],
                "options": {
                   "legend": {
@@ -20637,7 +20830,7 @@
             "x": 0,
             "y": 31
          },
-         "id": 111,
+         "id": 114,
          "panels": [
             {
                "datasource": {
@@ -20705,7 +20898,7 @@
                   "x": 0,
                   "y": 32
                },
-               "id": 112,
+               "id": 115,
                "links": [ ],
                "options": {
                   "legend": {
@@ -20863,7 +21056,7 @@
                   "x": 12,
                   "y": 32
                },
-               "id": 113,
+               "id": 116,
                "links": [ ],
                "options": {
                   "legend": {
@@ -20994,7 +21187,7 @@
                   "x": 0,
                   "y": 42
                },
-               "id": 114,
+               "id": 117,
                "links": [ ],
                "options": {
                   "legend": {
@@ -21112,7 +21305,7 @@
                   "x": 12,
                   "y": 42
                },
-               "id": 115,
+               "id": 118,
                "links": [ ],
                "options": {
                   "legend": {
@@ -21241,7 +21434,7 @@
                   "x": 0,
                   "y": 52
                },
-               "id": 116,
+               "id": 119,
                "links": [ ],
                "options": {
                   "legend": {
@@ -21305,7 +21498,7 @@
             "x": 0,
             "y": 32
          },
-         "id": 117,
+         "id": 120,
          "panels": [
             {
                "datasource": {
@@ -21385,7 +21578,7 @@
                   "x": 0,
                   "y": 33
                },
-               "id": 118,
+               "id": 121,
                "links": [ ],
                "options": {
                   "legend": {
@@ -21502,7 +21695,7 @@
                   "x": 12,
                   "y": 33
                },
-               "id": 119,
+               "id": 122,
                "links": [ ],
                "options": {
                   "legend": {
@@ -21619,7 +21812,7 @@
                   "x": 0,
                   "y": 43
                },
-               "id": 120,
+               "id": 123,
                "links": [ ],
                "options": {
                   "legend": {
@@ -21748,7 +21941,7 @@
                   "x": 12,
                   "y": 43
                },
-               "id": 121,
+               "id": 124,
                "links": [ ],
                "options": {
                   "legend": {
@@ -21876,7 +22069,7 @@
                   "x": 0,
                   "y": 53
                },
-               "id": 122,
+               "id": 125,
                "links": [ ],
                "options": {
                   "legend": {
@@ -21992,7 +22185,7 @@
                   "x": 12,
                   "y": 53
                },
-               "id": 123,
+               "id": 126,
                "links": [ ],
                "options": {
                   "legend": {
@@ -22169,7 +22362,7 @@
                   "x": 0,
                   "y": 63
                },
-               "id": 124,
+               "id": 127,
                "links": [ ],
                "options": {
                   "legend": {
@@ -22288,7 +22481,7 @@
                   "x": 12,
                   "y": 63
                },
-               "id": 125,
+               "id": 128,
                "links": [ ],
                "options": {
                   "legend": {
@@ -22470,7 +22663,7 @@
                   "x": 0,
                   "y": 73
                },
-               "id": 126,
+               "id": 129,
                "links": [ ],
                "options": {
                   "legend": {
@@ -22602,7 +22795,7 @@
                   "x": 12,
                   "y": 73
                },
-               "id": 127,
+               "id": 130,
                "links": [ ],
                "options": {
                   "legend": {
@@ -22735,7 +22928,7 @@
                   "x": 0,
                   "y": 83
                },
-               "id": 128,
+               "id": 131,
                "links": [ ],
                "options": {
                   "legend": {
@@ -22849,7 +23042,7 @@
                   "x": 12,
                   "y": 83
                },
-               "id": 129,
+               "id": 132,
                "links": [ ],
                "options": {
                   "legend": {
@@ -22962,7 +23155,7 @@
             "x": 0,
             "y": 33
          },
-         "id": 130,
+         "id": 133,
          "panels": [
             {
                "datasource": {
@@ -23029,7 +23222,7 @@
                   "x": 0,
                   "y": 50
                },
-               "id": 131,
+               "id": 134,
                "links": [ ],
                "options": {
                   "legend": {
@@ -23156,7 +23349,7 @@
                   "x": 12,
                   "y": 50
                },
-               "id": 132,
+               "id": 135,
                "links": [ ],
                "options": {
                   "legend": {
@@ -23293,6 +23486,26 @@
             "query": "[a-z]+|nvme[0-9]+n[0-9]+|mmcblk[0-9]+",
             "refresh": 0,
             "type": "custom"
+         },
+         {
+            "allValue": null,
+            "current": { },
+            "datasource": "${DS_PROMETHEUS}",
+            "hide": 2,
+            "includeAll": true,
+            "label": null,
+            "multi": true,
+            "name": "volume_group",
+            "options": [ ],
+            "query": "label_values(node_volume_group_size{job=\"$job\",instance=\"$node\"},name)",
+            "refresh": 0,
+            "regex": "",
+            "sort": 0,
+            "tagValuesQuery": "",
+            "tags": [ ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
          }
       ]
    },

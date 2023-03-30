@@ -38,6 +38,15 @@ grafana.dashboard.new(
     '[a-z]+|nvme[0-9]+n[0-9]+|mmcblk[0-9]+',
     hide='all'
   )
+).addTemplate(
+  grafana.template.new(
+    'volume_group',
+    '${DS_PROMETHEUS}',
+    'label_values(node_volume_group_size{job="$job",instance="$node"},name)',
+    hide='all',
+    includeAll=true,
+    multi=true
+  )
 ).addPanels(
   local Modify(panel) =
     local id = panel.id;
@@ -93,13 +102,62 @@ grafana.dashboard.new(
             targets: [
               t {
                 expr: t.expr + ' * on (device) group_left(name) node_lvm_name{instance="$node",job="$job"} or on (device) label_replace(' + t.expr + ', "name", "$1", "device", "(.*)")',
-                legendFormat: std.strReplace(t.legendFormat, '{{device}}', '{{name}}')
+                legendFormat: std.strReplace(t.legendFormat, '{{device}}', '{{name}}'),
               }
               for t in x.targets
             ],
           }
           for x in panel.panels
         ],
+      },
+    ] else if id == 271 then [
+      panel,
+      grafana.row.new(
+        'Storage LVM',
+        collapse=true
+      ).addPanel(
+        grafana.timeseriesPanel.new(
+          'Physical Disk Space Used',
+          fillOpacity=20,
+          tooltip='all',
+          unit='percent'
+        ).addTarget(
+          grafana.prometheus.target(
+            '100 - ((node_physical_volume_free{instance="$node",job="$job"} * 100) / node_physical_volume_size{instance="$node",job="$job"})',
+            datasource='${DS_PROMETHEUS}',
+            intervalFactor=1,
+            legendFormat='{{name}}'
+          )
+        ),
+        gridPos={ x: 0, y: 30, w: 12, h: 10 }
+      ).addPanel(
+        grafana.timeseriesPanel.new(
+          'Logical Volume Usage for $volume_group',
+          fillOpacity=20,
+          legendMode='table',
+          legendValues=['mean', 'lastNotNull', 'max', 'min'],
+          repeat='volume_group',
+          stackSeries='normal',
+          tooltip='all',
+          unit='bytes'
+        ).addTarget(
+          grafana.prometheus.target(
+            'node_volume_group_free{instance="$node", job="$job", name="$volume_group"}',
+            datasource='${DS_PROMETHEUS}',
+            intervalFactor=1,
+            legendFormat='free'
+          )
+        ).addTarget(
+          grafana.prometheus.target(
+            'node_logical_volume_size{instance="$node", job="$job", vgroup="$volume_group"}',
+            datasource='${DS_PROMETHEUS}',
+            intervalFactor=1,
+            legendFormat='{{name}}'
+          )
+        ),
+        gridPos={ x: 12, y: 30, w: 12, h: 10 }
+      ) + {
+        gridPos: { x: 0, y: 29, h: 1, w: 24 },
       },
     ] else [
       panel,
