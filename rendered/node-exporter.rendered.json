@@ -14978,9 +14978,9 @@
                         "type": "prometheus",
                         "uid": "${DS_PROMETHEUS}"
                      },
-                     "expr": "irate(node_disk_reads_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(name) node_lvm_name{instance=\"$node\",job=\"$job\"} or on (device) label_replace(irate(node_disk_reads_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]), \"name\", \"$1\", \"device\", \"(.*)\")",
+                     "expr": "irate(node_disk_reads_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(device_label) node_disk_label_info{instance=\"$node\",job=\"$job\"}",
                      "intervalFactor": 4,
-                     "legendFormat": "{{name}} - Reads completed",
+                     "legendFormat": "{{device_label}} - Reads completed",
                      "refId": "A",
                      "step": 240
                   },
@@ -14989,9 +14989,9 @@
                         "type": "prometheus",
                         "uid": "${DS_PROMETHEUS}"
                      },
-                     "expr": "irate(node_disk_writes_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(name) node_lvm_name{instance=\"$node\",job=\"$job\"} or on (device) label_replace(irate(node_disk_writes_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]), \"name\", \"$1\", \"device\", \"(.*)\")",
+                     "expr": "irate(node_disk_writes_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(device_label) node_disk_label_info{instance=\"$node\",job=\"$job\"}",
                      "intervalFactor": 1,
-                     "legendFormat": "{{name}} - Writes completed",
+                     "legendFormat": "{{device_label}} - Writes completed",
                      "refId": "B",
                      "step": 240
                   }
@@ -15403,10 +15403,10 @@
                         "type": "prometheus",
                         "uid": "${DS_PROMETHEUS}"
                      },
-                     "expr": "irate(node_disk_read_bytes_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(name) node_lvm_name{instance=\"$node\",job=\"$job\"} or on (device) label_replace(irate(node_disk_read_bytes_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]), \"name\", \"$1\", \"device\", \"(.*)\")",
+                     "expr": "irate(node_disk_read_bytes_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(device_label) node_disk_label_info{instance=\"$node\",job=\"$job\"}",
                      "format": "time_series",
                      "intervalFactor": 4,
-                     "legendFormat": "{{name}} - Read bytes",
+                     "legendFormat": "{{device_label}} - Read bytes",
                      "refId": "A",
                      "step": 240
                   },
@@ -15415,10 +15415,10 @@
                         "type": "prometheus",
                         "uid": "${DS_PROMETHEUS}"
                      },
-                     "expr": "irate(node_disk_written_bytes_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(name) node_lvm_name{instance=\"$node\",job=\"$job\"} or on (device) label_replace(irate(node_disk_written_bytes_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]), \"name\", \"$1\", \"device\", \"(.*)\")",
+                     "expr": "irate(node_disk_written_bytes_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(device_label) node_disk_label_info{instance=\"$node\",job=\"$job\"}",
                      "format": "time_series",
                      "intervalFactor": 1,
-                     "legendFormat": "{{name}} - Written bytes",
+                     "legendFormat": "{{device_label}} - Written bytes",
                      "refId": "B",
                      "step": 240
                   }
@@ -15830,11 +15830,11 @@
                         "type": "prometheus",
                         "uid": "${DS_PROMETHEUS}"
                      },
-                     "expr": "irate(node_disk_read_time_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) / irate(node_disk_reads_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(name) node_lvm_name{instance=\"$node\",job=\"$job\"} or on (device) label_replace(irate(node_disk_read_time_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) / irate(node_disk_reads_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]), \"name\", \"$1\", \"device\", \"(.*)\")",
+                     "expr": "irate(node_disk_read_time_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) / irate(node_disk_reads_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(device_label) node_disk_label_info{instance=\"$node\",job=\"$job\"}",
                      "hide": false,
                      "interval": "",
                      "intervalFactor": 4,
-                     "legendFormat": "{{name}} - Read wait time avg",
+                     "legendFormat": "{{device_label}} - Read wait time avg",
                      "refId": "A",
                      "step": 240
                   },
@@ -15843,11 +15843,11 @@
                         "type": "prometheus",
                         "uid": "${DS_PROMETHEUS}"
                      },
-                     "expr": "irate(node_disk_write_time_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) / irate(node_disk_writes_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(name) node_lvm_name{instance=\"$node\",job=\"$job\"} or on (device) label_replace(irate(node_disk_write_time_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) / irate(node_disk_writes_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]), \"name\", \"$1\", \"device\", \"(.*)\")",
+                     "expr": "irate(node_disk_write_time_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) / irate(node_disk_writes_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(device_label) node_disk_label_info{instance=\"$node\",job=\"$job\"}",
                      "hide": false,
                      "interval": "",
                      "intervalFactor": 1,
-                     "legendFormat": "{{name}} - Write wait time avg",
+                     "legendFormat": "{{device_label}} - Write wait time avg",
                      "refId": "B",
                      "step": 240
                   }
@@ -16248,10 +16248,10 @@
                         "type": "prometheus",
                         "uid": "${DS_PROMETHEUS}"
                      },
-                     "expr": "irate(node_disk_io_time_weighted_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(name) node_lvm_name{instance=\"$node\",job=\"$job\"} or on (device) label_replace(irate(node_disk_io_time_weighted_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]), \"name\", \"$1\", \"device\", \"(.*)\")",
+                     "expr": "irate(node_disk_io_time_weighted_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(device_label) node_disk_label_info{instance=\"$node\",job=\"$job\"}",
                      "interval": "",
                      "intervalFactor": 4,
-                     "legendFormat": "{{name}}",
+                     "legendFormat": "{{device_label}}",
                      "refId": "A",
                      "step": 240
                   }
@@ -16663,9 +16663,9 @@
                         "type": "prometheus",
                         "uid": "${DS_PROMETHEUS}"
                      },
-                     "expr": "irate(node_disk_reads_merged_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(name) node_lvm_name{instance=\"$node\",job=\"$job\"} or on (device) label_replace(irate(node_disk_reads_merged_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]), \"name\", \"$1\", \"device\", \"(.*)\")",
+                     "expr": "irate(node_disk_reads_merged_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(device_label) node_disk_label_info{instance=\"$node\",job=\"$job\"}",
                      "intervalFactor": 1,
-                     "legendFormat": "{{name}} - Read merged",
+                     "legendFormat": "{{device_label}} - Read merged",
                      "refId": "A",
                      "step": 240
                   },
@@ -16674,9 +16674,9 @@
                         "type": "prometheus",
                         "uid": "${DS_PROMETHEUS}"
                      },
-                     "expr": "irate(node_disk_writes_merged_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(name) node_lvm_name{instance=\"$node\",job=\"$job\"} or on (device) label_replace(irate(node_disk_writes_merged_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]), \"name\", \"$1\", \"device\", \"(.*)\")",
+                     "expr": "irate(node_disk_writes_merged_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(device_label) node_disk_label_info{instance=\"$node\",job=\"$job\"}",
                      "intervalFactor": 1,
-                     "legendFormat": "{{name}} - Write merged",
+                     "legendFormat": "{{device_label}} - Write merged",
                      "refId": "B",
                      "step": 240
                   }
@@ -17077,10 +17077,10 @@
                         "type": "prometheus",
                         "uid": "${DS_PROMETHEUS}"
                      },
-                     "expr": "irate(node_disk_io_time_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(name) node_lvm_name{instance=\"$node\",job=\"$job\"} or on (device) label_replace(irate(node_disk_io_time_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]), \"name\", \"$1\", \"device\", \"(.*)\")",
+                     "expr": "irate(node_disk_io_time_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(device_label) node_disk_label_info{instance=\"$node\",job=\"$job\"}",
                      "interval": "",
                      "intervalFactor": 4,
-                     "legendFormat": "{{name}} - IO",
+                     "legendFormat": "{{device_label}} - IO",
                      "refId": "A",
                      "step": 240
                   },
@@ -17089,10 +17089,10 @@
                         "type": "prometheus",
                         "uid": "${DS_PROMETHEUS}"
                      },
-                     "expr": "irate(node_disk_discard_time_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(name) node_lvm_name{instance=\"$node\",job=\"$job\"} or on (device) label_replace(irate(node_disk_discard_time_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]), \"name\", \"$1\", \"device\", \"(.*)\")",
+                     "expr": "irate(node_disk_discard_time_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(device_label) node_disk_label_info{instance=\"$node\",job=\"$job\"}",
                      "interval": "",
                      "intervalFactor": 4,
-                     "legendFormat": "{{name}} - discard",
+                     "legendFormat": "{{device_label}} - discard",
                      "refId": "B",
                      "step": 240
                   }
@@ -17493,10 +17493,10 @@
                         "type": "prometheus",
                         "uid": "${DS_PROMETHEUS}"
                      },
-                     "expr": "node_disk_io_now{instance=\"$node\",job=\"$job\"} * on (device) group_left(name) node_lvm_name{instance=\"$node\",job=\"$job\"} or on (device) label_replace(node_disk_io_now{instance=\"$node\",job=\"$job\"}, \"name\", \"$1\", \"device\", \"(.*)\")",
+                     "expr": "node_disk_io_now{instance=\"$node\",job=\"$job\"} * on (device) group_left(device_label) node_disk_label_info{instance=\"$node\",job=\"$job\"}",
                      "interval": "",
                      "intervalFactor": 4,
-                     "legendFormat": "{{name}} - IO now",
+                     "legendFormat": "{{device_label}} - IO now",
                      "refId": "A",
                      "step": 240
                   }
@@ -17896,10 +17896,10 @@
                         "type": "prometheus",
                         "uid": "${DS_PROMETHEUS}"
                      },
-                     "expr": "irate(node_disk_discards_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(name) node_lvm_name{instance=\"$node\",job=\"$job\"} or on (device) label_replace(irate(node_disk_discards_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]), \"name\", \"$1\", \"device\", \"(.*)\")",
+                     "expr": "irate(node_disk_discards_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(device_label) node_disk_label_info{instance=\"$node\",job=\"$job\"}",
                      "interval": "",
                      "intervalFactor": 4,
-                     "legendFormat": "{{name}} - Discards completed",
+                     "legendFormat": "{{device_label}} - Discards completed",
                      "refId": "A",
                      "step": 240
                   },
@@ -17908,10 +17908,10 @@
                         "type": "prometheus",
                         "uid": "${DS_PROMETHEUS}"
                      },
-                     "expr": "irate(node_disk_discards_merged_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(name) node_lvm_name{instance=\"$node\",job=\"$job\"} or on (device) label_replace(irate(node_disk_discards_merged_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]), \"name\", \"$1\", \"device\", \"(.*)\")",
+                     "expr": "irate(node_disk_discards_merged_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) * on (device) group_left(device_label) node_disk_label_info{instance=\"$node\",job=\"$job\"}",
                      "interval": "",
                      "intervalFactor": 1,
-                     "legendFormat": "{{name}} - Discards merged",
+                     "legendFormat": "{{device_label}} - Discards merged",
                      "refId": "B",
                      "step": 240
                   }
