@@ -101,7 +101,7 @@ grafana.dashboard.new(
           x {
             targets: [
               t {
-                expr: t.expr + ' * on (device) group_left(device_label) node_disk_label_info{instance="$node",job="$job"}',
+                expr: t.expr + ' * on (device) group_left(device_label) node_disk_label_info{instance="$node",job="$job"} or on (device) label_replace(' + t.expr + ', "device_label", "$1", "device", "(.*)")',
                 legendFormat: std.strReplace(t.legendFormat, '{{device}}', '{{device_label}}'),
               }
               for t in x.targets
