@@ -9,27 +9,38 @@ grafana.dashboard.new(
   tags=['generated', 'node-exporter'],
   graphTooltip='shared_crosshair',
   schemaVersion=0
-).addInput(
-  name='DS_PROMETHEUS',
-  label='Prometheus',
-  type='datasource',
-  pluginId='prometheus',
-  pluginName='Prometheus'
 ).addTemplate(
-  grafana.template.new(
-    'job',
-    '${DS_PROMETHEUS}',
-    'label_values(node_uname_info, job)',
-    label='Job',
-    sort=1
+  grafana.template.datasource(
+    'datasource',
+    'prometheus',
+    'Mimir'
   )
 ).addTemplate(
   grafana.template.new(
-    'node',
-    '${DS_PROMETHEUS}',
-    'label_values(node_uname_info{job="$job"}, instance)',
-    label='Host',
-    sort=1
+    'cluster',
+    '$datasource',
+    'label_values(node_exporter_build_info, cluster)',
+    allValues='.+',
+    includeAll=true,
+    multi=true,
+    sort=2
+  )
+).addTemplate(
+  grafana.template.new(
+    'namespace',
+    '$datasource',
+    'label_values(node_exporter_build_info{cluster=~"$cluster"}, namespace)',
+    allValues='.+',
+    includeAll=true,
+    multi=true,
+    sort=2
+  )
+).addTemplate(
+  grafana.template.new(
+    'host',
+    '$datasource',
+    'label_values(node_exporter_build_info{cluster=~"$cluster", namespace=~"$namespace"}, host)',
+    sort=2
   )
 ).addTemplate(
   grafana.template.custom(
@@ -38,17 +49,8 @@ grafana.dashboard.new(
     '[a-z]+|nvme[0-9]+n[0-9]+|mmcblk[0-9]+',
     hide='all'
   )
-).addTemplate(
-  grafana.template.new(
-    'volume_group',
-    '${DS_PROMETHEUS}',
-    'label_values(node_volume_group_size{job="$job",instance="$node"},name)',
-    hide='all',
-    includeAll=true,
-    multi=true
-  )
 ).addPanels(
-  local Modify(panel) =
+  /*local Modify(panel) =
     local id = panel.id;
     if id == 304 then [
       panel {
@@ -165,6 +167,126 @@ grafana.dashboard.new(
   local panels = std.flattenArrays([
     Modify(i)
     for i in nodeExporterFull.panels
+  ]);*/
+  local ModifyTarget(target) = target + {
+    datasource: {
+      type: 'prometheus',
+      uid: '${datasource}'
+    }
+  } + (
+    if std.objectHas(target, 'expr') then {
+      expr: std.strReplace(target.expr, 'instance="$node",job="$job"', 'cluster=~"$cluster",namespace=~"$namespace",host="$host"')
+    } else {}
+  );
+  local ModifyPanel(panel) = [
+    panel + {
+      datasource: {
+        type: 'prometheus',
+        uid: '${datasource}'
+      },
+      targets: [
+        ModifyTarget(t)
+        for t in panel.targets
+      ]
+    } + (
+      local id = panel.id;
+      if id == 304 then {
+        panels: [
+          panel.panels[0] + {
+            datasource: {
+              type: 'prometheus',
+              uid: '${datasource}'
+            },
+            targets: [
+              ModifyTarget(t)
+              for t in panel.panels[0].targets
+            ]
+          },
+          grafana.timeseriesPanel.new(
+            'Fan Speed',
+            axisLabel='RPM',
+            fillOpacity=20,
+            legendMode='table',
+            legendValues=['mean', 'lastNotNull', 'max', 'min'],
+            tooltip='all',
+            unit='short'
+          ).addTarget(
+            grafana.prometheus.target(
+              'node_ipmi_speed_rpm{cluster=~"$cluster",namespace=~"$namespace",host="$host"}',
+              datasource='${datasource}',
+              intervalFactor=1,
+              legendFormat='{{sensor}}'
+            )
+          ) + {
+            gridPos: { x: 12, y: 43, w: 12, h: 10 },
+          },
+          panel.panels[1] + {
+            datasource: {
+              type: 'prometheus',
+              uid: '${datasource}'
+            },
+            targets: [
+              ModifyTarget(t)
+              for t in panel.panels[1].targets
+            ],
+            gridPos: { x: 0, y: 53, w: 12, h: 10 },
+          },
+          grafana.timeseriesPanel.new(
+            'Hardware Voltages',
+            axisLabel='voltage',
+            fillOpacity=20,
+            legendMode='table',
+            legendValues=['mean', 'lastNotNull', 'max', 'min'],
+            tooltip='all',
+            unit='volt'
+          ).addTarget(
+            grafana.prometheus.target(
+              'node_ipmi_volts{cluster=~"$cluster",namespace=~"$namespace",host="$host"}',
+              datasource='${datasource}',
+              intervalFactor=1,
+              legendFormat='{{sensor}}'
+            )
+          ) + {
+            gridPos: { x: 12, y: 53, w: 12, h: 10 },
+          },
+        ]
+      } else if id == 270 then {
+        panels: [
+          p {
+            datasource: {
+              type: 'prometheus',
+              uid: '${datasource}'
+            },
+            targets: [
+              ModifyTarget(t + {
+                expr: t.expr + ' * on (device) group_left(device_label) node_disk_label_info{cluster=~"$cluster",namespace=~"$namespace",host="$host"} or on (device) label_replace(' + t.expr + ', "device_label", "$1", "device", "(.*)")',
+                legendFormat: std.strReplace(t.legendFormat, '{{device}}', '{{device_label}}'),
+              })
+              for t in p.targets
+            ]
+          }
+          for p in panel.panels
+        ]
+      } else if std.objectHas(panel, 'panels') then {
+        panels: [
+          p {
+            datasource: {
+              type: 'prometheus',
+              uid: '${datasource}'
+            },
+            targets: [
+              ModifyTarget(t)
+              for t in p.targets
+            ]
+          }
+          for p in panel.panels
+        ],
+      } else {}
+    )
+  ];
+  local modifiedPanels = std.flattenArrays([
+    ModifyPanel(p)
+    for p in nodeExporterFull.panels
   ]);
-  panels
+  modifiedPanels
 )
