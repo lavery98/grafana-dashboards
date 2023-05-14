@@ -1,14 +1,5 @@
 {
-   "__inputs": [
-      {
-         "description": "",
-         "label": "Prometheus",
-         "name": "DS_PROMETHEUS",
-         "pluginId": "prometheus",
-         "pluginName": "Prometheus",
-         "type": "datasource"
-      }
-   ],
+   "__inputs": [ ],
    "__requires": [ ],
    "annotations": {
       "list": [ ]
@@ -85,8 +76,8 @@
          "pluginVersion": "9.2.4",
          "targets": [
             {
-               "datasource": "${DS_PROMETHEUS}",
-               "expr": "sum(smartmon_device_active{instance=\"$instance\",job=\"$job\"})",
+               "datasource": "$datasource",
+               "expr": "sum(smartmon_device_active{cluster=~\"$cluster\", namespace=~\"$namespace\", host=\"$host\"})",
                "format": "time_series",
                "instant": true,
                "intervalFactor": null,
@@ -151,8 +142,8 @@
          "pluginVersion": "9.2.4",
          "targets": [
             {
-               "datasource": "${DS_PROMETHEUS}",
-               "expr": "sum(smartmon_device_smart_enabled{instance=\"$instance\",job=\"$job\"})-sum(smartmon_device_smart_healthy{instance=\"$instance\",job=\"$job\"})",
+               "datasource": "$datasource",
+               "expr": "sum(smartmon_device_smart_enabled{cluster=~\"$cluster\", namespace=~\"$namespace\", host=\"$host\"})-sum(smartmon_device_smart_healthy{cluster=~\"$cluster\", namespace=~\"$namespace\", host=\"$host\"})",
                "format": "time_series",
                "instant": true,
                "intervalFactor": null,
@@ -204,8 +195,8 @@
          "pluginVersion": "9.2.1",
          "targets": [
             {
-               "datasource": "${DS_PROMETHEUS}",
-               "expr": "smartmon_device_info{instance=\"$instance\",job=\"$job\"}",
+               "datasource": "$datasource",
+               "expr": "smartmon_device_info{cluster=~\"$cluster\", namespace=~\"$namespace\", host=\"$host\"}",
                "format": "table",
                "instant": true,
                "intervalFactor": null,
@@ -340,8 +331,8 @@
                },
                "targets": [
                   {
-                     "datasource": "${DS_PROMETHEUS}",
-                     "expr": "smartmon_attr_raw_value{name=\"temperature_celsius\",instance=\"$instance\",job=\"$job\"}",
+                     "datasource": "$datasource",
+                     "expr": "smartmon_attr_raw_value{name=\"temperature_celsius\",cluster=~\"$cluster\", namespace=~\"$namespace\", host=\"$host\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{device}} {{disk}}",
@@ -409,8 +400,8 @@
                },
                "targets": [
                   {
-                     "datasource": "${DS_PROMETHEUS}",
-                     "expr": "smartmon_attr_raw_value{name=\"power_on_hours\",instance=\"$instance\",job=\"$job\"}",
+                     "datasource": "$datasource",
+                     "expr": "smartmon_attr_raw_value{name=\"power_on_hours\",cluster=~\"$cluster\", namespace=~\"$namespace\", host=\"$host\"}",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": null,
@@ -459,8 +450,8 @@
                },
                "targets": [
                   {
-                     "datasource": "${DS_PROMETHEUS}",
-                     "expr": "smartmon_attr_raw_value{name=\"start_stop_count\",instance=\"$instance\",job=\"$job\"}",
+                     "datasource": "$datasource",
+                     "expr": "smartmon_attr_raw_value{name=\"start_stop_count\",cluster=~\"$cluster\", namespace=~\"$namespace\", host=\"$host\"}",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": null,
@@ -509,8 +500,8 @@
                },
                "targets": [
                   {
-                     "datasource": "${DS_PROMETHEUS}",
-                     "expr": "smartmon_attr_raw_value{name=\"power_cycle_count\",instance=\"$instance\",job=\"$job\"}",
+                     "datasource": "$datasource",
+                     "expr": "smartmon_attr_raw_value{name=\"power_cycle_count\",cluster=~\"$cluster\", namespace=~\"$namespace\", host=\"$host\"}",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": null,
@@ -559,8 +550,8 @@
                },
                "targets": [
                   {
-                     "datasource": "${DS_PROMETHEUS}",
-                     "expr": "smartmon_attr_raw_value{name=\"load_cycle_count\",instance=\"$instance\",job=\"$job\"}",
+                     "datasource": "$datasource",
+                     "expr": "smartmon_attr_raw_value{name=\"load_cycle_count\",cluster=~\"$cluster\", namespace=~\"$namespace\", host=\"$host\"}",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": null,
@@ -610,8 +601,8 @@
                },
                "targets": [
                   {
-                     "datasource": "${DS_PROMETHEUS}",
-                     "expr": "smartmon_attr_raw_value{name=\"total_lbas_written\",instance=\"$instance\",job=\"$job\"}*512",
+                     "datasource": "$datasource",
+                     "expr": "smartmon_attr_raw_value{name=\"total_lbas_written\",cluster=~\"$cluster\", namespace=~\"$namespace\", host=\"$host\"}*512",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": null,
@@ -656,8 +647,8 @@
                },
                "targets": [
                   {
-                     "datasource": "${DS_PROMETHEUS}",
-                     "expr": "smartmon_attr_raw_value{name=\"reallocated_event_count\",instance=\"$instance\",job=\"$job\"}",
+                     "datasource": "$datasource",
+                     "expr": "smartmon_attr_raw_value{name=\"reallocated_event_count\",cluster=~\"$cluster\", namespace=~\"$namespace\", host=\"$host\"}",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": null,
@@ -722,8 +713,8 @@
                },
                "targets": [
                   {
-                     "datasource": "${DS_PROMETHEUS}",
-                     "expr": "smartmon_attr_value{name=\"raw_read_error_rate\",instance=\"$instance\",job=\"$job\"}",
+                     "datasource": "$datasource",
+                     "expr": "smartmon_attr_value{name=\"raw_read_error_rate\",cluster=~\"$cluster\", namespace=~\"$namespace\", host=\"$host\"}",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": null,
@@ -768,8 +759,8 @@
                },
                "targets": [
                   {
-                     "datasource": "${DS_PROMETHEUS}",
-                     "expr": "smartmon_attr_value{name=\"seek_error_rate\",instance=\"$instance\",job=\"$job\"}",
+                     "datasource": "$datasource",
+                     "expr": "smartmon_attr_value{name=\"seek_error_rate\",cluster=~\"$cluster\", namespace=~\"$namespace\", host=\"$host\"}",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": null,
@@ -818,8 +809,8 @@
                },
                "targets": [
                   {
-                     "datasource": "${DS_PROMETHEUS}",
-                     "expr": "smartmon_attr_raw_value{name=\"spin_retry_count\",instance=\"$instance\",job=\"$job\"}",
+                     "datasource": "$datasource",
+                     "expr": "smartmon_attr_raw_value{name=\"spin_retry_count\",cluster=~\"$cluster\", namespace=~\"$namespace\", host=\"$host\"}",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": null,
@@ -868,8 +859,8 @@
                },
                "targets": [
                   {
-                     "datasource": "${DS_PROMETHEUS}",
-                     "expr": "smartmon_attr_raw_value{name=\"command_timeout\",instance=\"$instance\",job=\"$job\"}",
+                     "datasource": "$datasource",
+                     "expr": "smartmon_attr_raw_value{name=\"command_timeout\",cluster=~\"$cluster\", namespace=~\"$namespace\", host=\"$host\"}",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": null,
@@ -918,8 +909,8 @@
                },
                "targets": [
                   {
-                     "datasource": "${DS_PROMETHEUS}",
-                     "expr": "smartmon_attr_raw_value{name=\"current_pending_sector\",instance=\"$instance\",job=\"$job\"}",
+                     "datasource": "$datasource",
+                     "expr": "smartmon_attr_raw_value{name=\"current_pending_sector\",cluster=~\"$cluster\", namespace=~\"$namespace\", host=\"$host\"}",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": null,
@@ -968,8 +959,8 @@
                },
                "targets": [
                   {
-                     "datasource": "${DS_PROMETHEUS}",
-                     "expr": "smartmon_attr_raw_value{name=\"offline_uncorrectable\",instance=\"$instance\",job=\"$job\"}",
+                     "datasource": "$datasource",
+                     "expr": "smartmon_attr_raw_value{name=\"offline_uncorrectable\",cluster=~\"$cluster\", namespace=~\"$namespace\", host=\"$host\"}",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": null,
@@ -1018,8 +1009,8 @@
                },
                "targets": [
                   {
-                     "datasource": "${DS_PROMETHEUS}",
-                     "expr": "smartmon_attr_raw_value{name=\"reported_uncorrect\",instance=\"$instance\",job=\"$job\"}",
+                     "datasource": "$datasource",
+                     "expr": "smartmon_attr_raw_value{name=\"reported_uncorrect\",cluster=~\"$cluster\", namespace=~\"$namespace\", host=\"$host\"}",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": null,
@@ -1064,8 +1055,8 @@
                },
                "targets": [
                   {
-                     "datasource": "${DS_PROMETHEUS}",
-                     "expr": "smartmon_attr_raw_value{name=\"udma_crc_error_count\",instance=\"$instance\",job=\"$job\"}",
+                     "datasource": "$datasource",
+                     "expr": "smartmon_attr_raw_value{name=\"udma_crc_error_count\",cluster=~\"$cluster\", namespace=~\"$namespace\", host=\"$host\"}",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": null,
@@ -1096,19 +1087,53 @@
    "templating": {
       "list": [
          {
-            "allValue": null,
-            "current": { },
-            "datasource": "${DS_PROMETHEUS}",
+            "current": {
+               "text": "Mimir",
+               "value": "Mimir"
+            },
             "hide": 0,
-            "includeAll": false,
-            "label": "Job",
-            "multi": false,
-            "name": "job",
+            "label": null,
+            "name": "datasource",
             "options": [ ],
-            "query": "label_values(smartmon_device_active,job)",
+            "query": "prometheus",
+            "refresh": 1,
+            "regex": "",
+            "type": "datasource"
+         },
+         {
+            "allValue": ".+",
+            "current": { },
+            "datasource": "$datasource",
+            "hide": 0,
+            "includeAll": true,
+            "label": null,
+            "multi": true,
+            "name": "cluster",
+            "options": [ ],
+            "query": "label_values(node_exporter_build_info, cluster)",
             "refresh": 0,
             "regex": "",
-            "sort": 1,
+            "sort": 2,
+            "tagValuesQuery": "",
+            "tags": [ ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+         },
+         {
+            "allValue": ".+",
+            "current": { },
+            "datasource": "$datasource",
+            "hide": 0,
+            "includeAll": true,
+            "label": null,
+            "multi": true,
+            "name": "namespace",
+            "options": [ ],
+            "query": "label_values(node_exporter_build_info{cluster=~\"$cluster\"}, namespace)",
+            "refresh": 0,
+            "regex": "",
+            "sort": 2,
             "tagValuesQuery": "",
             "tags": [ ],
             "tagsQuery": "",
@@ -1118,17 +1143,17 @@
          {
             "allValue": null,
             "current": { },
-            "datasource": "${DS_PROMETHEUS}",
+            "datasource": "$datasource",
             "hide": 0,
             "includeAll": false,
-            "label": "Instance",
+            "label": null,
             "multi": false,
-            "name": "instance",
+            "name": "host",
             "options": [ ],
-            "query": "label_values(smartmon_device_active{job=\"$job\"},instance)",
+            "query": "label_values(node_exporter_build_info{cluster=~\"$cluster\", namespace=~\"$namespace\"}, host)",
             "refresh": 0,
             "regex": "",
-            "sort": 1,
+            "sort": 2,
             "tagValuesQuery": "",
             "tags": [ ],
             "tagsQuery": "",

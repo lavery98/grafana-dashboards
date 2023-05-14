@@ -1,34 +1,42 @@
 local grafana = import 'grafonnet/grafana.libsonnet';
 
-// Allow datasource to be easily changed for testing
-local datasourceToUse = '${DS_PROMETHEUS}';
-
 grafana.dashboard.new(
   'S.M.A.R.T Status',
   uid='smart-status',
   tags=['generated'],
   schemaVersion=0
-).addInput(
-  name='DS_PROMETHEUS',
-  label='Prometheus',
-  type='datasource',
-  pluginId='prometheus',
-  pluginName='Prometheus'
 ).addTemplate(
-  grafana.template.new(
-    name='job',
-    label='Job',
-    datasource=datasourceToUse,
-    query='label_values(smartmon_device_active,job)',
-    sort=1
+  grafana.template.datasource(
+    'datasource',
+    'prometheus',
+    'Mimir'
   )
 ).addTemplate(
   grafana.template.new(
-    name='instance',
-    label='Instance',
-    datasource=datasourceToUse,
-    query='label_values(smartmon_device_active{job="$job"},instance)',
-    sort=1
+    'cluster',
+    '$datasource',
+    'label_values(node_exporter_build_info, cluster)',
+    allValues='.+',
+    includeAll=true,
+    multi=true,
+    sort=2
+  )
+).addTemplate(
+  grafana.template.new(
+    'namespace',
+    '$datasource',
+    'label_values(node_exporter_build_info{cluster=~"$cluster"}, namespace)',
+    allValues='.+',
+    includeAll=true,
+    multi=true,
+    sort=2
+  )
+).addTemplate(
+  grafana.template.new(
+    'host',
+    '$datasource',
+    'label_values(node_exporter_build_info{cluster=~"$cluster", namespace=~"$namespace"}, host)',
+    sort=2
   )
 ).addPanel(
   grafana.row.new(
@@ -43,8 +51,8 @@ grafana.dashboard.new(
     sparkLines=false
   ).addTarget(
     grafana.prometheus.target(
-      'sum(smartmon_device_active{instance="$instance",job="$job"})',
-      datasource=datasourceToUse,
+      'sum(smartmon_device_active{cluster=~"$cluster", namespace=~"$namespace", host="$host"})',
+      datasource='$datasource',
       intervalFactor=null,
       instant=true
     )
@@ -58,8 +66,8 @@ grafana.dashboard.new(
     sparkLines=false
   ).addTarget(
     grafana.prometheus.target(
-      'sum(smartmon_device_smart_enabled{instance="$instance",job="$job"})-sum(smartmon_device_smart_healthy{instance="$instance",job="$job"})',
-      datasource=datasourceToUse,
+      'sum(smartmon_device_smart_enabled{cluster=~"$cluster", namespace=~"$namespace", host="$host"})-sum(smartmon_device_smart_healthy{cluster=~"$cluster", namespace=~"$namespace", host="$host"})',
+      datasource='$datasource',
       intervalFactor=null,
       instant=true
     )
@@ -75,8 +83,8 @@ grafana.dashboard.new(
     'Disk Drives'
   ).addTarget(
     grafana.prometheus.target(
-      'smartmon_device_info{instance="$instance",job="$job"}',
-      datasource=datasourceToUse,
+      'smartmon_device_info{cluster=~"$cluster", namespace=~"$namespace", host="$host"}',
+      datasource='$datasource',
       intervalFactor=null,
       instant=true,
       format='table'
@@ -135,8 +143,8 @@ grafana.dashboard.new(
       legendValues=['mean', 'min', 'max', 'last']
     ).addTarget(
       grafana.prometheus.target(
-        'smartmon_attr_raw_value{name="temperature_celsius",instance="$instance",job="$job"}',
-        datasource=datasourceToUse,
+        'smartmon_attr_raw_value{name="temperature_celsius",cluster=~"$cluster", namespace=~"$namespace", host="$host"}',
+        datasource='$datasource',
         legendFormat='{{device}} {{disk}}'
       )
     ),
@@ -167,8 +175,8 @@ grafana.dashboard.new(
       unit='h'
     ).addTarget(
       grafana.prometheus.target(
-        'smartmon_attr_raw_value{name="power_on_hours",instance="$instance",job="$job"}',
-        datasource=datasourceToUse,
+        'smartmon_attr_raw_value{name="power_on_hours",cluster=~"$cluster", namespace=~"$namespace", host="$host"}',
+        datasource='$datasource',
         intervalFactor=null,
         instant=true,
         legendFormat='{{device}} {{disk}}'
@@ -204,8 +212,8 @@ grafana.dashboard.new(
       ]
     ).addTarget(
       grafana.prometheus.target(
-        'smartmon_attr_raw_value{name="start_stop_count",instance="$instance",job="$job"}',
-        datasource=datasourceToUse,
+        'smartmon_attr_raw_value{name="start_stop_count",cluster=~"$cluster", namespace=~"$namespace", host="$host"}',
+        datasource='$datasource',
         intervalFactor=null,
         instant=true,
         legendFormat='{{device}} {{disk}}'
@@ -241,8 +249,8 @@ grafana.dashboard.new(
       ]
     ).addTarget(
       grafana.prometheus.target(
-        'smartmon_attr_raw_value{name="power_cycle_count",instance="$instance",job="$job"}',
-        datasource=datasourceToUse,
+        'smartmon_attr_raw_value{name="power_cycle_count",cluster=~"$cluster", namespace=~"$namespace", host="$host"}',
+        datasource='$datasource',
         intervalFactor=null,
         instant=true,
         legendFormat='{{device}} {{disk}}'
@@ -278,8 +286,8 @@ grafana.dashboard.new(
       ]
     ).addTarget(
       grafana.prometheus.target(
-        'smartmon_attr_raw_value{name="load_cycle_count",instance="$instance",job="$job"}',
-        datasource=datasourceToUse,
+        'smartmon_attr_raw_value{name="load_cycle_count",cluster=~"$cluster", namespace=~"$namespace", host="$host"}',
+        datasource='$datasource',
         intervalFactor=null,
         instant=true,
         legendFormat='{{device}} {{disk}}'
@@ -317,8 +325,8 @@ grafana.dashboard.new(
       unit='decbytes'
     ).addTarget(
       grafana.prometheus.target(
-        'smartmon_attr_raw_value{name="total_lbas_written",instance="$instance",job="$job"}*512',
-        datasource=datasourceToUse,
+        'smartmon_attr_raw_value{name="total_lbas_written",cluster=~"$cluster", namespace=~"$namespace", host="$host"}*512',
+        datasource='$datasource',
         intervalFactor=null,
         instant=true,
         legendFormat='{{device}} {{disk}}'
@@ -350,8 +358,8 @@ grafana.dashboard.new(
       ]
     ).addTarget(
       grafana.prometheus.target(
-        'smartmon_attr_raw_value{name="reallocated_event_count",instance="$instance",job="$job"}',
-        datasource=datasourceToUse,
+        'smartmon_attr_raw_value{name="reallocated_event_count",cluster=~"$cluster", namespace=~"$namespace", host="$host"}',
+        datasource='$datasource',
         intervalFactor=null,
         instant=true,
         legendFormat='{{device}} {{disk}}'
@@ -390,8 +398,8 @@ grafana.dashboard.new(
       unit='percent'
     ).addTarget(
       grafana.prometheus.target(
-        'smartmon_attr_value{name="raw_read_error_rate",instance="$instance",job="$job"}',
-        datasource=datasourceToUse,
+        'smartmon_attr_value{name="raw_read_error_rate",cluster=~"$cluster", namespace=~"$namespace", host="$host"}',
+        datasource='$datasource',
         intervalFactor=null,
         instant=true,
         legendFormat='{{device}} {{disk}}'
@@ -427,8 +435,8 @@ grafana.dashboard.new(
       ]
     ).addTarget(
       grafana.prometheus.target(
-        'smartmon_attr_value{name="seek_error_rate",instance="$instance",job="$job"}',
-        datasource=datasourceToUse,
+        'smartmon_attr_value{name="seek_error_rate",cluster=~"$cluster", namespace=~"$namespace", host="$host"}',
+        datasource='$datasource',
         intervalFactor=null,
         instant=true,
         legendFormat='{{device}} {{disk}}'
@@ -464,8 +472,8 @@ grafana.dashboard.new(
       ]
     ).addTarget(
       grafana.prometheus.target(
-        'smartmon_attr_raw_value{name="spin_retry_count",instance="$instance",job="$job"}',
-        datasource=datasourceToUse,
+        'smartmon_attr_raw_value{name="spin_retry_count",cluster=~"$cluster", namespace=~"$namespace", host="$host"}',
+        datasource='$datasource',
         intervalFactor=null,
         instant=true,
         legendFormat='{{device}} {{disk}}'
@@ -501,8 +509,8 @@ grafana.dashboard.new(
       ]
     ).addTarget(
       grafana.prometheus.target(
-        'smartmon_attr_raw_value{name="command_timeout",instance="$instance",job="$job"}',
-        datasource=datasourceToUse,
+        'smartmon_attr_raw_value{name="command_timeout",cluster=~"$cluster", namespace=~"$namespace", host="$host"}',
+        datasource='$datasource',
         intervalFactor=null,
         instant=true,
         legendFormat='{{device}} {{disk}}'
@@ -538,8 +546,8 @@ grafana.dashboard.new(
       ]
     ).addTarget(
       grafana.prometheus.target(
-        'smartmon_attr_raw_value{name="current_pending_sector",instance="$instance",job="$job"}',
-        datasource=datasourceToUse,
+        'smartmon_attr_raw_value{name="current_pending_sector",cluster=~"$cluster", namespace=~"$namespace", host="$host"}',
+        datasource='$datasource',
         intervalFactor=null,
         instant=true,
         legendFormat='{{device}} {{disk}}'
@@ -575,8 +583,8 @@ grafana.dashboard.new(
       ]
     ).addTarget(
       grafana.prometheus.target(
-        'smartmon_attr_raw_value{name="offline_uncorrectable",instance="$instance",job="$job"}',
-        datasource=datasourceToUse,
+        'smartmon_attr_raw_value{name="offline_uncorrectable",cluster=~"$cluster", namespace=~"$namespace", host="$host"}',
+        datasource='$datasource',
         intervalFactor=null,
         instant=true,
         legendFormat='{{device}} {{disk}}'
@@ -612,8 +620,8 @@ grafana.dashboard.new(
       ]
     ).addTarget(
       grafana.prometheus.target(
-        'smartmon_attr_raw_value{name="reported_uncorrect",instance="$instance",job="$job"}',
-        datasource=datasourceToUse,
+        'smartmon_attr_raw_value{name="reported_uncorrect",cluster=~"$cluster", namespace=~"$namespace", host="$host"}',
+        datasource='$datasource',
         intervalFactor=null,
         instant=true,
         legendFormat='{{device}} {{disk}}'
@@ -645,8 +653,8 @@ grafana.dashboard.new(
       ]
     ).addTarget(
       grafana.prometheus.target(
-        'smartmon_attr_raw_value{name="udma_crc_error_count",instance="$instance",job="$job"}',
-        datasource=datasourceToUse,
+        'smartmon_attr_raw_value{name="udma_crc_error_count",cluster=~"$cluster", namespace=~"$namespace", host="$host"}',
+        datasource='$datasource',
         intervalFactor=null,
         instant=true,
         legendFormat='{{device}} {{disk}}'
