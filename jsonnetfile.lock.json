@@ -4,6 +4,76 @@
     {
       "source": {
         "git": {
+          "remote": "https://github.com/crdsonnet/crdsonnet.git",
+          "subdir": "crdsonnet"
+        }
+      },
+      "version": "af14e3b8e958e1e4155d67689bd9d38cb7169698",
+      "sum": "HH+GjMwZCo65Q4SBG2M2Ezz+RekZmc783vZsXvVyPOA="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/grafonnet.git",
+          "subdir": "gen/grafonnet-latest"
+        }
+      },
+      "version": "b9624c912cb8261caedded8998a063827296eef4",
+      "sum": "FLkM01ITp3oQeY8Ndnjp3Tg1cP66X4bCIfp5bGfVm8k="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/grafonnet.git",
+          "subdir": "gen/grafonnet-v9.4.0"
+        }
+      },
+      "version": "b9624c912cb8261caedded8998a063827296eef4",
+      "sum": "sE+0tek2iu0A21LFfewIgjAJjuVLP6dK5Caw9dR0nNA="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/grafonnet.git",
+          "subdir": "grafonnet-base"
+        }
+      },
+      "version": "b9624c912cb8261caedded8998a063827296eef4",
+      "sum": "KUwJ6lO0rHEia9cLk0IhxrmSODMRL5hOlZGtMH1KgKQ="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/grok.git",
+          "subdir": "jsonnet/v9.4.0"
+        }
+      },
+      "version": "04d102b7cf9a5ecad0731aec6a484a61290ee36a",
+      "sum": "b6KSW0/Z45K0W2dF+8ZPLV32uv0ApjIsShTjk/zHEbg="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/jsonnet-libs/docsonnet.git",
+          "subdir": "doc-util"
+        }
+      },
+      "version": "ff76f6d8edde6366c6dcf81a356481b0e344566b",
+      "sum": "OxjkWDF0oHmwV52hhyoFW3bwtwgke8s/EOPNRiICPTI="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/jsonnet-libs/xtd.git",
+          "subdir": ""
+        }
+      },
+      "version": "3e494e02563b9eababbb24f0dfca0a50e03dc0b3",
+      "sum": "GP6SaIzrnD0HRw/EeI3iO9HboA2dnBizgEpxw3m7Ph4="
+    },
+    {
+      "source": {
+        "git": {
           "remote": "https://github.com/rhowe/grafonnet-lib.git",
           "subdir": "grafonnet"
         }
