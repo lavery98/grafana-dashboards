@@ -141,6 +141,28 @@ g.dashboard('UPS Status')
   + grafonnet.panel.timeSeries.gridPos.withH(8)
   + grafonnet.panel.timeSeries.gridPos.withW(6)
   + grafonnet.panel.timeSeries.gridPos.withX(18),
+
+  // New row
+  g.timeseriesPanel('UPS Input Voltage')
+  + grafonnet.panel.timeSeries.withTargets([
+    g.prometheusQuery('ups_in_voltage')
+    + grafonnet.query.prometheus.withLegendFormat('{{device}}'),
+  ])
+  + grafonnet.panel.timeSeries.fieldConfig.defaults.withUnit('watt')
+  + grafonnet.panel.timeSeries.gridPos.withH(8)
+  + grafonnet.panel.timeSeries.gridPos.withW(24)
+  + grafonnet.panel.timeSeries.gridPos.withX(0),
+
+  // New row
+  g.timeseriesPanel('UPS Output Voltage')
+  + grafonnet.panel.timeSeries.withTargets([
+    g.prometheusQuery('ups_out_voltage')
+    + grafonnet.query.prometheus.withLegendFormat('{{device}}'),
+  ])
+  + grafonnet.panel.timeSeries.fieldConfig.defaults.withUnit('watt')
+  + grafonnet.panel.timeSeries.gridPos.withH(8)
+  + grafonnet.panel.timeSeries.gridPos.withW(24)
+  + grafonnet.panel.timeSeries.gridPos.withX(0),
 ])
 
 /*g.makeGrid([
