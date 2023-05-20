@@ -19,20 +19,30 @@ local grafonnet = import 'github.com/grafana/grafonnet/gen/grafonnet-v9.4.0/main
   gaugePanel(title, query)::
     grafonnet.panel.gauge.new(title)
     + grafonnet.panel.stat.withTargets([
-      grafonnet.query.prometheus.new('$datasource', query)
-      + grafonnet.query.prometheus.withFormat('time_series')
-      + grafonnet.query.prometheus.withInstant(true)
-      + grafonnet.query.prometheus.withIntervalFactor(null)
+      self.prometheusQuery(query)
+      + grafonnet.query.prometheus.withInstant(true),
     ]),
 
   statPanel(title, query)::
     grafonnet.panel.stat.new(title)
     + grafonnet.panel.stat.withTargets([
-      grafonnet.query.prometheus.new('$datasource', query)
-      + grafonnet.query.prometheus.withFormat('time_series')
-      + grafonnet.query.prometheus.withInstant(true)
-      + grafonnet.query.prometheus.withIntervalFactor(null)
+      self.prometheusQuery(query)
+      + grafonnet.query.prometheus.withInstant(true),
     ]),
+
+  timeseriesPanel(title, query='')::
+    grafonnet.panel.timeSeries.new(title)
+    + (
+      if query == '' then {} else
+        grafonnet.panel.timeSeries.withTargets([
+          self.prometheusQuery(query),
+        ])
+    ),
+
+  prometheusQuery(query)::
+    grafonnet.query.prometheus.new('$datasource', query)
+    + grafonnet.query.prometheus.withFormat('time_series')
+    + grafonnet.query.prometheus.withIntervalFactor(null),
 
   makeGrid(panels)::
     std.foldl(
@@ -41,18 +51,18 @@ local grafonnet = import 'github.com/grafana/grafonnet/gen/grafonnet-v9.4.0/main
         local y = acc.nexty,
 
         panels+: [
-          panel + {
+          panel {
             gridPos+: {
               x: x,
-              y: y
-            }
-          }
-        ]
+              y: y,
+            },
+          },
+        ],
       },
       panels,
       {
         nextx: 0,
-        nexty: 0
+        nexty: 0,
       }
-    ).panels
+    ).panels,
 }
