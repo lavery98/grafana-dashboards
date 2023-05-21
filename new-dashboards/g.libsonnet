@@ -49,6 +49,18 @@ local grafonnet = import 'github.com/grafana/grafonnet/gen/grafonnet-v9.4.0/main
       function(acc, panel) acc {
         local x = acc.nextx,
         local y = acc.nexty,
+        local w = panel.gridPos.w,
+        local h = panel.gridPos.h,
+
+        // Keep the height of the largest panel
+        local rowHeight = (if h > acc.rowHeight then h else acc.rowHeight),
+        rowHeight: (if x + w >= 24 then 0 else rowHeight),
+
+        // Work out the next x value. If the next x value is more then 24 then wrap
+        nextx: (if x + w >= 24 then 0 else x + w),
+
+        // Work out the next y value. If we are wrapping then increase y by the row height
+        nexty: (if x + w >= 24 then y + rowHeight else y),
 
         panels+: [
           panel {
@@ -63,6 +75,7 @@ local grafonnet = import 'github.com/grafana/grafonnet/gen/grafonnet-v9.4.0/main
       {
         nextx: 0,
         nexty: 0,
+        rowHeight: 0,
       }
     ).panels,
 }
