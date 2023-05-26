@@ -8,9 +8,7 @@ local grafonnet = import 'github.com/grafana/grafonnet/gen/grafonnet-v9.4.0/main
     + grafonnet.dashboard.withStyle()
     + grafonnet.dashboard.withTimezone()
     + grafonnet.dashboard.withUid(uid)
-    + grafonnet.dashboard.withTags([
-      'generated',
-    ])
+    + grafonnet.dashboard.withTags($._config.tags)
     + grafonnet.dashboard.withVariables([
       grafonnet.dashboard.variable.datasource.new('datasource', 'prometheus'),
     ])

@@ -1,3 +1,1 @@
-{
-  'ups-status.json': (import 'new-dashboards/ups-status/main.jsonnet')
-}
+(import 'new-dashboards/smart-status/main.libsonnet')
