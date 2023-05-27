@@ -9,19 +9,6 @@ local queries = import './queries.libsonnet';
     + $.addVariable('namespace', 'smartmon_smartctl_version{cluster=~"$cluster"}', 'namespace')
     + $.addVariable('host', 'smartmon_smartctl_version{cluster=~"$cluster", namespace=~"$namespace"}', 'host')
     + grafonnet.dashboard.withPanels([
-      /*$.makeGrid([
-        $.statPanel('Disks Monitored', queries.disksMonitored)
-        + grafonnet.panel.stat.gridPos.withH(4)
-        + grafonnet.panel.stat.gridPos.withW(4),
-
-        $.tablePanel('Disk Drives', queries.diskDrives)
-        + grafonnet.panel.table.gridPos.withH(8)
-        + grafonnet.panel.table.gridPos.withW(20),
-
-        $.statPanel('Unhealthy Disks', queries.unhealthyDisks)
-        + grafonnet.panel.stat.gridPos.withH(4)
-        + grafonnet.panel.stat.gridPos.withW(4)
-      ])*/
       $.row('Overview')
       + grafonnet.panel.row.gridPos.withH(1)
       + grafonnet.panel.row.gridPos.withW(24),
@@ -67,7 +54,36 @@ local queries = import './queries.libsonnet';
 
       $.statPanel('Unhealthy Disks', queries.unhealthyDisks)
       + grafonnet.panel.stat.gridPos.withH(4)
-      + grafonnet.panel.stat.gridPos.withW(4)
+      + grafonnet.panel.stat.gridPos.withW(4),
+
+      $.row('Temperature', collapsed=true)
+      + grafonnet.panel.row.withPanels([
+        $.timeseriesPanel('Temperature History', queries.temperatureHistory)
+        + grafonnet.panel.timeSeries.fieldConfig.defaults.withUnit('celsius')
+        + grafonnet.panel.timeSeries.options.legend.withCalcs([
+          "mean",
+          "min",
+          "max",
+          "lastNotNull"
+        ])
+        + grafonnet.panel.timeSeries.options.legend.withDisplayMode('table')
+        + grafonnet.panel.timeSeries.options.legend.withPlacement('right')
+        + grafonnet.panel.timeSeries.options.legend.withShowLegend(true)
+        + grafonnet.panel.timeSeries.options.tooltip.withMode('multi')
+        + grafonnet.panel.timeSeries.options.tooltip.withSort('none')
+        + grafonnet.panel.timeSeries.gridPos.withH(8)
+        + grafonnet.panel.timeSeries.gridPos.withW(24)
+      ])
+      + grafonnet.panel.row.gridPos.withH(1)
+      + grafonnet.panel.row.gridPos.withW(24),
+
+      $.row('Wear & Tear', collapsed=true)
+      + grafonnet.panel.row.gridPos.withH(1)
+      + grafonnet.panel.row.gridPos.withW(24),
+
+      $.row('Errors', collapsed=true)
+      + grafonnet.panel.row.gridPos.withH(1)
+      + grafonnet.panel.row.gridPos.withW(24),
     ])
   )
 }

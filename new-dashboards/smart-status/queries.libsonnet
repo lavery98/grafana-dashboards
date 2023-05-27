@@ -18,4 +18,9 @@ local grafonnet = import 'github.com/grafana/grafonnet/gen/grafonnet-v9.4.0/main
     + grafonnet.query.prometheus.withFormat('table')
     + grafonnet.query.prometheus.withInstant(true)
     + grafonnet.query.prometheus.withIntervalFactor(null),
+
+  temperatureHistory:
+    grafonnet.query.prometheus.new('$datasource', 'smartmon_attr_raw_value{cluster=~"$cluster", namespace=~"$namespace", host="$host", name="temperature_celsius"}')
+    + grafonnet.query.prometheus.withFormat('time_series')
+    + grafonnet.query.prometheus.withLegendFormat('{{device}} {{disk}}')
 }

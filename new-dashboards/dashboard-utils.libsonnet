@@ -48,6 +48,10 @@ local grafonnet = import 'github.com/grafana/grafonnet/gen/grafonnet-v9.4.0/main
     grafonnet.panel.table.new(title)
     + grafonnet.panel.table.withTargets(targets),
 
+  timeseriesPanel(title, targets)::
+    grafonnet.panel.timeSeries.new(title)
+    + grafonnet.panel.timeSeries.withTargets(targets),
+
   makeGrid(panels)::
     std.foldl(
       function(acc, panel) acc {
