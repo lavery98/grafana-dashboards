@@ -31,6 +31,37 @@ local queries = import './queries.libsonnet';
       + grafonnet.panel.stat.gridPos.withW(4),
 
       $.tablePanel('Disk Drives', queries.diskDrives)
+      + grafonnet.panel.table.fieldConfig.defaults.withCustom({
+        "filterable": true
+      })
+      + grafonnet.panel.table.options.withCellHeight('sm')
+      + grafonnet.panel.table.options.withFooter()
+      + grafonnet.panel.table.options.footer.TableFooterOptions.withEnablePagination(true)
+      + grafonnet.panel.table.options.withShowHeader()
+      + grafonnet.panel.table.withTransformations([
+        grafonnet.panel.table.transformations.withId('organize')
+        + grafonnet.panel.table.transformations.withOptions({
+          "excludeByName": {
+            "Time": true,
+            "__name__": true,
+            "agent_hostname": true,
+            "cluster": true,
+            "host": true,
+            "instance": true,
+            "job": true,
+            "namespace": true,
+            "Value": true
+          },
+          "indexByName": {},
+          "renameByName": {
+            "device": "Device",
+            "device_model": "Device Model",
+            "firmware_version": "Firmware",
+            "model_family": "Model Family",
+            "serial_number": "Serial Number"
+          }
+        })
+      ])
       + grafonnet.panel.table.gridPos.withH(8)
       + grafonnet.panel.table.gridPos.withW(20),
 
