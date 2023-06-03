@@ -18,7 +18,7 @@
           "subdir": "gen/grafonnet-latest"
         }
       },
-      "version": "6bc5fff8b35c9883ea49843cba494be64274e386",
+      "version": "363aaf54ebad175fd2c568591656fce310985d87",
       "sum": "FLkM01ITp3oQeY8Ndnjp3Tg1cP66X4bCIfp5bGfVm8k="
     },
     {
@@ -28,8 +28,8 @@
           "subdir": "gen/grafonnet-v9.4.0"
         }
       },
-      "version": "6bc5fff8b35c9883ea49843cba494be64274e386",
-      "sum": "sE+0tek2iu0A21LFfewIgjAJjuVLP6dK5Caw9dR0nNA="
+      "version": "363aaf54ebad175fd2c568591656fce310985d87",
+      "sum": "lNJTwpIiQ0YmA7mVB/UO8b8kP28GLpEfDADk/9OIyUk="
     },
     {
       "source": {
@@ -38,8 +38,8 @@
           "subdir": "grafonnet-base"
         }
       },
-      "version": "6bc5fff8b35c9883ea49843cba494be64274e386",
-      "sum": "yxNNq8YTnQpYWY2qCn00hcjq7OCFvv3lcaBEmRwrIXo="
+      "version": "363aaf54ebad175fd2c568591656fce310985d87",
+      "sum": "C+EdbRSnQqP95DBzoE8gidm8A+vTolqN0uclxQ0RVWI="
     },
     {
       "source": {
@@ -48,7 +48,7 @@
           "subdir": "jsonnet/v9.4.0"
         }
       },
-      "version": "4c0fb298815626e23c9175571e991e8790737751",
+      "version": "f6c0c4cd6fc1902eb4f920d82315767cd61deea4",
       "sum": "b6KSW0/Z45K0W2dF+8ZPLV32uv0ApjIsShTjk/zHEbg="
     },
     {
@@ -68,8 +68,8 @@
           "subdir": ""
         }
       },
-      "version": "3e494e02563b9eababbb24f0dfca0a50e03dc0b3",
-      "sum": "GP6SaIzrnD0HRw/EeI3iO9HboA2dnBizgEpxw3m7Ph4="
+      "version": "e425fcc5eea051286c651de07e14223139e25f42",
+      "sum": "ozeIGQ4R8x1ODT6E84vm7vigsim0Lvu0Fo5SFKKhh+I="
     },
     {
       "source": {
