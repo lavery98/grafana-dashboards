@@ -3,7 +3,7 @@ local grafonnet = import 'github.com/grafana/grafonnet/gen/grafonnet-v9.4.0/main
 local queries = import './queries.libsonnet';
 
 (import '../dashboard-utils.libsonnet') {
-  "smart-status.json": (
+  'smart-status.json': (
     $.dashboard('S.M.A.R.T Status')
     + $.addVariable('cluster', 'smartmon_smartctl_version', 'cluster')
     + $.addVariable('namespace', 'smartmon_smartctl_version{cluster=~"$cluster"}', 'namespace')
@@ -19,7 +19,7 @@ local queries = import './queries.libsonnet';
 
       $.tablePanel('Disk Drives', queries.diskDrives)
       + grafonnet.panel.table.fieldConfig.defaults.withCustom({
-        "filterable": true
+        filterable: true,
       })
       + grafonnet.panel.table.options.withCellHeight('sm')
       + grafonnet.panel.table.options.withFooter()
@@ -28,26 +28,26 @@ local queries = import './queries.libsonnet';
       + grafonnet.panel.table.withTransformations([
         grafonnet.panel.table.transformations.withId('organize')
         + grafonnet.panel.table.transformations.withOptions({
-          "excludeByName": {
-            "Time": true,
-            "__name__": true,
-            "agent_hostname": true,
-            "cluster": true,
-            "host": true,
-            "instance": true,
-            "job": true,
-            "namespace": true,
-            "Value": true
+          excludeByName: {
+            Time: true,
+            __name__: true,
+            agent_hostname: true,
+            cluster: true,
+            host: true,
+            instance: true,
+            job: true,
+            namespace: true,
+            Value: true,
           },
-          "indexByName": {},
-          "renameByName": {
-            "device": "Device",
-            "device_model": "Device Model",
-            "firmware_version": "Firmware",
-            "model_family": "Model Family",
-            "serial_number": "Serial Number"
-          }
-        })
+          indexByName: {},
+          renameByName: {
+            device: 'Device',
+            device_model: 'Device Model',
+            firmware_version: 'Firmware',
+            model_family: 'Model Family',
+            serial_number: 'Serial Number',
+          },
+        }),
       ])
       + grafonnet.panel.table.gridPos.withH(8)
       + grafonnet.panel.table.gridPos.withW(20),
@@ -61,10 +61,10 @@ local queries = import './queries.libsonnet';
         $.timeseriesPanel('Temperature History', queries.temperatureHistory)
         + grafonnet.panel.timeSeries.fieldConfig.defaults.withUnit('celsius')
         + grafonnet.panel.timeSeries.options.legend.withCalcs([
-          "mean",
-          "min",
-          "max",
-          "lastNotNull"
+          'mean',
+          'min',
+          'max',
+          'lastNotNull',
         ])
         + grafonnet.panel.timeSeries.options.legend.withDisplayMode('table')
         + grafonnet.panel.timeSeries.options.legend.withPlacement('right')
@@ -72,7 +72,7 @@ local queries = import './queries.libsonnet';
         + grafonnet.panel.timeSeries.options.tooltip.withMode('multi')
         + grafonnet.panel.timeSeries.options.tooltip.withSort('none')
         + grafonnet.panel.timeSeries.gridPos.withH(8)
-        + grafonnet.panel.timeSeries.gridPos.withW(24)
+        + grafonnet.panel.timeSeries.gridPos.withW(24),
       ])
       + grafonnet.panel.row.gridPos.withH(1)
       + grafonnet.panel.row.gridPos.withW(24),
@@ -90,7 +90,7 @@ local queries = import './queries.libsonnet';
           grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('orange')
           + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(17520),
           grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('red')
-          + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(35040)
+          + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(35040),
         ])
         + grafonnet.panel.barGauge.options.withOrientation('horizontal')
         + grafonnet.panel.barGauge.gridPos.withH(8)
@@ -106,7 +106,7 @@ local queries = import './queries.libsonnet';
           grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('orange')
           + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(750),
           grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('red')
-          + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(1500)
+          + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(1500),
         ])
         + grafonnet.panel.barGauge.options.withOrientation('horizontal')
         + grafonnet.panel.barGauge.gridPos.withH(8)
@@ -122,7 +122,7 @@ local queries = import './queries.libsonnet';
           grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('orange')
           + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(1000),
           grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('red')
-          + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(2000)
+          + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(2000),
         ])
         + grafonnet.panel.barGauge.options.withOrientation('horizontal')
         + grafonnet.panel.barGauge.gridPos.withH(8)
@@ -138,7 +138,7 @@ local queries = import './queries.libsonnet';
           grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('orange')
           + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(5000),
           grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('red')
-          + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(10000)
+          + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(10000),
         ])
         + grafonnet.panel.barGauge.options.withOrientation('horizontal')
         + grafonnet.panel.barGauge.gridPos.withH(8)
@@ -156,7 +156,7 @@ local queries = import './queries.libsonnet';
           grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('orange')
           + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(40000000000000),
           grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('red')
-          + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(60000000000000)
+          + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(60000000000000),
         ])
         + grafonnet.panel.barGauge.options.withOrientation('horizontal')
         + grafonnet.panel.barGauge.gridPos.withH(8)
@@ -170,11 +170,11 @@ local queries = import './queries.libsonnet';
           grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('green')
           + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(null),
           grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('red')
-          + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(1)
+          + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(1),
         ])
         + grafonnet.panel.barGauge.options.withOrientation('horizontal')
         + grafonnet.panel.barGauge.gridPos.withH(8)
-        + grafonnet.panel.barGauge.gridPos.withW(12)
+        + grafonnet.panel.barGauge.gridPos.withW(12),
       ])
       + grafonnet.panel.row.gridPos.withH(1)
       + grafonnet.panel.row.gridPos.withW(24),
@@ -183,5 +183,5 @@ local queries = import './queries.libsonnet';
       + grafonnet.panel.row.gridPos.withH(1)
       + grafonnet.panel.row.gridPos.withW(24),
     ])
-  )
+  ),
 }

@@ -1,5 +1,5 @@
 (import '../dashboard-utils.libsonnet') {
-  "ups-status.json": (
+  'ups-status.json': (
     $.dashboard('UPS Status')
-  )
+  ),
 }

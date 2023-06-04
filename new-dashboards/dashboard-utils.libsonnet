@@ -51,7 +51,7 @@ local grafonnet = import 'github.com/grafana/grafonnet/gen/grafonnet-v9.4.0/main
     + panel.options.withShowUnfilled()
     + panel.options.withValueMode('color')
     + panel.options.reduceOptions.withCalcs([
-      'lastNotNull'
+      'lastNotNull',
     ])
     + panel.options.reduceOptions.withFields('')
     + panel.options.reduceOptions.withValues(false),

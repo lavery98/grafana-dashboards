@@ -168,39 +168,39 @@ grafana.dashboard.new(
     Modify(i)
     for i in nodeExporterFull.panels
   ]);*/
-  local ModifyTarget(target) = target + {
+  local ModifyTarget(target) = target {
     datasource: {
       type: 'prometheus',
-      uid: '${datasource}'
-    }
+      uid: '${datasource}',
+    },
   } + (
     if std.objectHas(target, 'expr') then {
-      expr: std.strReplace(target.expr, 'instance="$node",job="$job"', 'cluster=~"$cluster",namespace=~"$namespace",host="$host"')
+      expr: std.strReplace(target.expr, 'instance="$node",job="$job"', 'cluster=~"$cluster",namespace=~"$namespace",host="$host"'),
     } else {}
   );
   local ModifyPanel(panel) = [
-    panel + {
+    panel {
       datasource: {
         type: 'prometheus',
-        uid: '${datasource}'
+        uid: '${datasource}',
       },
       targets: [
         ModifyTarget(t)
         for t in panel.targets
-      ]
+      ],
     } + (
       local id = panel.id;
       if id == 304 then {
         panels: [
-          panel.panels[0] + {
+          panel.panels[0] {
             datasource: {
               type: 'prometheus',
-              uid: '${datasource}'
+              uid: '${datasource}',
             },
             targets: [
               ModifyTarget(t)
               for t in panel.panels[0].targets
-            ]
+            ],
           },
           grafana.timeseriesPanel.new(
             'Fan Speed',
@@ -220,10 +220,10 @@ grafana.dashboard.new(
           ) + {
             gridPos: { x: 12, y: 43, w: 12, h: 10 },
           },
-          panel.panels[1] + {
+          panel.panels[1] {
             datasource: {
               type: 'prometheus',
-              uid: '${datasource}'
+              uid: '${datasource}',
             },
             targets: [
               ModifyTarget(t)
@@ -249,40 +249,40 @@ grafana.dashboard.new(
           ) + {
             gridPos: { x: 12, y: 53, w: 12, h: 10 },
           },
-        ]
+        ],
       } else if id == 270 then {
         panels: [
           p {
             datasource: {
               type: 'prometheus',
-              uid: '${datasource}'
+              uid: '${datasource}',
             },
             targets: [
-              ModifyTarget(t + {
+              ModifyTarget(t {
                 expr: t.expr + ' * on (device) group_left(device_label) node_disk_label_info{cluster=~"$cluster",namespace=~"$namespace",host="$host"} or on (device) label_replace(' + t.expr + ', "device_label", "$1", "device", "(.*)")',
                 legendFormat: std.strReplace(t.legendFormat, '{{device}}', '{{device_label}}'),
               })
               for t in p.targets
-            ]
+            ],
           }
           for p in panel.panels
-        ]
+        ],
       } else if std.objectHas(panel, 'panels') then {
         panels: [
           p {
             datasource: {
               type: 'prometheus',
-              uid: '${datasource}'
+              uid: '${datasource}',
             },
             targets: [
               ModifyTarget(t)
               for t in p.targets
-            ]
+            ],
           }
           for p in panel.panels
         ],
       } else {}
-    )
+    ),
   ];
   local modifiedPanels = std.flattenArrays([
     ModifyPanel(p)
