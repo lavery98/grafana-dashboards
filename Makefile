@@ -4,11 +4,13 @@
 JSONNET_BIN ?= jsonnet
 JSONNET_FMT := jsonnetfmt -n 2 --max-blank-lines 2 --string-style s --comment-style s
 
+JSONNET_FILE := generate.jsonnet
+
 clean:
 	rm -rf gen
 
 generate: clean
-	${JSONNET_BIN} -J vendor -m gen -c generate.jsonnet
+	${JSONNET_BIN} -J vendor -m gen -c $(JSONNET_FILE)
 
 lint:
 	@RESULT=0; \
