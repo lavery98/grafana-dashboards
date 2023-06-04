@@ -34,11 +34,27 @@ local grafonnet = import 'github.com/grafana/grafonnet/gen/grafonnet-v9.4.0/main
     ),
 
   row(title, collapsed=false)::
-    grafonnet.panel.row.withTitle(title)
-    + grafonnet.panel.row.withType('row')
-    + grafonnet.panel.row.datasource.withType('datasource')
-    + grafonnet.panel.row.datasource.withUid('-- Mixed --')
+    grafonnet.panel.row.new(title)
     + grafonnet.panel.row.withCollapsed(collapsed),
+
+  barGaugePanel(title, targets)::
+    local panel = grafonnet.panel.barGauge;
+
+    panel.new(title)
+    + panel.withTargets(targets)
+    // Default values
+    + panel.fieldConfig.defaults.color.withMode('fixed')
+    + panel.options.withDisplayMode('gradient')
+    + panel.options.withMinVizHeight()
+    + panel.options.withMinVizWidth()
+    + panel.options.withOrientation('auto')
+    + panel.options.withShowUnfilled()
+    + panel.options.withValueMode('color')
+    + panel.options.reduceOptions.withCalcs([
+      'lastNotNull'
+    ])
+    + panel.options.reduceOptions.withFields('')
+    + panel.options.reduceOptions.withValues(false),
 
   statPanel(title, targets)::
     grafonnet.panel.stat.new(title)

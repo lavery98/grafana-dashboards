@@ -78,6 +78,23 @@ local queries = import './queries.libsonnet';
       + grafonnet.panel.row.gridPos.withW(24),
 
       $.row('Wear & Tear', collapsed=true)
+      + grafonnet.panel.row.withPanels([
+        $.barGaugePanel('Power On Hours', queries.powerOnHours)
+        + grafonnet.panel.barGauge.fieldConfig.defaults.withUnit('h')
+        + grafonnet.panel.barGauge.fieldConfig.defaults.color.withMode('thresholds')
+        + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withMode('absolute')
+        + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withSteps([
+          grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('green')
+          + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(null),
+          grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('orange')
+          + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(17520),
+          grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('red')
+          + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(35040)
+        ])
+        + grafonnet.panel.barGauge.options.withOrientation('horizontal')
+        + grafonnet.panel.barGauge.gridPos.withH(8)
+        + grafonnet.panel.barGauge.gridPos.withW(12)
+      ])
       + grafonnet.panel.row.gridPos.withH(1)
       + grafonnet.panel.row.gridPos.withW(24),
 
