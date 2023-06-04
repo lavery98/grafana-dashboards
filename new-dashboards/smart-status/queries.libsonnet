@@ -36,5 +36,29 @@ local prometheusQuery = grafonnet.query.prometheus;
     prometheusQuery.new('$datasource', 'smartmon_attr_raw_value{cluster=~"$cluster", namespace=~"$namespace", host="$host", name="start_stop_count"}')
     + prometheusQuery.withLegendFormat('{{device}} {{disk}}')
     + prometheusQuery.withInstant(true)
-    + prometheusQuery.withIntervalFactor(null)
+    + prometheusQuery.withIntervalFactor(null),
+
+  powerCycleCount:
+    prometheusQuery.new('$datasource', 'smartmon_attr_raw_value{cluster=~"$cluster", namespace=~"$namespace", host="$host", name="power_cycle_count"}')
+    + prometheusQuery.withLegendFormat('{{device}} {{disk}}')
+    + prometheusQuery.withInstant(true)
+    + prometheusQuery.withIntervalFactor(null),
+
+  loadCycleCount:
+    prometheusQuery.new('$datasource', 'smartmon_attr_raw_value{cluster=~"$cluster", namespace=~"$namespace", host="$host", name="load_cycle_count"}')
+    + prometheusQuery.withLegendFormat('{{device}} {{disk}}')
+    + prometheusQuery.withInstant(true)
+    + prometheusQuery.withIntervalFactor(null),
+
+  totalDataWritten:
+    prometheusQuery.new('$datasource', 'smartmon_attr_raw_value{cluster=~"$cluster", namespace=~"$namespace", host="$host", name="total_lbas_written"} * 512')
+    + prometheusQuery.withLegendFormat('{{device}} {{disk}}')
+    + prometheusQuery.withInstant(true)
+    + prometheusQuery.withIntervalFactor(null),
+
+  reallocatedSectorEvents:
+    prometheusQuery.new('$datasource', 'smartmon_attr_raw_value{cluster=~"$cluster", namespace=~"$namespace", host="$host", name="reallocated_event_count"}')
+    + prometheusQuery.withLegendFormat('{{device}} {{disk}}')
+    + prometheusQuery.withInstant(true)
+    + prometheusQuery.withIntervalFactor(null),
 }
