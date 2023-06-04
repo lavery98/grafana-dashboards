@@ -57,16 +57,67 @@ local grafonnet = import 'github.com/grafana/grafonnet/gen/grafonnet-v9.4.0/main
     + panel.options.reduceOptions.withValues(false),
 
   statPanel(title, targets)::
-    grafonnet.panel.stat.new(title)
-    + grafonnet.panel.stat.withTargets(targets),
+    local panel = grafonnet.panel.stat;
+
+    panel.new(title)
+    + panel.withTargets(targets)
+    // Default values
+    + panel.fieldConfig.defaults.color.withMode('fixed')
+    + panel.options.withColorMode('value')
+    + panel.options.withGraphMode('area')
+    + panel.options.withJustifyMode('auto')
+    + panel.options.withOrientation('auto')
+    + panel.options.withTextMode('auto')
+    + panel.options.reduceOptions.withCalcs([
+      'lastNotNull',
+    ])
+    + panel.options.reduceOptions.withFields('')
+    + panel.options.reduceOptions.withValues(false),
 
   tablePanel(title, targets)::
-    grafonnet.panel.table.new(title)
-    + grafonnet.panel.table.withTargets(targets),
+    local panel = grafonnet.panel.table;
+
+    panel.new(title)
+    + panel.withTargets(targets)
+    // Default values
+    + panel.fieldConfig.defaults.withCustom({
+      align: 'auto',
+      cellOptions: {
+        type: 'auto'
+      },
+      inspect: false
+    })
+    + panel.fieldConfig.defaults.color.withMode('fixed')
+    + panel.options.withCellHeight('sm')
+    + panel.options.withFooter()
+    + panel.options.withShowHeader(),
 
   timeseriesPanel(title, targets)::
-    grafonnet.panel.timeSeries.new(title)
-    + grafonnet.panel.timeSeries.withTargets(targets),
+    local panel = grafonnet.panel.timeSeries;
+
+    panel.new(title)
+    + panel.withTargets(targets)
+    // Default values
+    + panel.fieldConfig.defaults.color.withMode('palette-classic')
+    + panel.fieldConfig.defaults.custom.withAxisCenteredZero(false)
+    + panel.fieldConfig.defaults.custom.withAxisColorMode('text')
+    + panel.fieldConfig.defaults.custom.withAxisLabel('')
+    + panel.fieldConfig.defaults.custom.withAxisPlacement('auto')
+    + panel.fieldConfig.defaults.custom.withBarAlignment(0)
+    + panel.fieldConfig.defaults.custom.withDrawStyle('line')
+    + panel.fieldConfig.defaults.custom.withFillOpacity(0)
+    + panel.fieldConfig.defaults.custom.withGradientMode('none')
+    + panel.fieldConfig.defaults.custom.withLineInterpolation('linear')
+    + panel.fieldConfig.defaults.custom.withLineWidth(1)
+    + panel.fieldConfig.defaults.custom.withPointSize(5)
+    + panel.fieldConfig.defaults.custom.withShowPoints('auto')
+    + panel.fieldConfig.defaults.custom.withSpanNulls(false)
+    + panel.fieldConfig.defaults.custom.hideFrom.withLegend(false)
+    + panel.fieldConfig.defaults.custom.hideFrom.withTooltip(false)
+    + panel.fieldConfig.defaults.custom.hideFrom.withViz(false)
+    + panel.fieldConfig.defaults.custom.scaleDistribution.withType('linear')
+    + panel.fieldConfig.defaults.custom.stacking.withMode('none')
+    + panel.fieldConfig.defaults.custom.thresholdsStyle.withMode('off'),
 
   makeGrid(panels)::
     std.foldl(
