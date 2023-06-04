@@ -93,6 +93,22 @@ local queries = import './queries.libsonnet';
         ])
         + grafonnet.panel.barGauge.options.withOrientation('horizontal')
         + grafonnet.panel.barGauge.gridPos.withH(8)
+        + grafonnet.panel.barGauge.gridPos.withW(12),
+
+        $.barGaugePanel('Start Stop Count', queries.startStopCount)
+        + grafonnet.panel.barGauge.fieldConfig.defaults.withMin(0)
+        + grafonnet.panel.barGauge.fieldConfig.defaults.color.withMode('thresholds')
+        + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withMode('absolute')
+        + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withSteps([
+          grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('green')
+          + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(null),
+          grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('orange')
+          + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(750),
+          grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('red')
+          + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(1500)
+        ])
+        + grafonnet.panel.barGauge.options.withOrientation('horizontal')
+        + grafonnet.panel.barGauge.gridPos.withH(8)
         + grafonnet.panel.barGauge.gridPos.withW(12)
       ])
       + grafonnet.panel.row.gridPos.withH(1)

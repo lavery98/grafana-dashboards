@@ -30,5 +30,11 @@ local prometheusQuery = grafonnet.query.prometheus;
     prometheusQuery.new('$datasource', 'smartmon_attr_raw_value{cluster=~"$cluster", namespace=~"$namespace", host="$host", name="power_on_hours"}')
     + prometheusQuery.withLegendFormat('{{device}} {{disk}}')
     + prometheusQuery.withInstant(true)
+    + prometheusQuery.withIntervalFactor(null),
+
+  startStopCount:
+    prometheusQuery.new('$datasource', 'smartmon_attr_raw_value{cluster=~"$cluster", namespace=~"$namespace", host="$host", name="start_stop_count"}')
+    + prometheusQuery.withLegendFormat('{{device}} {{disk}}')
+    + prometheusQuery.withInstant(true)
     + prometheusQuery.withIntervalFactor(null)
 }
