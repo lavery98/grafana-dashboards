@@ -61,4 +61,52 @@ local prometheusQuery = grafonnet.query.prometheus;
     + prometheusQuery.withLegendFormat('{{device}} {{disk}}')
     + prometheusQuery.withInstant(true)
     + prometheusQuery.withIntervalFactor(null),
+
+  rawReadError:
+    prometheusQuery.new('$datasource', 'smartmon_attr_value{cluster=~"$cluster", namespace=~"$namespace", host="$host", name="raw_read_error_rate"}')
+    + prometheusQuery.withLegendFormat('{{device}} {{disk}}')
+    + prometheusQuery.withInstant(true)
+    + prometheusQuery.withIntervalFactor(null),
+
+  seekErrorRate:
+    prometheusQuery.new('$datasource', 'smartmon_attr_value{cluster=~"$cluster", namespace=~"$namespace", host="$host", name="seek_error_rate"}')
+    + prometheusQuery.withLegendFormat('{{device}} {{disk}}')
+    + prometheusQuery.withInstant(true)
+    + prometheusQuery.withIntervalFactor(null),
+
+  spinRetryCount:
+    prometheusQuery.new('$datasource', 'smartmon_attr_raw_value{cluster=~"$cluster", namespace=~"$namespace", host="$host", name="spin_retry_count"}')
+    + prometheusQuery.withLegendFormat('{{device}} {{disk}}')
+    + prometheusQuery.withInstant(true)
+    + prometheusQuery.withIntervalFactor(null),
+
+  commandTimeoutCount:
+    prometheusQuery.new('$datasource', 'smartmon_attr_raw_value{cluster=~"$cluster", namespace=~"$namespace", host="$host", name="command_timeout"}')
+    + prometheusQuery.withLegendFormat('{{device}} {{disk}}')
+    + prometheusQuery.withInstant(true)
+    + prometheusQuery.withIntervalFactor(null),
+
+  currentPendingSectorCount:
+    prometheusQuery.new('$datasource', 'smartmon_attr_raw_value{cluster=~"$cluster", namespace=~"$namespace", host="$host", name="current_pending_sector"}')
+    + prometheusQuery.withLegendFormat('{{device}} {{disk}}')
+    + prometheusQuery.withInstant(true)
+    + prometheusQuery.withIntervalFactor(null),
+
+  offlineUncorrectableSectorCount:
+    prometheusQuery.new('$datasource', 'smartmon_attr_raw_value{cluster=~"$cluster", namespace=~"$namespace", host="$host", name="offline_uncorrectable"}')
+    + prometheusQuery.withLegendFormat('{{device}} {{disk}}')
+    + prometheusQuery.withInstant(true)
+    + prometheusQuery.withIntervalFactor(null),
+
+  reportedUncorrectableErrors:
+    prometheusQuery.new('$datasource', 'smartmon_attr_raw_value{cluster=~"$cluster", namespace=~"$namespace", host="$host", name="reported_uncorrect"}')
+    + prometheusQuery.withLegendFormat('{{device}} {{disk}}')
+    + prometheusQuery.withInstant(true)
+    + prometheusQuery.withIntervalFactor(null),
+
+  ultradmaCrcError:
+    prometheusQuery.new('$datasource', 'smartmon_attr_raw_value{cluster=~"$cluster", namespace=~"$namespace", host="$host", name="udma_crc_error_count"}')
+    + prometheusQuery.withLegendFormat('{{device}} {{disk}}')
+    + prometheusQuery.withInstant(true)
+    + prometheusQuery.withIntervalFactor(null),
 }
