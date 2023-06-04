@@ -83,9 +83,9 @@ local grafonnet = import 'github.com/grafana/grafonnet/gen/grafonnet-v9.4.0/main
     + panel.fieldConfig.defaults.withCustom({
       align: 'auto',
       cellOptions: {
-        type: 'auto'
+        type: 'auto',
       },
-      inspect: false
+      inspect: false,
     })
     + panel.fieldConfig.defaults.color.withMode('fixed')
     + panel.options.withCellHeight('sm')
