@@ -2,6 +2,13 @@ local grafonnet = import 'github.com/grafana/grafonnet/gen/grafonnet-v9.4.0/main
 
 local queries = import './queries.libsonnet';
 
+local dashboard = grafonnet.dashboard;
+local barGauge = grafonnet.panel.barGauge;
+local row = grafonnet.panel.row;
+local stat = grafonnet.panel.stat;
+local table = grafonnet.panel.table;
+local timeSeries = grafonnet.panel.timeSeries;
+
 (import '../dashboard-utils.libsonnet') {
   'smart-status.json': (
     $.dashboard('S.M.A.R.T Status')
@@ -11,26 +18,23 @@ local queries = import './queries.libsonnet';
     + grafonnet.dashboard.withPanels(
       $.makeGrid([
         $.row('Overview')
-        + grafonnet.panel.row.gridPos.withH(1)
-        + grafonnet.panel.row.gridPos.withW(24),
+        + row.gridPos.withH(1)
+        + row.gridPos.withW(24),
 
         $.statPanel('Disks Monitored', queries.disksMonitored)
-        + grafonnet.panel.stat.fieldConfig.defaults.color.withFixedColor('text')
-        + grafonnet.panel.stat.options.withGraphMode('none')
-        + grafonnet.panel.stat.gridPos.withH(4)
-        + grafonnet.panel.stat.gridPos.withW(4),
+        + stat.options.withGraphMode('none')
+        + stat.standardOptions.color.withFixedColor('text')
+        + stat.gridPos.withH(4)
+        + stat.gridPos.withW(4),
 
         $.tablePanel('Disk Drives', queries.diskDrives)
-        + grafonnet.panel.table.fieldConfig.defaults.withCustom({
+        + table.fieldConfig.defaults.withCustom({
           filterable: true,
         })
-        + grafonnet.panel.table.options.withCellHeight('sm')
-        + grafonnet.panel.table.options.withFooter()
-        + grafonnet.panel.table.options.withShowHeader()
-        + grafonnet.panel.table.options.footer.TableFooterOptions.withEnablePagination(true)
-        + grafonnet.panel.table.withTransformations([
-          grafonnet.panel.table.transformations.withId('organize')
-          + grafonnet.panel.table.transformations.withOptions({
+        + table.options.footer.TableFooterOptions.withEnablePagination(true)
+        + table.queryOptions.withTransformations([
+          table.transformation.withId('organize')
+          + table.transformation.withOptions({
             excludeByName: {
               Time: true,
               __name__: true,
@@ -55,280 +59,280 @@ local queries = import './queries.libsonnet';
               model_family: 'Model Family',
               serial_number: 'Serial Number',
             },
-          }),
+          })
         ])
-        + grafonnet.panel.table.gridPos.withH(8)
-        + grafonnet.panel.table.gridPos.withW(20),
+        + table.gridPos.withH(8)
+        + table.gridPos.withW(20),
 
         $.statPanel('Unhealthy Disks', queries.unhealthyDisks)
-        + grafonnet.panel.stat.fieldConfig.defaults.color.withMode('thresholds')
-        + grafonnet.panel.stat.fieldConfig.defaults.thresholds.withMode('absolute')
-        + grafonnet.panel.stat.fieldConfig.defaults.thresholds.withSteps([
-          grafonnet.panel.stat.fieldConfig.defaults.thresholds.steps.withColor('green')
-          + grafonnet.panel.stat.fieldConfig.defaults.thresholds.steps.withValue(null),
-          grafonnet.panel.stat.fieldConfig.defaults.thresholds.steps.withColor('red')
-          + grafonnet.panel.stat.fieldConfig.defaults.thresholds.steps.withValue(1),
+        + stat.options.withColorMode('background')
+        + stat.options.withGraphMode('none')
+        + stat.standardOptions.color.withMode('thresholds')
+        + stat.standardOptions.tresholds.withMode('absolute')
+        + stat.standardOptions.tresholds.withSteps([
+          stat.thresholdStep.withColor('green')
+          + stat.thresholdStep.withValue(null),
+          stat.thresholdStep.withColor('red')
+          + stat.thresholdStep.withValue(1)
         ])
-        + grafonnet.panel.stat.options.withColorMode('background')
-        + grafonnet.panel.stat.options.withGraphMode('none')
-        + grafonnet.panel.stat.gridPos.withH(4)
-        + grafonnet.panel.stat.gridPos.withW(4),
+        + stat.gridPos.withH(4)
+        + stat.gridPos.withW(4),
 
         $.row('Temperature', collapsed=true)
-        + grafonnet.panel.row.withPanels([
+        + row.withPanels([
           $.timeseriesPanel('Temperature History', queries.temperatureHistory)
-          + grafonnet.panel.timeSeries.fieldConfig.defaults.withUnit('celsius')
-          + grafonnet.panel.timeSeries.options.legend.withCalcs([
+          + timeSeries.options.legend.withCalcs([
             'mean',
             'min',
             'max',
-            'lastNotNull',
+            'lastNotNull'
           ])
-          + grafonnet.panel.timeSeries.options.legend.withDisplayMode('table')
-          + grafonnet.panel.timeSeries.options.legend.withPlacement('right')
-          + grafonnet.panel.timeSeries.options.legend.withShowLegend(true)
-          + grafonnet.panel.timeSeries.options.tooltip.withMode('multi')
-          + grafonnet.panel.timeSeries.options.tooltip.withSort('none')
-          + grafonnet.panel.timeSeries.gridPos.withH(8)
-          + grafonnet.panel.timeSeries.gridPos.withW(24),
+          + timeSeries.options.legend.withDisplayMode('table')
+          + timeSeries.options.legend.withPlacement('right')
+          + timeSeries.options.legend.withShowLegend(true)
+          + timeSeries.options.tooltip.withMode('multi')
+          + timeSeries.options.tooltip.withSort('none')
+          + timeSeries.standardOptions.withUnit('celsius')
+          + timeSeries.gridPos.withH(8)
+          + timeSeries.gridPos.withW(24),
         ])
-        + grafonnet.panel.row.gridPos.withH(1)
-        + grafonnet.panel.row.gridPos.withW(24),
+        + row.gridPos.withH(1)
+        + row.gridPos.withW(24),
 
         $.row('Wear & Tear', collapsed=true)
-        + grafonnet.panel.row.withPanels(
+        + row.withPanels(
           $.makeGrid([
             $.barGaugePanel('Power On Hours', queries.powerOnHours)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.withMin(0)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.withUnit('h')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.color.withMode('thresholds')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withMode('absolute')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withSteps([
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('green')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(null),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('orange')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(17520),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('red')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(35040),
+            + barGauge.options.withOrientation('horizontal')
+            + barGauge.standardOptions.withMin(0)
+            + barGauge.standardOptions.withUnit('h')
+            + barGauge.standardOptions.color.withMode('thresholds')
+            + barGauge.standardOptions.tresholds.withMode('absolute')
+            + barGauge.standardOptions.tresholds.withSteps([
+              barGauge.thresholdStep.withColor('green')
+              + barGauge.thresholdStep.withValue(null),
+              barGauge.thresholdStep.withColor('orange')
+              + barGauge.thresholdStep.withValue(17520),
+              barGauge.thresholdStep.withColor('red')
+              + barGauge.thresholdStep.withValue(35040)
             ])
-            + grafonnet.panel.barGauge.options.withOrientation('horizontal')
-            + grafonnet.panel.barGauge.gridPos.withH(8)
-            + grafonnet.panel.barGauge.gridPos.withW(12),
+            + barGauge.gridPos.withH(8)
+            + barGauge.gridPos.withW(12),
 
             $.barGaugePanel('Start Stop Count', queries.startStopCount)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.withMin(0)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.color.withMode('thresholds')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withMode('absolute')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withSteps([
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('green')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(null),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('orange')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(750),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('red')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(1500),
+            + barGauge.options.withOrientation('horizontal')
+            + barGauge.standardOptions.withMin(0)
+            + barGauge.standardOptions.color.withMode('thresholds')
+            + barGauge.standardOptions.tresholds.withMode('absolute')
+            + barGauge.standardOptions.tresholds.withSteps([
+              barGauge.thresholdStep.withColor('green')
+              + barGauge.thresholdStep.withValue(null),
+              barGauge.thresholdStep.withColor('orange')
+              + barGauge.thresholdStep.withValue(750),
+              barGauge.thresholdStep.withColor('red')
+              + barGauge.thresholdStep.withValue(1500)
             ])
-            + grafonnet.panel.barGauge.options.withOrientation('horizontal')
-            + grafonnet.panel.barGauge.gridPos.withH(8)
-            + grafonnet.panel.barGauge.gridPos.withW(12),
+            + barGauge.gridPos.withH(8)
+            + barGauge.gridPos.withW(12),
 
             $.barGaugePanel('Power Cycle Count', queries.powerCycleCount)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.withMin(0)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.color.withMode('thresholds')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withMode('absolute')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withSteps([
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('green')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(null),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('orange')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(1000),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('red')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(2000),
+            + barGauge.options.withOrientation('horizontal')
+            + barGauge.standardOptions.withMin(0)
+            + barGauge.standardOptions.color.withMode('thresholds')
+            + barGauge.standardOptions.tresholds.withMode('absolute')
+            + barGauge.standardOptions.tresholds.withSteps([
+              barGauge.thresholdStep.withColor('green')
+              + barGauge.thresholdStep.withValue(null),
+              barGauge.thresholdStep.withColor('orange')
+              + barGauge.thresholdStep.withValue(1000),
+              barGauge.thresholdStep.withColor('red')
+              + barGauge.thresholdStep.withValue(2000)
             ])
-            + grafonnet.panel.barGauge.options.withOrientation('horizontal')
-            + grafonnet.panel.barGauge.gridPos.withH(8)
-            + grafonnet.panel.barGauge.gridPos.withW(12),
+            + barGauge.gridPos.withH(8)
+            + barGauge.gridPos.withW(12),
 
             $.barGaugePanel('Load Cycle Count', queries.loadCycleCount)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.withMin(0)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.color.withMode('thresholds')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withMode('absolute')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withSteps([
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('green')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(null),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('orange')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(5000),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('red')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(10000),
+            + barGauge.options.withOrientation('horizontal')
+            + barGauge.standardOptions.withMin(0)
+            + barGauge.standardOptions.color.withMode('thresholds')
+            + barGauge.standardOptions.tresholds.withMode('absolute')
+            + barGauge.standardOptions.tresholds.withSteps([
+              barGauge.thresholdStep.withColor('green')
+              + barGauge.thresholdStep.withValue(null),
+              barGauge.thresholdStep.withColor('orange')
+              + barGauge.thresholdStep.withValue(5000),
+              barGauge.thresholdStep.withColor('red')
+              + barGauge.thresholdStep.withValue(10000)
             ])
-            + grafonnet.panel.barGauge.options.withOrientation('horizontal')
-            + grafonnet.panel.barGauge.gridPos.withH(8)
-            + grafonnet.panel.barGauge.gridPos.withW(12),
+            + barGauge.gridPos.withH(8)
+            + barGauge.gridPos.withW(12),
 
             $.barGaugePanel('Total Data Written', queries.totalDataWritten)
-            + grafonnet.panel.barGauge.withDescription('Please note: This may be slightly incorrect')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.withMin(0)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.withUnit('decbytes')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.color.withMode('thresholds')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withMode('absolute')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withSteps([
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('green')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(null),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('orange')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(40000000000000),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('red')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(60000000000000),
+            + barGauge.options.withOrientation('horizontal')
+            + barGauge.panelOptions.withDescription('Please note: This may be slightly incorrect')
+            + barGauge.standardOptions.withMin(0)
+            + barGauge.standardOptions.withUnit('decbytes')
+            + barGauge.standardOptions.color.withMode('thresholds')
+            + barGauge.standardOptions.tresholds.withMode('absolute')
+            + barGauge.standardOptions.tresholds.withSteps([
+              barGauge.thresholdStep.withColor('green')
+              + barGauge.thresholdStep.withValue(null),
+              barGauge.thresholdStep.withColor('orange')
+              + barGauge.thresholdStep.withValue(40000000000000),
+              barGauge.thresholdStep.withColor('red')
+              + barGauge.thresholdStep.withValue(60000000000000)
             ])
-            + grafonnet.panel.barGauge.options.withOrientation('horizontal')
-            + grafonnet.panel.barGauge.gridPos.withH(8)
-            + grafonnet.panel.barGauge.gridPos.withW(12),
+            + barGauge.gridPos.withH(8)
+            + barGauge.gridPos.withW(12),
 
             $.barGaugePanel('Reallocated Sector Events', queries.reallocatedSectorEvents)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.withMin(0)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.color.withMode('thresholds')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withMode('absolute')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withSteps([
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('green')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(null),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('red')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(1),
+            + barGauge.options.withOrientation('horizontal')
+            + barGauge.standardOptions.withMin(0)
+            + barGauge.standardOptions.color.withMode('thresholds')
+            + barGauge.standardOptions.tresholds.withMode('absolute')
+            + barGauge.standardOptions.tresholds.withSteps([
+              barGauge.thresholdStep.withColor('green')
+              + barGauge.thresholdStep.withValue(null),
+              barGauge.thresholdStep.withColor('red')
+              + barGauge.thresholdStep.withValue(1)
             ])
-            + grafonnet.panel.barGauge.options.withOrientation('horizontal')
-            + grafonnet.panel.barGauge.gridPos.withH(8)
-            + grafonnet.panel.barGauge.gridPos.withW(12),
+            + barGauge.gridPos.withH(8)
+            + barGauge.gridPos.withW(12),
           ])
         )
-        + grafonnet.panel.row.gridPos.withH(1)
-        + grafonnet.panel.row.gridPos.withW(24),
+        + row.gridPos.withH(1)
+        + row.gridPos.withW(24),
 
         $.row('Errors', collapsed=true)
-        + grafonnet.panel.row.withPanels(
+        + row.withPanels(
           $.makeGrid([
             $.barGaugePanel('Raw Read Error', queries.rawReadError)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.withMax(100)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.withMin(0)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.withUnit('percent')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.color.withMode('thresholds')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withMode('absolute')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withSteps([
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('red')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(null),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('green')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(100),
+            + barGauge.options.withOrientation('horizontal')
+            + barGauge.standardOptions.withMax(100)
+            + barGauge.standardOptions.withMin(0)
+            + barGauge.standardOptions.withUnit('percent')
+            + barGauge.standardOptions.color.withMode('thresholds')
+            + barGauge.standardOptions.tresholds.withMode('absolute')
+            + barGauge.standardOptions.tresholds.withSteps([
+              barGauge.thresholdStep.withColor('red')
+              + barGauge.thresholdStep.withValue(null),
+              barGauge.thresholdStep.withColor('green')
+              + barGauge.thresholdStep.withValue(100),
             ])
-            + grafonnet.panel.barGauge.options.withOrientation('horizontal')
-            + grafonnet.panel.barGauge.gridPos.withH(8)
-            + grafonnet.panel.barGauge.gridPos.withW(12),
+            + barGauge.gridPos.withH(8)
+            + barGauge.gridPos.withW(12),
 
             $.barGaugePanel('Seek Error Rate', queries.seekErrorRate)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.withMin(0)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.color.withMode('thresholds')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withMode('absolute')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withSteps([
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('red')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(null),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('green')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(60),
+            + barGauge.options.withOrientation('horizontal')
+            + barGauge.standardOptions.withMin(0)
+            + barGauge.standardOptions.color.withMode('thresholds')
+            + barGauge.standardOptions.tresholds.withMode('absolute')
+            + barGauge.standardOptions.tresholds.withSteps([
+              barGauge.thresholdStep.withColor('red')
+              + barGauge.thresholdStep.withValue(null),
+              barGauge.thresholdStep.withColor('green')
+              + barGauge.thresholdStep.withValue(60),
             ])
-            + grafonnet.panel.barGauge.options.withOrientation('horizontal')
-            + grafonnet.panel.barGauge.gridPos.withH(8)
-            + grafonnet.panel.barGauge.gridPos.withW(12),
+            + barGauge.gridPos.withH(8)
+            + barGauge.gridPos.withW(12),
 
             $.barGaugePanel('Spin Retry Count', queries.spinRetryCount)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.withMin(0)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.color.withMode('thresholds')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withMode('absolute')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withSteps([
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('green')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(null),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('orange')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(1),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('red')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(10),
+            + barGauge.options.withOrientation('horizontal')
+            + barGauge.standardOptions.withMin(0)
+            + barGauge.standardOptions.color.withMode('thresholds')
+            + barGauge.standardOptions.tresholds.withMode('absolute')
+            + barGauge.standardOptions.tresholds.withSteps([
+              barGauge.thresholdStep.withColor('green')
+              + barGauge.thresholdStep.withValue(null),
+              barGauge.thresholdStep.withColor('orange')
+              + barGauge.thresholdStep.withValue(1),
+              barGauge.thresholdStep.withColor('red')
+              + barGauge.thresholdStep.withValue(10),
             ])
-            + grafonnet.panel.barGauge.options.withOrientation('horizontal')
-            + grafonnet.panel.barGauge.gridPos.withH(8)
-            + grafonnet.panel.barGauge.gridPos.withW(12),
+            + barGauge.gridPos.withH(8)
+            + barGauge.gridPos.withW(12),
 
             $.barGaugePanel('Command Timeout Count', queries.commandTimeoutCount)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.withMin(0)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.color.withMode('thresholds')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withMode('absolute')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withSteps([
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('green')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(null),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('orange')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(1),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('red')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(10),
+            + barGauge.options.withOrientation('horizontal')
+            + barGauge.standardOptions.withMin(0)
+            + barGauge.standardOptions.color.withMode('thresholds')
+            + barGauge.standardOptions.tresholds.withMode('absolute')
+            + barGauge.standardOptions.tresholds.withSteps([
+              barGauge.thresholdStep.withColor('green')
+              + barGauge.thresholdStep.withValue(null),
+              barGauge.thresholdStep.withColor('orange')
+              + barGauge.thresholdStep.withValue(1),
+              barGauge.thresholdStep.withColor('red')
+              + barGauge.thresholdStep.withValue(10),
             ])
-            + grafonnet.panel.barGauge.options.withOrientation('horizontal')
-            + grafonnet.panel.barGauge.gridPos.withH(8)
-            + grafonnet.panel.barGauge.gridPos.withW(12),
+            + barGauge.gridPos.withH(8)
+            + barGauge.gridPos.withW(12),
 
             $.barGaugePanel('Current Pending Sector Count', queries.currentPendingSectorCount)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.withMin(0)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.color.withMode('thresholds')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withMode('absolute')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withSteps([
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('green')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(null),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('orange')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(1),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('red')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(10),
+            + barGauge.options.withOrientation('horizontal')
+            + barGauge.standardOptions.withMin(0)
+            + barGauge.standardOptions.color.withMode('thresholds')
+            + barGauge.standardOptions.tresholds.withMode('absolute')
+            + barGauge.standardOptions.tresholds.withSteps([
+              barGauge.thresholdStep.withColor('green')
+              + barGauge.thresholdStep.withValue(null),
+              barGauge.thresholdStep.withColor('orange')
+              + barGauge.thresholdStep.withValue(1),
+              barGauge.thresholdStep.withColor('red')
+              + barGauge.thresholdStep.withValue(10),
             ])
-            + grafonnet.panel.barGauge.options.withOrientation('horizontal')
-            + grafonnet.panel.barGauge.gridPos.withH(8)
-            + grafonnet.panel.barGauge.gridPos.withW(12),
+            + barGauge.gridPos.withH(8)
+            + barGauge.gridPos.withW(12),
 
             $.barGaugePanel('Offline Uncorrectable Sector Count', queries.offlineUncorrectableSectorCount)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.withMin(0)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.color.withMode('thresholds')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withMode('absolute')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withSteps([
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('green')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(null),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('orange')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(1),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('red')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(10),
+            + barGauge.options.withOrientation('horizontal')
+            + barGauge.standardOptions.withMin(0)
+            + barGauge.standardOptions.color.withMode('thresholds')
+            + barGauge.standardOptions.tresholds.withMode('absolute')
+            + barGauge.standardOptions.tresholds.withSteps([
+              barGauge.thresholdStep.withColor('green')
+              + barGauge.thresholdStep.withValue(null),
+              barGauge.thresholdStep.withColor('orange')
+              + barGauge.thresholdStep.withValue(1),
+              barGauge.thresholdStep.withColor('red')
+              + barGauge.thresholdStep.withValue(10),
             ])
-            + grafonnet.panel.barGauge.options.withOrientation('horizontal')
-            + grafonnet.panel.barGauge.gridPos.withH(8)
-            + grafonnet.panel.barGauge.gridPos.withW(12),
+            + barGauge.gridPos.withH(8)
+            + barGauge.gridPos.withW(12),
 
             $.barGaugePanel('Reported Uncorrectable Errors', queries.reportedUncorrectableErrors)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.withMin(0)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.color.withMode('thresholds')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withMode('absolute')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withSteps([
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('green')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(null),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('orange')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(1),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('red')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(10),
+            + barGauge.options.withOrientation('horizontal')
+            + barGauge.standardOptions.withMin(0)
+            + barGauge.standardOptions.color.withMode('thresholds')
+            + barGauge.standardOptions.tresholds.withMode('absolute')
+            + barGauge.standardOptions.tresholds.withSteps([
+              barGauge.thresholdStep.withColor('green')
+              + barGauge.thresholdStep.withValue(null),
+              barGauge.thresholdStep.withColor('orange')
+              + barGauge.thresholdStep.withValue(1),
+              barGauge.thresholdStep.withColor('red')
+              + barGauge.thresholdStep.withValue(10),
             ])
-            + grafonnet.panel.barGauge.options.withOrientation('horizontal')
-            + grafonnet.panel.barGauge.gridPos.withH(8)
-            + grafonnet.panel.barGauge.gridPos.withW(12),
+            + barGauge.gridPos.withH(8)
+            + barGauge.gridPos.withW(12),
 
             $.barGaugePanel('UltraDMA CRC Error', queries.ultradmaCrcError)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.withMin(0)
-            + grafonnet.panel.barGauge.fieldConfig.defaults.color.withMode('thresholds')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withMode('absolute')
-            + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.withSteps([
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('green')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(null),
-              grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withColor('red')
-              + grafonnet.panel.barGauge.fieldConfig.defaults.thresholds.steps.withValue(1),
+            + barGauge.options.withOrientation('horizontal')
+            + barGauge.standardOptions.withMin(0)
+            + barGauge.standardOptions.color.withMode('thresholds')
+            + barGauge.standardOptions.tresholds.withMode('absolute')
+            + barGauge.standardOptions.tresholds.withSteps([
+              barGauge.thresholdStep.withColor('green')
+              + barGauge.thresholdStep.withValue(null),
+              barGauge.thresholdStep.withColor('red')
+              + barGauge.thresholdStep.withValue(1),
             ])
-            + grafonnet.panel.barGauge.options.withOrientation('horizontal')
-            + grafonnet.panel.barGauge.gridPos.withH(8)
-            + grafonnet.panel.barGauge.gridPos.withW(12),
+            + barGauge.gridPos.withH(8)
+            + barGauge.gridPos.withW(12),
           ])
         )
-        + grafonnet.panel.row.gridPos.withH(1)
-        + grafonnet.panel.row.gridPos.withW(24),
+        + row.gridPos.withH(1)
+        + row.gridPos.withW(24),
       ])
     )
   ),
