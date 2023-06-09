@@ -2,50 +2,24 @@ local grafonnet = import 'github.com/grafana/grafonnet/gen/grafonnet-v9.4.0/main
 
 local queries = import './queries.libsonnet';
 
+local dashboard = grafonnet.dashboard;
+local table = grafonnet.panel.table;
+local timeSeries = grafonnet.panel.timeSeries;
+
 (import '../dashboard-utils.libsonnet') {
   'blackbox-exporter-overview.json': (
     $.dashboard('Blackbox Exporter Overview')
-    + $.addMultiVariable('cluster', 'probe_success', 'cluster', allValue='.+')
-    + grafonnet.dashboard.withPanels(
+    + $.addMultiVariable('cluster', 'probe_success', 'cluster')
+    + dashboard.withPanels(
       $.makeGrid([
         $.tablePanel('Probes (Up/Down) - Current Status', queries.probesCurrentStatus)
-        + grafonnet.panel.table.fieldConfig.defaults.withCustom({
-          filterable: true,
+        + table.fieldConfig.defaults.withCustom({
+          filterable: true
         })
-        + grafonnet.panel.table.fieldConfig.withOverrides([
-          grafonnet.panel.table.fieldConfig.overrides.withProperties([
-            grafonnet.panel.table.fieldConfig.overrides.properties.withId('mappings')
-            + grafonnet.panel.table.fieldConfig.overrides.properties.withValue([
-              {
-                type: 'value',
-                options: {
-                  '0': {
-                    color: 'red',
-                    text: 'Down'
-                  },
-                  '1': {
-                    color: 'green',
-                    text: 'Up'
-                  }
-                }
-              }
-            ]),
-
-            grafonnet.panel.table.fieldConfig.overrides.properties.withId('custom.cellOptions')
-            + grafonnet.panel.table.fieldConfig.overrides.properties.withValue({
-              type: 'color-background'
-            })
-          ])
-          + grafonnet.panel.table.fieldConfig.overrides.matcher.withId('byName')
-          + grafonnet.panel.table.fieldConfig.overrides.matcher.withOptions('Status')
-        ])
-        + grafonnet.panel.table.options.withCellHeight('sm')
-        + grafonnet.panel.table.options.withFooter()
-        + grafonnet.panel.table.options.withShowHeader()
-        + grafonnet.panel.table.options.footer.TableFooterOptions.withEnablePagination(true)
-        + grafonnet.panel.table.withTransformations([
-          grafonnet.panel.table.transformations.withId('organize')
-          + grafonnet.panel.table.transformations.withOptions({
+        + table.options.footer.TableFooterOptions.withEnablePagination(true)
+        + table.queryOptions.withTransformations([
+          table.transformation.withId('organize')
+          + table.transformation.withOptions({
             excludeByName: {
               Time: true,
               __name__: true,
@@ -61,59 +35,58 @@ local queries = import './queries.libsonnet';
             }
           })
         ])
-        + grafonnet.panel.table.gridPos.withH(8)
-        + grafonnet.panel.table.gridPos.withW(10),
+        + table.standardOptions.withOverrides([
+          table.fieldOverride.byName.new('Status')
+          + table.fieldOverride.byName.withPropertiesFromOptions(
+            table.standardOptions.withMappings([
+              table.valueMapping.ValueMap.withOptions({
+                '0': {
+                  color: 'red',
+                  text: 'Down'
+                },
+                '1': {
+                  color: 'green',
+                  text: 'Up'
+                }
+              })
+              + table.valueMapping.ValueMap.withType('value')
+            ])
+          )
+          + table.fieldOverride.byName.withProperty('custom.cellOptions', {
+            type: 'color-background'
+          })
+        ])
+        + table.gridPos.withH(8)
+        + table.gridPos.withW(10),
 
         $.timeseriesPanel('Probes (Up/Down) - Historic Status', queries.probesHistoricStatus)
-        + grafonnet.panel.timeSeries.options.tooltip.withMode('multi')
-        + grafonnet.panel.timeSeries.options.tooltip.withSort('desc')
-        + grafonnet.panel.timeSeries.gridPos.withH(8)
-        + grafonnet.panel.timeSeries.gridPos.withW(14),
+        + timeSeries.options.tooltip.withMode('multi')
+        + timeSeries.options.tooltip.withSort('desc')
+        + timeSeries.standardOptions.withDecimals(0)
+        + timeSeries.standardOptions.withMappings([
+          timeSeries.valueMapping.ValueMap.withOptions({
+            '0': {
+              text: 'Down'
+            },
+            '1': {
+              text: 'Up'
+            }
+          })
+          + timeSeries.valueMapping.ValueMap.withType('value')
+        ])
+        + timeSeries.standardOptions.withMax(1)
+        + timeSeries.standardOptions.withMin(0)
+        + timeSeries.gridPos.withH(8)
+        + timeSeries.gridPos.withW(14),
 
         $.tablePanel('SSL Certificate Expiry', queries.sslCertificateExpiry)
-        + grafonnet.panel.table.fieldConfig.withOverrides([
-          grafonnet.panel.table.fieldConfig.overrides.withProperties([
-            grafonnet.panel.table.fieldConfig.overrides.properties.withId('unit')
-            + grafonnet.panel.table.fieldConfig.overrides.properties.withValue('s'),
-
-            grafonnet.panel.table.fieldConfig.overrides.properties.withId('thresholds')
-            + grafonnet.panel.table.fieldConfig.overrides.properties.withValue({
-              mode: 'absolute',
-              steps: [
-                {
-                  color: 'red',
-                  value: null
-                },
-                {
-                  color: 'orange',
-                  value: 604800
-                },
-                {
-                  color: 'green',
-                  value: 2419200
-                }
-              ]
-            }),
-
-            grafonnet.panel.table.fieldConfig.overrides.properties.withId('custom.cellOptions')
-            + grafonnet.panel.table.fieldConfig.overrides.properties.withValue({
-              type: 'color-background'
-            })
-          ])
-          + grafonnet.panel.table.fieldConfig.overrides.matcher.withId('byName')
-          + grafonnet.panel.table.fieldConfig.overrides.matcher.withOptions('Time left')
-        ])
-        + grafonnet.panel.table.fieldConfig.defaults.withCustom({
-          filterable: true,
+        + table.fieldConfig.defaults.withCustom({
+          filterable: true
         })
-        + grafonnet.panel.table.fieldConfig.defaults.color.withMode('thresholds')
-        + grafonnet.panel.table.options.withCellHeight('sm')
-        + grafonnet.panel.table.options.withFooter()
-        + grafonnet.panel.table.options.withShowHeader()
-        + grafonnet.panel.table.options.footer.TableFooterOptions.withEnablePagination(true)
-        + grafonnet.panel.table.withTransformations([
-          grafonnet.panel.table.transformations.withId('organize')
-          + grafonnet.panel.table.transformations.withOptions({
+        + table.options.footer.TableFooterOptions.withEnablePagination(true)
+        + table.queryOptions.withTransformations([
+          table.transformation.withId('organize')
+          + table.transformation.withOptions({
             excludeByName: {
               Time: true,
               __name__: true
@@ -127,8 +100,41 @@ local queries = import './queries.libsonnet';
             }
           })
         ])
-        + grafonnet.panel.table.gridPos.withH(8)
-        + grafonnet.panel.table.gridPos.withW(10),
+        + table.standardOptions.withOverrides([
+          table.fieldOverride.byName.new('Time left')
+          + table.fieldOverride.byName.withPropertiesFromOptions(
+            table.standardOptions.withUnit('s')
+          )
+          + table.fieldOverride.byName.withProperty('custom.cellOptions', {
+            type: 'color-background'
+          })
+        ])
+        + table.standardOptions.color.withMode('thresholds')
+        + table.standardOptions.tresholds.withMode('absolute')
+        + table.standardOptions.tresholds.withSteps([
+          table.thresholdStep.withColor('red')
+          + table.thresholdStep.withValue(null),
+          table.thresholdStep.withColor('orange')
+          + table.thresholdStep.withValue(604800),
+          table.thresholdStep.withColor('green')
+          + table.thresholdStep.withValue(2419200),
+        ])
+        + table.gridPos.withH(8)
+        + table.gridPos.withW(10),
+
+        $.timeseriesPanel('DNS Lookup', queries.dnsLookup)
+        + timeSeries.options.tooltip.withMode('multi')
+        + timeSeries.options.tooltip.withSort('desc')
+        + timeSeries.standardOptions.withUnit('s')
+        + timeSeries.gridPos.withH(8)
+        + timeSeries.gridPos.withW(14),
+
+        $.timeseriesPanel('Probe Duration', queries.probeDuration)
+        + timeSeries.options.tooltip.withMode('multi')
+        + timeSeries.options.tooltip.withSort('desc')
+        + timeSeries.standardOptions.withUnit('s')
+        + timeSeries.gridPos.withH(8)
+        + timeSeries.gridPos.withW(24),
       ])
     )
   )
