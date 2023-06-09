@@ -1,123 +1,140 @@
 local grafonnet = import 'github.com/grafana/grafonnet/gen/grafonnet-v9.4.0/main.libsonnet';
 
+local dashboard = grafonnet.dashboard;
+local panel = grafonnet.panel;
+
 {
   dashboard(title, uid='')::
-    grafonnet.dashboard.new(title)
-    + grafonnet.dashboard.withEditable()
-    + grafonnet.dashboard.withSchemaVersion()
-    + grafonnet.dashboard.withStyle()
-    + grafonnet.dashboard.withTimezone()
-    + grafonnet.dashboard.withUid(uid)
-    + grafonnet.dashboard.withTags($._config.tags)
-    + grafonnet.dashboard.withVariables(
-      grafonnet.dashboard.variable.datasource.new('datasource', 'prometheus'),
-    )
-    + grafonnet.dashboard.graphTooltip.withSharedCrosshair(),
+    dashboard.new(title)
+    + dashboard.withEditable()
+    + dashboard.withSchemaVersion()
+    + dashboard.withStyle()
+    + dashboard.withTags($._config.tags)
+    + dashboard.withTimezone()
+    + dashboard.withUid(uid)
+    + dashboard.withVariables([
+      dashboard.variable.datasource.new('datasource', 'prometheus'),
+    ])
+    + dashboard.graphTooltip.withSharedCrosshair(),
 
   addVariable(name, metric_name, label_name, hide=0, allValue=null, includeAll=false)::
-    grafonnet.dashboard.withVariables(
-      grafonnet.dashboard.variable.query.new(name)
-      + grafonnet.dashboard.variable.query.withDatasource('prometheus', '${datasource}')
-      + grafonnet.dashboard.variable.query.withSort(2)
-      + grafonnet.dashboard.variable.query.queryTypes.withLabelValues(label_name, metric_name)
-      + grafonnet.dashboard.variable.query.selectionOptions.withIncludeAll(includeAll, allValue)
-    ),
+    local variable = dashboard.variable;
+
+    dashboard.withVariables([
+      variable.query.new(name)
+      + variable.query.withDatasource('prometheus', '${datasource}')
+      + variable.query.withSort(1)
+      + variable.query.queryTypes.withLabelValues(label_name, metric_name)
+      + variable.query.selectionOptions.withIncludeAll(includeAll, allValue)
+    ]),
 
   addMultiVariable(name, metric_name, label_name, hide=0, allValue='.+')::
-    grafonnet.dashboard.withVariables(
-      grafonnet.dashboard.variable.query.new(name)
-      + grafonnet.dashboard.variable.query.withDatasource('prometheus', '${datasource}')
-      + grafonnet.dashboard.variable.query.withSort(2)
-      + grafonnet.dashboard.variable.query.queryTypes.withLabelValues(label_name, metric_name)
-      + grafonnet.dashboard.variable.query.selectionOptions.withIncludeAll(true, allValue)
-      + grafonnet.dashboard.variable.query.selectionOptions.withMulti()
-    ),
+    local variable = dashboard.variable;
+
+    dashboard.withVariables([
+      variable.query.new(name)
+      + variable.query.withDatasource('prometheus', '${datasource}')
+      + variable.query.withSort(1)
+      + variable.query.queryTypes.withLabelValues(label_name, metric_name)
+      + variable.query.selectionOptions.withIncludeAll(true, allValue)
+      + variable.query.selectionOptions.withMulti()
+    ]),
 
   row(title, collapsed=false)::
-    grafonnet.panel.row.new(title)
-    + grafonnet.panel.row.withCollapsed(collapsed),
+    local row = panel.row;
+
+    row.new(title)
+    + row.withCollapsed(collapsed),
 
   barGaugePanel(title, targets)::
-    local panel = grafonnet.panel.barGauge;
+    local barGauge = panel.barGauge;
+    local options = barGauge.options;
+    local standardOptions = barGauge.standardOptions;
 
-    panel.new(title)
-    + panel.withTargets(targets)
+    barGauge.new(title)
+    + barGauge.queryOptions.withTargets(targets)
     // Default values
-    + panel.fieldConfig.defaults.color.withMode('fixed')
-    + panel.options.withDisplayMode('gradient')
-    + panel.options.withMinVizHeight()
-    + panel.options.withMinVizWidth()
-    + panel.options.withOrientation('auto')
-    + panel.options.withShowUnfilled()
-    + panel.options.withValueMode('color')
-    + panel.options.reduceOptions.withCalcs([
-      'lastNotNull',
+    + options.withDisplayMode('gradient')
+    + options.withMinVizHeight()
+    + options.withMinVizWidth()
+    + options.withOrientation('auto')
+    + options.withShowUnfilled()
+    + options.withValueMode('color')
+    + options.reduceOptions.withCalcs([
+      'lastNotNull'
     ])
-    + panel.options.reduceOptions.withFields('')
-    + panel.options.reduceOptions.withValues(false),
+    + options.reduceOptions.withFields('')
+    + options.reduceOptions.withValues(false)
+    + standardOptions.color.withMode('fixed'),
 
   statPanel(title, targets)::
-    local panel = grafonnet.panel.stat;
+    local stat = panel.stat;
+    local options = stat.options;
+    local standardOptions = stat.standardOptions;
 
-    panel.new(title)
-    + panel.withTargets(targets)
+    stat.new(title)
+    + stat.queryOptions.withTargets(targets)
     // Default values
-    + panel.fieldConfig.defaults.color.withMode('fixed')
-    + panel.options.withColorMode('value')
-    + panel.options.withGraphMode('area')
-    + panel.options.withJustifyMode('auto')
-    + panel.options.withOrientation('auto')
-    + panel.options.withTextMode('auto')
-    + panel.options.reduceOptions.withCalcs([
-      'lastNotNull',
+    + options.withColorMode('value')
+    + options.withGraphMode('area')
+    + options.withJustifyMode('auto')
+    + options.withOrientation('auto')
+    + options.withTextMode('auto')
+    + options.reduceOptions.withCalcs([
+      'lastNotNull'
     ])
-    + panel.options.reduceOptions.withFields('')
-    + panel.options.reduceOptions.withValues(false),
+    + options.reduceOptions.withFields('')
+    + options.reduceOptions.withValues(false)
+    + standardOptions.color.withMode('fixed'),
 
   tablePanel(title, targets)::
-    local panel = grafonnet.panel.table;
+    local table = panel.table;
+    local options = table.options;
+    local standardOptions = table.standardOptions;
 
-    panel.new(title)
-    + panel.withTargets(targets)
+    table.new(title)
+    + table.queryOptions.withTargets(targets)
     // Default values
-    + panel.fieldConfig.defaults.withCustom({
+    + options.withCellHeight('sm')
+    + options.withFooter()
+    + options.withShowHeader()
+    + standardOptions.color.withMode('fixed')
+    + table.fieldConfig.defaults.withCustom({
       align: 'auto',
       cellOptions: {
         type: 'auto',
       },
       inspect: false,
-    })
-    + panel.fieldConfig.defaults.color.withMode('fixed')
-    + panel.options.withCellHeight('sm')
-    + panel.options.withFooter()
-    + panel.options.withShowHeader(),
+    }),
 
   timeseriesPanel(title, targets)::
-    local panel = grafonnet.panel.timeSeries;
+    local timeSeries = panel.timeSeries;
+    local fieldConfig = timeSeries.fieldConfig;
+    local standardOptions = timeSeries.standardOptions;
 
-    panel.new(title)
-    + panel.withTargets(targets)
+    timeSeries.new(title)
+    + timeSeries.queryOptions.withTargets(targets)
     // Default values
-    + panel.fieldConfig.defaults.color.withMode('palette-classic')
-    + panel.fieldConfig.defaults.custom.withAxisCenteredZero(false)
-    + panel.fieldConfig.defaults.custom.withAxisColorMode('text')
-    + panel.fieldConfig.defaults.custom.withAxisLabel('')
-    + panel.fieldConfig.defaults.custom.withAxisPlacement('auto')
-    + panel.fieldConfig.defaults.custom.withBarAlignment(0)
-    + panel.fieldConfig.defaults.custom.withDrawStyle('line')
-    + panel.fieldConfig.defaults.custom.withFillOpacity(0)
-    + panel.fieldConfig.defaults.custom.withGradientMode('none')
-    + panel.fieldConfig.defaults.custom.withLineInterpolation('linear')
-    + panel.fieldConfig.defaults.custom.withLineWidth(1)
-    + panel.fieldConfig.defaults.custom.withPointSize(5)
-    + panel.fieldConfig.defaults.custom.withShowPoints('auto')
-    + panel.fieldConfig.defaults.custom.withSpanNulls(false)
-    + panel.fieldConfig.defaults.custom.hideFrom.withLegend(false)
-    + panel.fieldConfig.defaults.custom.hideFrom.withTooltip(false)
-    + panel.fieldConfig.defaults.custom.hideFrom.withViz(false)
-    + panel.fieldConfig.defaults.custom.scaleDistribution.withType('linear')
-    + panel.fieldConfig.defaults.custom.stacking.withMode('none')
-    + panel.fieldConfig.defaults.custom.thresholdsStyle.withMode('off'),
+    + fieldConfig.defaults.custom.withAxisCenteredZero(false)
+    + fieldConfig.defaults.custom.withAxisColorMode('text')
+    + fieldConfig.defaults.custom.withAxisLabel('')
+    + fieldConfig.defaults.custom.withAxisPlacement('auto')
+    + fieldConfig.defaults.custom.withBarAlignment(0)
+    + fieldConfig.defaults.custom.withDrawStyle('line')
+    + fieldConfig.defaults.custom.withFillOpacity(0)
+    + fieldConfig.defaults.custom.withGradientMode('none')
+    + fieldConfig.defaults.custom.withLineInterpolation('linear')
+    + fieldConfig.defaults.custom.withLineWidth(1)
+    + fieldConfig.defaults.custom.withPointSize(5)
+    + fieldConfig.defaults.custom.withShowPoints('auto')
+    + fieldConfig.defaults.custom.withSpanNulls(false)
+    + fieldConfig.defaults.custom.hideFrom.withLegend(false)
+    + fieldConfig.defaults.custom.hideFrom.withTooltip(false)
+    + fieldConfig.defaults.custom.hideFrom.withViz(false)
+    + fieldConfig.defaults.custom.scaleDistribution.withType('linear')
+    + fieldConfig.defaults.custom.stacking.withMode('none')
+    + fieldConfig.defaults.custom.thresholdsStyle.withMode('off')
+    + standardOptions.color.withMode('palette-classic'),
 
   makeGrid(panels)::
     std.foldl(
