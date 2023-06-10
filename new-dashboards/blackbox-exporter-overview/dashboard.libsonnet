@@ -14,7 +14,7 @@ local timeSeries = grafonnet.panel.timeSeries;
       $.makeGrid([
         $.tablePanel('Probes (Up/Down) - Current Status', queries.probesCurrentStatus)
         + table.fieldConfig.defaults.withCustom({
-          filterable: true
+          filterable: true,
         })
         + table.options.footer.TableFooterOptions.withEnablePagination(true)
         + table.queryOptions.withTransformations([
@@ -24,16 +24,16 @@ local timeSeries = grafonnet.panel.timeSeries;
               Time: true,
               __name__: true,
               host: true,
-              namespace: true
+              namespace: true,
             },
             indexByName: {},
             renameByName: {
               cluster: 'Cluster',
               instance: 'Instance',
               job: 'Job',
-              Value: 'Status'
-            }
-          })
+              Value: 'Status',
+            },
+          }),
         ])
         + table.standardOptions.withOverrides([
           table.fieldOverride.byName.new('Status')
@@ -42,19 +42,19 @@ local timeSeries = grafonnet.panel.timeSeries;
               table.valueMapping.ValueMap.withOptions({
                 '0': {
                   color: 'red',
-                  text: 'Down'
+                  text: 'Down',
                 },
                 '1': {
                   color: 'green',
-                  text: 'Up'
-                }
+                  text: 'Up',
+                },
               })
-              + table.valueMapping.ValueMap.withType('value')
+              + table.valueMapping.ValueMap.withType('value'),
             ])
           )
           + table.fieldOverride.byName.withProperty('custom.cellOptions', {
-            type: 'color-background'
-          })
+            type: 'color-background',
+          }),
         ])
         + table.gridPos.withH(8)
         + table.gridPos.withW(10),
@@ -66,13 +66,13 @@ local timeSeries = grafonnet.panel.timeSeries;
         + timeSeries.standardOptions.withMappings([
           timeSeries.valueMapping.ValueMap.withOptions({
             '0': {
-              text: 'Down'
+              text: 'Down',
             },
             '1': {
-              text: 'Up'
-            }
+              text: 'Up',
+            },
           })
-          + timeSeries.valueMapping.ValueMap.withType('value')
+          + timeSeries.valueMapping.ValueMap.withType('value'),
         ])
         + timeSeries.standardOptions.withMax(1)
         + timeSeries.standardOptions.withMin(0)
@@ -81,7 +81,7 @@ local timeSeries = grafonnet.panel.timeSeries;
 
         $.tablePanel('SSL Certificate Expiry', queries.sslCertificateExpiry)
         + table.fieldConfig.defaults.withCustom({
-          filterable: true
+          filterable: true,
         })
         + table.options.footer.TableFooterOptions.withEnablePagination(true)
         + table.queryOptions.withTransformations([
@@ -89,16 +89,16 @@ local timeSeries = grafonnet.panel.timeSeries;
           + table.transformation.withOptions({
             excludeByName: {
               Time: true,
-              __name__: true
+              __name__: true,
             },
             indexByName: {},
             renameByName: {
               cluster: 'Cluster',
               instance: 'Instance',
               job: 'Job',
-              Value: 'Time left'
-            }
-          })
+              Value: 'Time left',
+            },
+          }),
         ])
         + table.standardOptions.withOverrides([
           table.fieldOverride.byName.new('Time left')
@@ -106,8 +106,8 @@ local timeSeries = grafonnet.panel.timeSeries;
             table.standardOptions.withUnit('s')
           )
           + table.fieldOverride.byName.withProperty('custom.cellOptions', {
-            type: 'color-background'
-          })
+            type: 'color-background',
+          }),
         ])
         + table.standardOptions.color.withMode('thresholds')
         + table.standardOptions.tresholds.withMode('absolute')
@@ -137,5 +137,5 @@ local timeSeries = grafonnet.panel.timeSeries;
         + timeSeries.gridPos.withW(24),
       ])
     )
-  )
+  ),
 }

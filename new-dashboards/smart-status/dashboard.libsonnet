@@ -59,7 +59,7 @@ local timeSeries = grafonnet.panel.timeSeries;
               model_family: 'Model Family',
               serial_number: 'Serial Number',
             },
-          })
+          }),
         ])
         + table.gridPos.withH(8)
         + table.gridPos.withW(20),
@@ -73,7 +73,7 @@ local timeSeries = grafonnet.panel.timeSeries;
           stat.thresholdStep.withColor('green')
           + stat.thresholdStep.withValue(null),
           stat.thresholdStep.withColor('red')
-          + stat.thresholdStep.withValue(1)
+          + stat.thresholdStep.withValue(1),
         ])
         + stat.gridPos.withH(4)
         + stat.gridPos.withW(4),
@@ -85,7 +85,7 @@ local timeSeries = grafonnet.panel.timeSeries;
             'mean',
             'min',
             'max',
-            'lastNotNull'
+            'lastNotNull',
           ])
           + timeSeries.options.legend.withDisplayMode('table')
           + timeSeries.options.legend.withPlacement('right')
@@ -114,7 +114,7 @@ local timeSeries = grafonnet.panel.timeSeries;
               barGauge.thresholdStep.withColor('orange')
               + barGauge.thresholdStep.withValue(17520),
               barGauge.thresholdStep.withColor('red')
-              + barGauge.thresholdStep.withValue(35040)
+              + barGauge.thresholdStep.withValue(35040),
             ])
             + barGauge.gridPos.withH(8)
             + barGauge.gridPos.withW(12),
@@ -130,7 +130,7 @@ local timeSeries = grafonnet.panel.timeSeries;
               barGauge.thresholdStep.withColor('orange')
               + barGauge.thresholdStep.withValue(750),
               barGauge.thresholdStep.withColor('red')
-              + barGauge.thresholdStep.withValue(1500)
+              + barGauge.thresholdStep.withValue(1500),
             ])
             + barGauge.gridPos.withH(8)
             + barGauge.gridPos.withW(12),
@@ -146,7 +146,7 @@ local timeSeries = grafonnet.panel.timeSeries;
               barGauge.thresholdStep.withColor('orange')
               + barGauge.thresholdStep.withValue(1000),
               barGauge.thresholdStep.withColor('red')
-              + barGauge.thresholdStep.withValue(2000)
+              + barGauge.thresholdStep.withValue(2000),
             ])
             + barGauge.gridPos.withH(8)
             + barGauge.gridPos.withW(12),
@@ -162,7 +162,7 @@ local timeSeries = grafonnet.panel.timeSeries;
               barGauge.thresholdStep.withColor('orange')
               + barGauge.thresholdStep.withValue(5000),
               barGauge.thresholdStep.withColor('red')
-              + barGauge.thresholdStep.withValue(10000)
+              + barGauge.thresholdStep.withValue(10000),
             ])
             + barGauge.gridPos.withH(8)
             + barGauge.gridPos.withW(12),
@@ -180,7 +180,7 @@ local timeSeries = grafonnet.panel.timeSeries;
               barGauge.thresholdStep.withColor('orange')
               + barGauge.thresholdStep.withValue(40000000000000),
               barGauge.thresholdStep.withColor('red')
-              + barGauge.thresholdStep.withValue(60000000000000)
+              + barGauge.thresholdStep.withValue(60000000000000),
             ])
             + barGauge.gridPos.withH(8)
             + barGauge.gridPos.withW(12),
@@ -194,7 +194,7 @@ local timeSeries = grafonnet.panel.timeSeries;
               barGauge.thresholdStep.withColor('green')
               + barGauge.thresholdStep.withValue(null),
               barGauge.thresholdStep.withColor('red')
-              + barGauge.thresholdStep.withValue(1)
+              + barGauge.thresholdStep.withValue(1),
             ])
             + barGauge.gridPos.withH(8)
             + barGauge.gridPos.withW(12),

@@ -25,7 +25,7 @@ local panel = grafonnet.panel;
       + variable.query.withDatasource('prometheus', '${datasource}')
       + variable.query.withSort(1)
       + variable.query.queryTypes.withLabelValues(label_name, metric_name)
-      + variable.query.selectionOptions.withIncludeAll(includeAll, allValue)
+      + variable.query.selectionOptions.withIncludeAll(includeAll, allValue),
     ]),
 
   addMultiVariable(name, metric_name, label_name, hide=0, allValue='.+')::
@@ -37,7 +37,7 @@ local panel = grafonnet.panel;
       + variable.query.withSort(1)
       + variable.query.queryTypes.withLabelValues(label_name, metric_name)
       + variable.query.selectionOptions.withIncludeAll(true, allValue)
-      + variable.query.selectionOptions.withMulti()
+      + variable.query.selectionOptions.withMulti(),
     ]),
 
   row(title, collapsed=false)::
@@ -61,7 +61,7 @@ local panel = grafonnet.panel;
     + options.withShowUnfilled()
     + options.withValueMode('color')
     + options.reduceOptions.withCalcs([
-      'lastNotNull'
+      'lastNotNull',
     ])
     + options.reduceOptions.withFields('')
     + options.reduceOptions.withValues(false)
@@ -81,7 +81,7 @@ local panel = grafonnet.panel;
     + options.withOrientation('auto')
     + options.withTextMode('auto')
     + options.reduceOptions.withCalcs([
-      'lastNotNull'
+      'lastNotNull',
     ])
     + options.reduceOptions.withFields('')
     + options.reduceOptions.withValues(false)

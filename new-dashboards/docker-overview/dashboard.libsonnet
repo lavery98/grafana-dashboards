@@ -111,5 +111,5 @@ local timeSeries = grafonnet.panel.timeSeries;
         + timeSeries.gridPos.withW(12),
       ])
     )
-  )
+  ),
 }
