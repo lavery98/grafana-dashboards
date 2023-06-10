@@ -5,6 +5,7 @@ local queries = import './queries.libsonnet';
 local dashboard = grafonnet.dashboard;
 local stat = grafonnet.panel.stat;
 local table = grafonnet.panel.table;
+local timeSeries = grafonnet.panel.timeSeries;
 
 (import '../dashboard-utils.libsonnet') {
   'snmp-interface-status.json': (
@@ -187,6 +188,54 @@ local table = grafonnet.panel.table;
         ])
         + table.gridPos.withH(3)
         + table.gridPos.withW(9),
+
+        $.timeseriesPanel('Traffic', queries.traffic)
+        + timeSeries.options.legend.withShowLegend(false)
+        + timeSeries.options.tooltip.withMode('multi')
+        + timeSeries.options.tooltip.withSort('desc')
+        + timeSeries.standardOptions.withUnit('bps')
+        + timeSeries.gridPos.withH(9)
+        + timeSeries.gridPos.withW(12),
+
+        $.timeseriesPanel('Broadcast Packets', queries.broadcastPackets)
+        + timeSeries.options.legend.withShowLegend(false)
+        + timeSeries.options.tooltip.withMode('multi')
+        + timeSeries.options.tooltip.withSort('desc')
+        + timeSeries.standardOptions.withUnit('pps')
+        + timeSeries.gridPos.withH(9)
+        + timeSeries.gridPos.withW(12),
+
+        $.timeseriesPanel('Unicast Packets', queries.unicastPackets)
+        + timeSeries.options.legend.withShowLegend(false)
+        + timeSeries.options.tooltip.withMode('multi')
+        + timeSeries.options.tooltip.withSort('desc')
+        + timeSeries.standardOptions.withUnit('pps')
+        + timeSeries.gridPos.withH(9)
+        + timeSeries.gridPos.withW(12),
+
+        $.timeseriesPanel('Multicast Packets', queries.multicastPackets)
+        + timeSeries.options.legend.withShowLegend(false)
+        + timeSeries.options.tooltip.withMode('multi')
+        + timeSeries.options.tooltip.withSort('desc')
+        + timeSeries.standardOptions.withUnit('pps')
+        + timeSeries.gridPos.withH(9)
+        + timeSeries.gridPos.withW(12),
+
+        $.timeseriesPanel('Errors', queries.errors)
+        + timeSeries.options.legend.withShowLegend(false)
+        + timeSeries.options.tooltip.withMode('multi')
+        + timeSeries.options.tooltip.withSort('desc')
+        + timeSeries.standardOptions.withUnit('pps')
+        + timeSeries.gridPos.withH(9)
+        + timeSeries.gridPos.withW(12),
+
+        $.timeseriesPanel('Discards', queries.discards)
+        + timeSeries.options.legend.withShowLegend(false)
+        + timeSeries.options.tooltip.withMode('multi')
+        + timeSeries.options.tooltip.withSort('desc')
+        + timeSeries.standardOptions.withUnit('pps')
+        + timeSeries.gridPos.withH(9)
+        + timeSeries.gridPos.withW(12),
       ])
     )
   ),
