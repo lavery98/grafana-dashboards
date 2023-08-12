@@ -8,8 +8,18 @@
           "subdir": "crdsonnet"
         }
       },
-      "version": "af14e3b8e958e1e4155d67689bd9d38cb7169698",
-      "sum": "HH+GjMwZCo65Q4SBG2M2Ezz+RekZmc783vZsXvVyPOA="
+      "version": "3dab27c8c9119eb14ecc19592240caf5f7330d23",
+      "sum": "Vh6Wo/7IIyIkmDE2XAJfWZDlTHClRrdMa9CCBPrcF1U="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/crdsonnet/validate-libsonnet.git",
+          "subdir": ""
+        }
+      },
+      "version": "a78ca15fbfece3110c4807d1f059132ece01d97b",
+      "sum": "qYLH56MqvmgxE4YMNeTbuJ1XSsCpl1sumHN5x8IQv2I="
     },
     {
       "source": {
@@ -18,18 +28,18 @@
           "subdir": "gen/grafonnet-latest"
         }
       },
-      "version": "d69eca143c137a72d6a55f078dc0eef1a47cf61c",
-      "sum": "FLkM01ITp3oQeY8Ndnjp3Tg1cP66X4bCIfp5bGfVm8k="
+      "version": "441b95e5a16ee5e511d54beb5f07e9b05f2bb5a2",
+      "sum": "sVzVlSLbxPkAurwO19YERigLMmRfVsViMcWC0gkTTqU="
     },
     {
       "source": {
         "git": {
           "remote": "https://github.com/grafana/grafonnet.git",
-          "subdir": "gen/grafonnet-v9.4.0"
+          "subdir": "gen/grafonnet-v10.0.0"
         }
       },
-      "version": "d69eca143c137a72d6a55f078dc0eef1a47cf61c",
-      "sum": "ZpLDXjPjdY1BXZqNrFZ6sApXKALmN3m9j6pp/2xxkxY="
+      "version": "441b95e5a16ee5e511d54beb5f07e9b05f2bb5a2",
+      "sum": "Lv5DM6d93sW3q2v9l5A6V0Etnnrzy5t19uYTEjO77Ag="
     },
     {
       "source": {
@@ -38,18 +48,18 @@
           "subdir": "grafonnet-base"
         }
       },
-      "version": "d69eca143c137a72d6a55f078dc0eef1a47cf61c",
-      "sum": "dnl+USRFJPZ/f+whbqA0X+qXg6xYzx3chl1rX1wgxYc="
+      "version": "441b95e5a16ee5e511d54beb5f07e9b05f2bb5a2",
+      "sum": "5zmj5Vn/cKhKrD+jA5BfLliR4t74upkM4PfnuJC5t4M="
     },
     {
       "source": {
         "git": {
           "remote": "https://github.com/grafana/grok.git",
-          "subdir": "jsonnet/v9.4.0"
+          "subdir": "jsonnet/v10.0.0"
         }
       },
-      "version": "f6c0c4cd6fc1902eb4f920d82315767cd61deea4",
-      "sum": "b6KSW0/Z45K0W2dF+8ZPLV32uv0ApjIsShTjk/zHEbg="
+      "version": "7a7f6b80de0ba5713a7ed45833acf5f641b08d4d",
+      "sum": "cpxEEjeaQMUYA938vuVie3s5SSRv+O9IWwL9F1m44Qk="
     },
     {
       "source": {
@@ -58,8 +68,8 @@
           "subdir": "doc-util"
         }
       },
-      "version": "ff76f6d8edde6366c6dcf81a356481b0e344566b",
-      "sum": "OxjkWDF0oHmwV52hhyoFW3bwtwgke8s/EOPNRiICPTI="
+      "version": "7c865ec0606f2b68c0f6b2721f101e6a99cd2593",
+      "sum": "zjjufxN4yAIevldYEERiZEp27vK0BJKj1VvZcVtWiOo="
     },
     {
       "source": {
@@ -68,8 +78,8 @@
           "subdir": ""
         }
       },
-      "version": "d1929c3c1728274424a21a617f1b82095685d640",
-      "sum": "DHqlMNfQH/eCWHbHD2Ouc/bH00AwTkCS86z6cgzQ7UI="
+      "version": "59533c525e8bc6c54e86d7184c0ddf413a88c91c",
+      "sum": "8YJptN9ErbZFr7AGI6PiWM8A4f70JE5KSgt1cykieDU="
     },
     {
       "source": {
@@ -78,7 +88,7 @@
           "subdir": "grafonnet"
         }
       },
-      "version": "ddf4c1ed7e4a766740c666c955f3a5369a6d30ab",
+      "version": "3d21274987a5fdc0eb507c098853b1e5d36f7304",
       "sum": "ubFxRQSfB7h5gvueNcp1b+vpSBQWgnhOcwQQk5qGcoM="
     }
   ],
