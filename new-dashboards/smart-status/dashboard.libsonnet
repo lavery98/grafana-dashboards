@@ -1,4 +1,4 @@
-local grafonnet = import 'github.com/grafana/grafonnet/gen/grafonnet-v9.4.0/main.libsonnet';
+local grafonnet = import 'github.com/grafana/grafonnet/gen/grafonnet-latest/main.libsonnet';
 
 local queries = import './queries.libsonnet';
 
@@ -68,8 +68,8 @@ local timeSeries = grafonnet.panel.timeSeries;
         + stat.options.withColorMode('background')
         + stat.options.withGraphMode('none')
         + stat.standardOptions.color.withMode('thresholds')
-        + stat.standardOptions.tresholds.withMode('absolute')
-        + stat.standardOptions.tresholds.withSteps([
+        + stat.standardOptions.thresholds.withMode('absolute')
+        + stat.standardOptions.thresholds.withSteps([
           stat.thresholdStep.withColor('green')
           + stat.thresholdStep.withValue(null),
           stat.thresholdStep.withColor('red')
@@ -107,8 +107,8 @@ local timeSeries = grafonnet.panel.timeSeries;
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.withUnit('h')
             + barGauge.standardOptions.color.withMode('thresholds')
-            + barGauge.standardOptions.tresholds.withMode('absolute')
-            + barGauge.standardOptions.tresholds.withSteps([
+            + barGauge.standardOptions.thresholds.withMode('absolute')
+            + barGauge.standardOptions.thresholds.withSteps([
               barGauge.thresholdStep.withColor('green')
               + barGauge.thresholdStep.withValue(null),
               barGauge.thresholdStep.withColor('orange')
@@ -123,8 +123,8 @@ local timeSeries = grafonnet.panel.timeSeries;
             + barGauge.options.withOrientation('horizontal')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.color.withMode('thresholds')
-            + barGauge.standardOptions.tresholds.withMode('absolute')
-            + barGauge.standardOptions.tresholds.withSteps([
+            + barGauge.standardOptions.thresholds.withMode('absolute')
+            + barGauge.standardOptions.thresholds.withSteps([
               barGauge.thresholdStep.withColor('green')
               + barGauge.thresholdStep.withValue(null),
               barGauge.thresholdStep.withColor('orange')
@@ -139,8 +139,8 @@ local timeSeries = grafonnet.panel.timeSeries;
             + barGauge.options.withOrientation('horizontal')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.color.withMode('thresholds')
-            + barGauge.standardOptions.tresholds.withMode('absolute')
-            + barGauge.standardOptions.tresholds.withSteps([
+            + barGauge.standardOptions.thresholds.withMode('absolute')
+            + barGauge.standardOptions.thresholds.withSteps([
               barGauge.thresholdStep.withColor('green')
               + barGauge.thresholdStep.withValue(null),
               barGauge.thresholdStep.withColor('orange')
@@ -155,8 +155,8 @@ local timeSeries = grafonnet.panel.timeSeries;
             + barGauge.options.withOrientation('horizontal')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.color.withMode('thresholds')
-            + barGauge.standardOptions.tresholds.withMode('absolute')
-            + barGauge.standardOptions.tresholds.withSteps([
+            + barGauge.standardOptions.thresholds.withMode('absolute')
+            + barGauge.standardOptions.thresholds.withSteps([
               barGauge.thresholdStep.withColor('green')
               + barGauge.thresholdStep.withValue(null),
               barGauge.thresholdStep.withColor('orange')
@@ -173,8 +173,8 @@ local timeSeries = grafonnet.panel.timeSeries;
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.withUnit('decbytes')
             + barGauge.standardOptions.color.withMode('thresholds')
-            + barGauge.standardOptions.tresholds.withMode('absolute')
-            + barGauge.standardOptions.tresholds.withSteps([
+            + barGauge.standardOptions.thresholds.withMode('absolute')
+            + barGauge.standardOptions.thresholds.withSteps([
               barGauge.thresholdStep.withColor('green')
               + barGauge.thresholdStep.withValue(null),
               barGauge.thresholdStep.withColor('orange')
@@ -189,8 +189,8 @@ local timeSeries = grafonnet.panel.timeSeries;
             + barGauge.options.withOrientation('horizontal')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.color.withMode('thresholds')
-            + barGauge.standardOptions.tresholds.withMode('absolute')
-            + barGauge.standardOptions.tresholds.withSteps([
+            + barGauge.standardOptions.thresholds.withMode('absolute')
+            + barGauge.standardOptions.thresholds.withSteps([
               barGauge.thresholdStep.withColor('green')
               + barGauge.thresholdStep.withValue(null),
               barGauge.thresholdStep.withColor('red')
@@ -212,8 +212,8 @@ local timeSeries = grafonnet.panel.timeSeries;
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.withUnit('percent')
             + barGauge.standardOptions.color.withMode('thresholds')
-            + barGauge.standardOptions.tresholds.withMode('absolute')
-            + barGauge.standardOptions.tresholds.withSteps([
+            + barGauge.standardOptions.thresholds.withMode('absolute')
+            + barGauge.standardOptions.thresholds.withSteps([
               barGauge.thresholdStep.withColor('red')
               + barGauge.thresholdStep.withValue(null),
               barGauge.thresholdStep.withColor('green')
@@ -226,8 +226,8 @@ local timeSeries = grafonnet.panel.timeSeries;
             + barGauge.options.withOrientation('horizontal')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.color.withMode('thresholds')
-            + barGauge.standardOptions.tresholds.withMode('absolute')
-            + barGauge.standardOptions.tresholds.withSteps([
+            + barGauge.standardOptions.thresholds.withMode('absolute')
+            + barGauge.standardOptions.thresholds.withSteps([
               barGauge.thresholdStep.withColor('red')
               + barGauge.thresholdStep.withValue(null),
               barGauge.thresholdStep.withColor('green')
@@ -240,8 +240,8 @@ local timeSeries = grafonnet.panel.timeSeries;
             + barGauge.options.withOrientation('horizontal')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.color.withMode('thresholds')
-            + barGauge.standardOptions.tresholds.withMode('absolute')
-            + barGauge.standardOptions.tresholds.withSteps([
+            + barGauge.standardOptions.thresholds.withMode('absolute')
+            + barGauge.standardOptions.thresholds.withSteps([
               barGauge.thresholdStep.withColor('green')
               + barGauge.thresholdStep.withValue(null),
               barGauge.thresholdStep.withColor('orange')
@@ -256,8 +256,8 @@ local timeSeries = grafonnet.panel.timeSeries;
             + barGauge.options.withOrientation('horizontal')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.color.withMode('thresholds')
-            + barGauge.standardOptions.tresholds.withMode('absolute')
-            + barGauge.standardOptions.tresholds.withSteps([
+            + barGauge.standardOptions.thresholds.withMode('absolute')
+            + barGauge.standardOptions.thresholds.withSteps([
               barGauge.thresholdStep.withColor('green')
               + barGauge.thresholdStep.withValue(null),
               barGauge.thresholdStep.withColor('orange')
@@ -272,8 +272,8 @@ local timeSeries = grafonnet.panel.timeSeries;
             + barGauge.options.withOrientation('horizontal')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.color.withMode('thresholds')
-            + barGauge.standardOptions.tresholds.withMode('absolute')
-            + barGauge.standardOptions.tresholds.withSteps([
+            + barGauge.standardOptions.thresholds.withMode('absolute')
+            + barGauge.standardOptions.thresholds.withSteps([
               barGauge.thresholdStep.withColor('green')
               + barGauge.thresholdStep.withValue(null),
               barGauge.thresholdStep.withColor('orange')
@@ -288,8 +288,8 @@ local timeSeries = grafonnet.panel.timeSeries;
             + barGauge.options.withOrientation('horizontal')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.color.withMode('thresholds')
-            + barGauge.standardOptions.tresholds.withMode('absolute')
-            + barGauge.standardOptions.tresholds.withSteps([
+            + barGauge.standardOptions.thresholds.withMode('absolute')
+            + barGauge.standardOptions.thresholds.withSteps([
               barGauge.thresholdStep.withColor('green')
               + barGauge.thresholdStep.withValue(null),
               barGauge.thresholdStep.withColor('orange')
@@ -304,8 +304,8 @@ local timeSeries = grafonnet.panel.timeSeries;
             + barGauge.options.withOrientation('horizontal')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.color.withMode('thresholds')
-            + barGauge.standardOptions.tresholds.withMode('absolute')
-            + barGauge.standardOptions.tresholds.withSteps([
+            + barGauge.standardOptions.thresholds.withMode('absolute')
+            + barGauge.standardOptions.thresholds.withSteps([
               barGauge.thresholdStep.withColor('green')
               + barGauge.thresholdStep.withValue(null),
               barGauge.thresholdStep.withColor('orange')
@@ -320,8 +320,8 @@ local timeSeries = grafonnet.panel.timeSeries;
             + barGauge.options.withOrientation('horizontal')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.color.withMode('thresholds')
-            + barGauge.standardOptions.tresholds.withMode('absolute')
-            + barGauge.standardOptions.tresholds.withSteps([
+            + barGauge.standardOptions.thresholds.withMode('absolute')
+            + barGauge.standardOptions.thresholds.withSteps([
               barGauge.thresholdStep.withColor('green')
               + barGauge.thresholdStep.withValue(null),
               barGauge.thresholdStep.withColor('red')

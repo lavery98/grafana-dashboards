@@ -1,4 +1,4 @@
-local grafonnet = import 'github.com/grafana/grafonnet/gen/grafonnet-v9.4.0/main.libsonnet';
+local grafonnet = import 'github.com/grafana/grafonnet/gen/grafonnet-latest/main.libsonnet';
 
 local queries = import './queries.libsonnet';
 
@@ -81,8 +81,8 @@ local timeSeries = grafonnet.panel.timeSeries;
         + stat.options.withGraphMode('none')
         + stat.standardOptions.withUnit('timeticks')
         + stat.standardOptions.color.withMode('thresholds')
-        + stat.standardOptions.tresholds.withMode('absolute')
-        + stat.standardOptions.tresholds.withSteps([
+        + stat.standardOptions.thresholds.withMode('absolute')
+        + stat.standardOptions.thresholds.withSteps([
           stat.thresholdStep.withColor('red')
           + stat.thresholdStep.withValue(null),
           stat.thresholdStep.withColor('orange')
