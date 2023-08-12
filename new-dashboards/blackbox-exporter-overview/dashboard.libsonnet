@@ -1,4 +1,4 @@
-local grafonnet = import 'github.com/grafana/grafonnet/gen/grafonnet-latest/main.libsonnet';
+local grafonnet = import '../g.libsonnet';
 
 local queries = import './queries.libsonnet';
 
