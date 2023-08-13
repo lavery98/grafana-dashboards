@@ -47,7 +47,9 @@ local panel = grafonnet.panel;
     local row = panel.row;
 
     row.new(title)
-    + row.withCollapsed(collapsed),
+    + row.withCollapsed(collapsed)
+    + row.gridPos.withH(1)
+    + row.gridPos.withW(24),
 
   barGaugePanel(title, targets)::
     local barGauge = panel.barGauge;
@@ -69,6 +71,33 @@ local panel = grafonnet.panel;
     + options.reduceOptions.withFields('')
     + options.reduceOptions.withValues(false)
     + standardOptions.color.withMode('fixed'),
+
+  barGauge: {
+    local barGauge = panel.barGauge,
+    local options = barGauge.options,
+    local standardOptions = barGauge.standardOptions,
+
+    base(title, targets, height=8, width=12):
+      barGauge.new(title)
+      + barGauge.datasource.withType('prometheus')
+      + barGauge.datasource.withUid('$datasource')
+      + barGauge.gridPos.withH(height)
+      + barGauge.gridPos.withW(width)
+      + barGauge.queryOptions.withTargets(targets)
+      // Default values
+      + options.withDisplayMode('gradient')
+      + options.withMinVizHeight()
+      + options.withMinVizWidth()
+      + options.withOrientation('auto')
+      + options.withShowUnfilled()
+      + options.withValueMode('color')
+      + options.reduceOptions.withCalcs([
+        'lastNotNull',
+      ])
+      + options.reduceOptions.withFields('')
+      + options.reduceOptions.withValues(false)
+      + standardOptions.color.withMode('fixed'),
+  },
 
   statPanel(title, targets)::
     local stat = panel.stat;
