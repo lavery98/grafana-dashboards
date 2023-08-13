@@ -1,4 +1,5 @@
-local grafonnet = import 'github.com/grafana/grafonnet/gen/grafonnet-latest/main.libsonnet';
+local util = import '../dashboard-utils.libsonnet';
+local grafonnet = import '../g.libsonnet';
 
 local queries = import './queries.libsonnet';
 
@@ -6,109 +7,85 @@ local dashboard = grafonnet.dashboard;
 local stat = grafonnet.panel.stat;
 local timeSeries = grafonnet.panel.timeSeries;
 
-(import '../dashboard-utils.libsonnet') {
+{
   'docker-overview.json': (
-    $.dashboard('Docker Overview')
-    + $.addVariable('cluster', 'cadvisor_version_info', 'cluster')
-    + $.addVariable('namespace', 'cadvisor_version_info{cluster=~"$cluster"}', 'namespace')
-    + $.addVariable('host', 'cadvisor_version_info{cluster=~"$cluster", namespace=~"$namespace"}', 'host')
+    util.dashboard('Docker Overview', tags=['generated', 'docker', 'cadvisor'])
+    + util.addMultiVariable('cluster', 'cadvisor_version_info', 'cluster')
+    + util.addMultiVariable('namespace', 'cadvisor_version_info{cluster=~"$cluster"}', 'namespace')
+    + util.addMultiVariable('host', 'cadvisor_version_info{cluster=~"$cluster", namespace=~"$namespace"}', 'host')
     + dashboard.withPanels(
-      $.makeGrid([
-        $.statPanel('Containers', queries.containers)
+      util.makeGrid([
+        util.stat.base('Containers', queries.containers, height=4, width=4)
         + stat.options.withGraphMode('none')
-        + stat.standardOptions.color.withFixedColor('text')
-        + stat.gridPos.withH(4)
-        + stat.gridPos.withW(4),
+        + stat.standardOptions.color.withFixedColor('text'),
 
-        $.statPanel('Total CPU Usage', queries.totalCPUUsage)
+        util.stat.base('Total CPU Usage', queries.totalCPUUsage, height=4, width=4)
         + stat.standardOptions.withUnit('percent')
-        + stat.standardOptions.color.withMode('palette-classic')
-        + stat.gridPos.withH(4)
-        + stat.gridPos.withW(4),
+        + stat.standardOptions.color.withMode('palette-classic'),
 
-        $.statPanel('Total Memory Usage', queries.totalMemoryUsage)
+        util.stat.base('Total Memory Usage', queries.totalMemoryUsage, height=4, width=4)
         + stat.standardOptions.withUnit('bytes')
-        + stat.standardOptions.color.withMode('palette-classic')
-        + stat.gridPos.withH(4)
-        + stat.gridPos.withW(4),
+        + stat.standardOptions.color.withMode('palette-classic'),
 
-        $.statPanel('Total Swap Usage', queries.totalSwapUsage)
+        util.stat.base('Total Swap Usage', queries.totalSwapUsage, height=4, width=4)
         + stat.standardOptions.withUnit('bytes')
-        + stat.standardOptions.color.withMode('palette-classic')
-        + stat.gridPos.withH(4)
-        + stat.gridPos.withW(4),
+        + stat.standardOptions.color.withMode('palette-classic'),
 
-        $.statPanel('Total Received Network Traffic', queries.totalReceivedNetworkTraffic)
+        util.stat.base('Total Received Network Traffic', queries.totalReceivedNetworkTraffic, height=4, width=4)
         + stat.standardOptions.withUnit('Bps')
-        + stat.standardOptions.color.withMode('palette-classic')
-        + stat.gridPos.withH(4)
-        + stat.gridPos.withW(4),
+        + stat.standardOptions.color.withMode('palette-classic'),
 
-        $.statPanel('Total Sent Network Traffic', queries.totalSentNetworkTraffic)
+        util.stat.base('Total Sent Network Traffic', queries.totalSentNetworkTraffic, height=4, width=4)
         + stat.standardOptions.withUnit('Bps')
-        + stat.standardOptions.color.withMode('palette-classic')
-        + stat.gridPos.withH(4)
-        + stat.gridPos.withW(4),
+        + stat.standardOptions.color.withMode('palette-classic'),
 
-        $.timeseriesPanel('CPU Usage per Container', queries.cpuUsagePerContainer)
+        util.timeSeries.base('CPU Usage per Container', queries.cpuUsagePerContainer)
         + timeSeries.fieldConfig.defaults.custom.withFillOpacity(20)
         + timeSeries.fieldConfig.defaults.custom.stacking.withMode('normal')
         + timeSeries.options.legend.withPlacement('right')
         + timeSeries.options.tooltip.withMode('multi')
         + timeSeries.options.tooltip.withSort('desc')
-        + timeSeries.standardOptions.withUnit('percent')
-        + timeSeries.gridPos.withH(8)
-        + timeSeries.gridPos.withW(12),
+        + timeSeries.standardOptions.withUnit('percent'),
 
-        $.timeseriesPanel('Memory Usage per Container', queries.memoryUsagePerContainer)
+        util.timeSeries.base('Memory Usage per Container', queries.memoryUsagePerContainer)
         + timeSeries.fieldConfig.defaults.custom.withFillOpacity(20)
         + timeSeries.fieldConfig.defaults.custom.stacking.withMode('normal')
         + timeSeries.options.legend.withPlacement('right')
         + timeSeries.options.tooltip.withMode('multi')
         + timeSeries.options.tooltip.withSort('desc')
-        + timeSeries.standardOptions.withUnit('bytes')
-        + timeSeries.gridPos.withH(8)
-        + timeSeries.gridPos.withW(12),
+        + timeSeries.standardOptions.withUnit('bytes'),
 
-        $.timeseriesPanel('Received Network Traffic per Container', queries.receivedNetworkTrafficPerContainer)
+        util.timeSeries.base('Received Network Traffic per Container', queries.receivedNetworkTrafficPerContainer)
         + timeSeries.fieldConfig.defaults.custom.withFillOpacity(20)
         + timeSeries.fieldConfig.defaults.custom.stacking.withMode('normal')
         + timeSeries.options.legend.withPlacement('right')
         + timeSeries.options.tooltip.withMode('multi')
         + timeSeries.options.tooltip.withSort('desc')
-        + timeSeries.standardOptions.withUnit('Bps')
-        + timeSeries.gridPos.withH(8)
-        + timeSeries.gridPos.withW(12),
+        + timeSeries.standardOptions.withUnit('Bps'),
 
-        $.timeseriesPanel('Sent Network Traffic per Container', queries.sentNetworkTrafficPerContainer)
+        util.timeSeries.base('Sent Network Traffic per Container', queries.sentNetworkTrafficPerContainer)
         + timeSeries.fieldConfig.defaults.custom.withFillOpacity(20)
         + timeSeries.fieldConfig.defaults.custom.stacking.withMode('normal')
         + timeSeries.options.legend.withPlacement('right')
         + timeSeries.options.tooltip.withMode('multi')
         + timeSeries.options.tooltip.withSort('desc')
-        + timeSeries.standardOptions.withUnit('Bps')
-        + timeSeries.gridPos.withH(8)
-        + timeSeries.gridPos.withW(12),
+        + timeSeries.standardOptions.withUnit('Bps'),
 
-        $.timeseriesPanel('Filesystem Reads per Container', queries.filesystemReadsPerContainer)
+        util.timeSeries.base('Filesystem Reads per Container', queries.filesystemReadsPerContainer)
         + timeSeries.fieldConfig.defaults.custom.withFillOpacity(20)
         + timeSeries.fieldConfig.defaults.custom.stacking.withMode('normal')
         + timeSeries.options.legend.withPlacement('right')
         + timeSeries.options.tooltip.withMode('multi')
         + timeSeries.options.tooltip.withSort('desc')
-        + timeSeries.standardOptions.withUnit('Bps')
-        + timeSeries.gridPos.withH(8)
-        + timeSeries.gridPos.withW(12),
+        + timeSeries.standardOptions.withUnit('Bps'),
 
-        $.timeseriesPanel('Filesystem Writes per Container', queries.filesystemWritesPerContainer)
+        util.timeSeries.base('Filesystem Writes per Container', queries.filesystemWritesPerContainer)
         + timeSeries.fieldConfig.defaults.custom.withFillOpacity(20)
         + timeSeries.fieldConfig.defaults.custom.stacking.withMode('normal')
         + timeSeries.options.legend.withPlacement('right')
         + timeSeries.options.tooltip.withMode('multi')
         + timeSeries.options.tooltip.withSort('desc')
-        + timeSeries.standardOptions.withUnit('Bps')
-        + timeSeries.gridPos.withH(8)
-        + timeSeries.gridPos.withW(12),
+        + timeSeries.standardOptions.withUnit('Bps'),
       ])
     )
   ),
