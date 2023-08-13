@@ -1,5 +1,5 @@
-local grafonnet = import '../g.libsonnet';
 local util = import '../dashboard-utils.libsonnet';
+local grafonnet = import '../g.libsonnet';
 
 local queries = import './queries.libsonnet';
 
@@ -20,12 +20,12 @@ local timeSeries = grafonnet.panel.timeSeries;
         + {
           options+: {
             reduceOptions+: {
-              calcs: []
-            }
-          }
+              calcs: [],
+            },
+          },
         }
         + stat.options.reduceOptions.withCalcs([
-          'mean'
+          'mean',
         ])
         + stat.standardOptions.withUnit('percentunit'),
 
@@ -42,5 +42,5 @@ local timeSeries = grafonnet.panel.timeSeries;
         + timeSeries.options.legend.withShowLegend(false),
       ])
     )
-  )
+  ),
 }
