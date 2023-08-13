@@ -1,4 +1,5 @@
-local grafonnet = import 'github.com/grafana/grafonnet/gen/grafonnet-latest/main.libsonnet';
+local util = import '../dashboard-utils.libsonnet';
+local grafonnet = import '../g.libsonnet';
 
 local queries = import './queries.libsonnet';
 
@@ -7,15 +8,15 @@ local stat = grafonnet.panel.stat;
 local table = grafonnet.panel.table;
 local timeSeries = grafonnet.panel.timeSeries;
 
-(import '../dashboard-utils.libsonnet') {
+{
   'snmp-interface-status.json': (
-    $.dashboard('SNMP Interface Status')
-    + $.addVariable('cluster', 'ifOperStatus', 'cluster')
-    + $.addVariable('instance', 'ifOperStatus{cluster=~"$cluster"}', 'instance')
-    + $.addVariable('interface', 'ifOperStatus{cluster=~"$cluster", instance="$instance"}', 'ifDescr')
+    util.dashboard('SNMP Interface Status', tags=['generated', 'snmp'])
+    + util.addVariable('cluster', 'ifOperStatus', 'cluster')
+    + util.addVariable('instance', 'ifOperStatus{cluster="$cluster"}', 'instance')
+    + util.addVariable('interface', 'ifOperStatus{cluster="$cluster", instance="$instance"}', 'ifDescr')
     + dashboard.withPanels(
-      $.makeGrid([
-        $.statPanel('Admin Status', queries.adminStatus)
+      util.makeGrid([
+        util.stat.base('Admin Status', queries.adminStatus, height=3, width=2)
         + stat.options.withGraphMode('none')
         + stat.standardOptions.withMappings([
           stat.valueMapping.ValueMap.withOptions({
@@ -34,11 +35,9 @@ local timeSeries = grafonnet.panel.timeSeries;
           })
           + stat.valueMapping.ValueMap.withType('value'),
         ])
-        + stat.standardOptions.color.withFixedColor('text')
-        + stat.gridPos.withH(3)
-        + stat.gridPos.withW(2),
+        + stat.standardOptions.color.withFixedColor('text'),
 
-        $.statPanel('Oper Status', queries.operStatus)
+        util.stat.base('Oper Status', queries.operStatus, height=3, width=2)
         + stat.options.withGraphMode('none')
         + stat.standardOptions.withMappings([
           stat.valueMapping.ValueMap.withOptions({
@@ -73,11 +72,9 @@ local timeSeries = grafonnet.panel.timeSeries;
           })
           + stat.valueMapping.ValueMap.withType('value'),
         ])
-        + stat.standardOptions.color.withFixedColor('text')
-        + stat.gridPos.withH(3)
-        + stat.gridPos.withW(2),
+        + stat.standardOptions.color.withFixedColor('text'),
 
-        $.statPanel('Last Change', queries.lastChange)
+        util.stat.base('Last Change', queries.lastChange, height=3, width=3)
         + stat.options.withGraphMode('none')
         + stat.standardOptions.withUnit('timeticks')
         + stat.standardOptions.color.withMode('thresholds')
@@ -89,11 +86,9 @@ local timeSeries = grafonnet.panel.timeSeries;
           + stat.thresholdStep.withValue(360000),
           stat.thresholdStep.withColor('green')
           + stat.thresholdStep.withValue(8640000),
-        ])
-        + stat.gridPos.withH(3)
-        + stat.gridPos.withW(3),
+        ]),
 
-        $.statPanel('Connector Present', queries.connectorPresent)
+        util.stat.base('Connector Present', queries.connectorPresent, height=3, width=2)
         + stat.options.withGraphMode('none')
         + stat.standardOptions.withMappings([
           stat.valueMapping.ValueMap.withOptions({
@@ -108,11 +103,9 @@ local timeSeries = grafonnet.panel.timeSeries;
           })
           + stat.valueMapping.ValueMap.withType('value'),
         ])
-        + stat.standardOptions.color.withFixedColor('text')
-        + stat.gridPos.withH(3)
-        + stat.gridPos.withW(2),
+        + stat.standardOptions.color.withFixedColor('text'),
 
-        $.statPanel('Promiscuous Mode', queries.promiscuousMode)
+        util.stat.base('Promiscuous Mode', queries.promiscuousMode, height=3, width=2)
         + stat.options.withGraphMode('none')
         + stat.standardOptions.withMappings([
           stat.valueMapping.ValueMap.withOptions({
@@ -127,11 +120,9 @@ local timeSeries = grafonnet.panel.timeSeries;
           })
           + stat.valueMapping.ValueMap.withType('value'),
         ])
-        + stat.standardOptions.color.withFixedColor('text')
-        + stat.gridPos.withH(3)
-        + stat.gridPos.withW(2),
+        + stat.standardOptions.color.withFixedColor('text'),
 
-        $.statPanel('Speed', queries.speed)
+        util.stat.base('Speed', queries.speed, height=3, width=2)
         + stat.options.withGraphMode('none')
         + stat.standardOptions.withUnit('bps')
         + stat.standardOptions.withMappings([
@@ -142,17 +133,13 @@ local timeSeries = grafonnet.panel.timeSeries;
           })
           + stat.valueMapping.ValueMap.withType('value'),
         ])
-        + stat.standardOptions.color.withFixedColor('text')
-        + stat.gridPos.withH(3)
-        + stat.gridPos.withW(2),
+        + stat.standardOptions.color.withFixedColor('text'),
 
-        $.statPanel('MTU', queries.mtu)
+        util.stat.base('MTU', queries.mtu, height=3, width=2)
         + stat.options.withGraphMode('none')
-        + stat.standardOptions.color.withFixedColor('text')
-        + stat.gridPos.withH(3)
-        + stat.gridPos.withW(2),
+        + stat.standardOptions.color.withFixedColor('text'),
 
-        $.tablePanel('', queries.ifTypeInfo)
+        util.table.base('', queries.ifTypeInfo, height=3, width=9)
         + table.queryOptions.withTransformations([
           table.transformation.withId('organize')
           + table.transformation.withOptions({
@@ -185,57 +172,49 @@ local timeSeries = grafonnet.panel.timeSeries;
             },
             renameByName: {},
           }),
-        ])
-        + table.gridPos.withH(3)
-        + table.gridPos.withW(9),
+        ]),
 
-        $.timeseriesPanel('Traffic', queries.traffic)
+        util.timeSeries.base('Traffic', queries.traffic)
         + timeSeries.options.legend.withShowLegend(false)
         + timeSeries.options.tooltip.withMode('multi')
         + timeSeries.options.tooltip.withSort('desc')
-        + timeSeries.standardOptions.withUnit('bps')
-        + timeSeries.gridPos.withH(9)
-        + timeSeries.gridPos.withW(12),
+        + timeSeries.queryOptions.withInterval('2m')
+        + timeSeries.standardOptions.withUnit('bps'),
 
-        $.timeseriesPanel('Broadcast Packets', queries.broadcastPackets)
+        util.timeSeries.base('Broadcast Packets', queries.broadcastPackets)
         + timeSeries.options.legend.withShowLegend(false)
         + timeSeries.options.tooltip.withMode('multi')
         + timeSeries.options.tooltip.withSort('desc')
-        + timeSeries.standardOptions.withUnit('pps')
-        + timeSeries.gridPos.withH(9)
-        + timeSeries.gridPos.withW(12),
+        + timeSeries.queryOptions.withInterval('2m')
+        + timeSeries.standardOptions.withUnit('pps'),
 
-        $.timeseriesPanel('Unicast Packets', queries.unicastPackets)
+        util.timeSeries.base('Unicast Packets', queries.unicastPackets)
         + timeSeries.options.legend.withShowLegend(false)
         + timeSeries.options.tooltip.withMode('multi')
         + timeSeries.options.tooltip.withSort('desc')
-        + timeSeries.standardOptions.withUnit('pps')
-        + timeSeries.gridPos.withH(9)
-        + timeSeries.gridPos.withW(12),
+        + timeSeries.queryOptions.withInterval('2m')
+        + timeSeries.standardOptions.withUnit('pps'),
 
-        $.timeseriesPanel('Multicast Packets', queries.multicastPackets)
+        util.timeSeries.base('Multicast Packets', queries.multicastPackets)
         + timeSeries.options.legend.withShowLegend(false)
         + timeSeries.options.tooltip.withMode('multi')
         + timeSeries.options.tooltip.withSort('desc')
-        + timeSeries.standardOptions.withUnit('pps')
-        + timeSeries.gridPos.withH(9)
-        + timeSeries.gridPos.withW(12),
+        + timeSeries.queryOptions.withInterval('2m')
+        + timeSeries.standardOptions.withUnit('pps'),
 
-        $.timeseriesPanel('Errors', queries.errors)
+        util.timeSeries.base('Errors', queries.errors)
         + timeSeries.options.legend.withShowLegend(false)
         + timeSeries.options.tooltip.withMode('multi')
         + timeSeries.options.tooltip.withSort('desc')
-        + timeSeries.standardOptions.withUnit('pps')
-        + timeSeries.gridPos.withH(9)
-        + timeSeries.gridPos.withW(12),
+        + timeSeries.queryOptions.withInterval('2m')
+        + timeSeries.standardOptions.withUnit('pps'),
 
-        $.timeseriesPanel('Discards', queries.discards)
+        util.timeSeries.base('Discards', queries.discards)
         + timeSeries.options.legend.withShowLegend(false)
         + timeSeries.options.tooltip.withMode('multi')
         + timeSeries.options.tooltip.withSort('desc')
-        + timeSeries.standardOptions.withUnit('pps')
-        + timeSeries.gridPos.withH(9)
-        + timeSeries.gridPos.withW(12),
+        + timeSeries.queryOptions.withInterval('2m')
+        + timeSeries.standardOptions.withUnit('pps'),
       ])
     )
   ),
