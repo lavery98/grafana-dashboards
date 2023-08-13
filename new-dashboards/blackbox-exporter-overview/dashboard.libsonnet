@@ -1,3 +1,4 @@
+local util = import '../dashboard-utils.libsonnet';
 local grafonnet = import '../g.libsonnet';
 
 local queries = import './queries.libsonnet';
@@ -6,13 +7,13 @@ local dashboard = grafonnet.dashboard;
 local table = grafonnet.panel.table;
 local timeSeries = grafonnet.panel.timeSeries;
 
-(import '../dashboard-utils.libsonnet') {
+{
   'blackbox-exporter-overview.json': (
-    $.dashboard('Blackbox Exporter Overview')
-    + $.addMultiVariable('cluster', 'probe_success', 'cluster')
+    util.dashboard('Blackbox Exporter Overview', tags=['generated', 'blackbox_exporter'])
+    + util.addMultiVariable('cluster', 'probe_success', 'cluster')
     + dashboard.withPanels(
-      $.makeGrid([
-        $.tablePanel('Probes (Up/Down) - Current Status', queries.probesCurrentStatus)
+      util.makeGrid([
+        util.table.base('Probes (Up/Down) - Current Status', queries.probesCurrentStatus)
         + table.fieldConfig.defaults.withCustom({
           filterable: true,
         })
@@ -55,11 +56,9 @@ local timeSeries = grafonnet.panel.timeSeries;
           + table.fieldOverride.byName.withProperty('custom.cellOptions', {
             type: 'color-background',
           }),
-        ])
-        + table.gridPos.withH(8)
-        + table.gridPos.withW(10),
+        ]),
 
-        $.timeseriesPanel('Probes (Up/Down) - Historic Status', queries.probesHistoricStatus)
+        util.timeSeries.base('Probes (Up/Down) - Historic Status', queries.probesHistoricStatus)
         + timeSeries.options.tooltip.withMode('multi')
         + timeSeries.options.tooltip.withSort('desc')
         + timeSeries.standardOptions.withDecimals(0)
@@ -75,11 +74,9 @@ local timeSeries = grafonnet.panel.timeSeries;
           + timeSeries.valueMapping.ValueMap.withType('value'),
         ])
         + timeSeries.standardOptions.withMax(1)
-        + timeSeries.standardOptions.withMin(0)
-        + timeSeries.gridPos.withH(8)
-        + timeSeries.gridPos.withW(14),
+        + timeSeries.standardOptions.withMin(0),
 
-        $.tablePanel('SSL Certificate Expiry', queries.sslCertificateExpiry)
+        util.table.base('SSL Certificate Expiry', queries.sslCertificateExpiry)
         + table.fieldConfig.defaults.withCustom({
           filterable: true,
         })
@@ -90,6 +87,8 @@ local timeSeries = grafonnet.panel.timeSeries;
             excludeByName: {
               Time: true,
               __name__: true,
+              host: true,
+              namespace: true,
             },
             indexByName: {},
             renameByName: {
@@ -118,23 +117,17 @@ local timeSeries = grafonnet.panel.timeSeries;
           + table.thresholdStep.withValue(604800),
           table.thresholdStep.withColor('green')
           + table.thresholdStep.withValue(2419200),
-        ])
-        + table.gridPos.withH(8)
-        + table.gridPos.withW(10),
+        ]),
 
-        $.timeseriesPanel('DNS Lookup', queries.dnsLookup)
+        util.timeSeries.base('DNS Lookup', queries.dnsLookup)
         + timeSeries.options.tooltip.withMode('multi')
         + timeSeries.options.tooltip.withSort('desc')
-        + timeSeries.standardOptions.withUnit('s')
-        + timeSeries.gridPos.withH(8)
-        + timeSeries.gridPos.withW(14),
+        + timeSeries.standardOptions.withUnit('s'),
 
-        $.timeseriesPanel('Probe Duration', queries.probeDuration)
+        util.timeSeries.base('Probe Duration', queries.probeDuration, width=24)
         + timeSeries.options.tooltip.withMode('multi')
         + timeSeries.options.tooltip.withSort('desc')
-        + timeSeries.standardOptions.withUnit('s')
-        + timeSeries.gridPos.withH(8)
-        + timeSeries.gridPos.withW(24),
+        + timeSeries.standardOptions.withUnit('s'),
       ])
     )
   ),

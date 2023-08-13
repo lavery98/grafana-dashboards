@@ -144,6 +144,32 @@ local panel = grafonnet.panel;
       inspect: false,
     }),
 
+  table: {
+    local table = panel.table,
+    local options = table.options,
+    local standardOptions = table.standardOptions,
+
+    base(title, targets, height=8, width=12):
+      table.new(title)
+      + table.datasource.withType('prometheus')
+      + table.datasource.withUid('$datasource')
+      + table.gridPos.withH(height)
+      + table.gridPos.withW(width)
+      + table.queryOptions.withTargets(targets)
+      // Default values
+      + options.withCellHeight('sm')
+      + options.withFooter()
+      + options.withShowHeader()
+      + standardOptions.color.withMode('fixed')
+      + table.fieldConfig.defaults.withCustom({
+        align: 'auto',
+        cellOptions: {
+          type: 'auto',
+        },
+        inspect: false,
+      }),
+  },
+
   timeSeries: {
     local timeSeries = panel.timeSeries,
     local fieldConfig = timeSeries.fieldConfig,
