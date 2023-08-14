@@ -51,27 +51,6 @@ local panel = grafonnet.panel;
     + row.gridPos.withH(1)
     + row.gridPos.withW(24),
 
-  barGaugePanel(title, targets)::
-    local barGauge = panel.barGauge;
-    local options = barGauge.options;
-    local standardOptions = barGauge.standardOptions;
-
-    barGauge.new(title)
-    + barGauge.queryOptions.withTargets(targets)
-    // Default values
-    + options.withDisplayMode('gradient')
-    + options.withMinVizHeight()
-    + options.withMinVizWidth()
-    + options.withOrientation('auto')
-    + options.withShowUnfilled()
-    + options.withValueMode('color')
-    + options.reduceOptions.withCalcs([
-      'lastNotNull',
-    ])
-    + options.reduceOptions.withFields('')
-    + options.reduceOptions.withValues(false)
-    + standardOptions.color.withMode('fixed'),
-
   barGauge: {
     local barGauge = panel.barGauge,
     local options = barGauge.options,
@@ -99,26 +78,29 @@ local panel = grafonnet.panel;
       + standardOptions.color.withMode('fixed'),
   },
 
-  statPanel(title, targets)::
-    local stat = panel.stat;
-    local options = stat.options;
-    local standardOptions = stat.standardOptions;
+  gauge: {
+    local gauge = panel.gauge,
+    local options = gauge.options,
+    local standardOptions = gauge.standardOptions,
 
-    stat.new(title)
-    + stat.queryOptions.withTargets(targets)
-    // Default values
-    + options.withColorMode('value')
-    + options.withGraphMode('area')
-    + options.withJustifyMode('auto')
-    + options.withOrientation('auto')
-    + options.withTextMode('auto')
-    + options.reduceOptions.withCalcs([
-      'lastNotNull',
-    ])
-    + options.reduceOptions.withFields('')
-    + options.reduceOptions.withValues(false)
-    + standardOptions.color.withFixedColor('text')
-    + standardOptions.color.withMode('fixed'),
+    base(title, targets, height=8, width=12):
+      gauge.new(title)
+      + gauge.datasource.withType('prometheus')
+      + gauge.datasource.withUid('$datasource')
+      + gauge.gridPos.withH(height)
+      + gauge.gridPos.withW(width)
+      + gauge.queryOptions.withTargets(targets)
+      // Default values
+      + options.withOrientation('auto')
+      + options.withShowThresholdLabels(false)
+      + options.withShowThresholdMarkers()
+      + options.reduceOptions.withCalcs([
+        'lastNotNull',
+      ])
+      + options.reduceOptions.withFields('')
+      + options.reduceOptions.withValues(false)
+      + standardOptions.color.withMode('fixed'),
+  },
 
   stat: {
     local stat = panel.stat,
@@ -153,25 +135,33 @@ local panel = grafonnet.panel;
       + standardOptions.withUnit('short'),
   },
 
-  tablePanel(title, targets)::
-    local table = panel.table;
-    local options = table.options;
-    local standardOptions = table.standardOptions;
+  stateTimeline: {
+    local stateTimeline = panel.stateTimeline,
+    local fieldConfig = stateTimeline.fieldConfig,
+    local options = stateTimeline.options,
+    local standardOptions = stateTimeline.standardOptions,
 
-    table.new(title)
-    + table.queryOptions.withTargets(targets)
-    // Default values
-    + options.withCellHeight('sm')
-    + options.withFooter()
-    + options.withShowHeader()
-    + standardOptions.color.withMode('fixed')
-    + table.fieldConfig.defaults.withCustom({
-      align: 'auto',
-      cellOptions: {
-        type: 'auto',
-      },
-      inspect: false,
-    }),
+    base(title, targets, height=8, width=12):
+      stateTimeline.new(title)
+      + stateTimeline.datasource.withType('prometheus')
+      + stateTimeline.datasource.withUid('$datasource')
+      + stateTimeline.gridPos.withH(height)
+      + stateTimeline.gridPos.withW(width)
+      + stateTimeline.queryOptions.withTargets(targets)
+      // Default values
+      + fieldConfig.defaults.custom.withFillOpacity(70)
+      + fieldConfig.defaults.custom.withLineWidth(0)
+      + options.withAlignValue('left')
+      + options.withMergeValues(true)
+      + options.withRowHeight(0.9)
+      + options.withShowValue(true)
+      + options.legend.withDisplayMode('list')
+      + options.legend.withPlacement('bottom')
+      + options.legend.withShowLegend(true)
+      + options.tooltip.withMode('single')
+      + options.tooltip.withSort('none')
+      + standardOptions.color.withMode('thresholds'),
+  },
 
   table: {
     local table = panel.table,
@@ -233,35 +223,6 @@ local panel = grafonnet.panel;
       + fieldConfig.defaults.custom.thresholdsStyle.withMode('off')
       + standardOptions.color.withMode('palette-classic'),
   },
-
-  timeseriesPanel(title, targets)::
-    local timeSeries = panel.timeSeries;
-    local fieldConfig = timeSeries.fieldConfig;
-    local standardOptions = timeSeries.standardOptions;
-
-    timeSeries.new(title)
-    + timeSeries.queryOptions.withTargets(targets)
-    // Default values
-    + fieldConfig.defaults.custom.withAxisCenteredZero(false)
-    + fieldConfig.defaults.custom.withAxisColorMode('text')
-    + fieldConfig.defaults.custom.withAxisLabel('')
-    + fieldConfig.defaults.custom.withAxisPlacement('auto')
-    + fieldConfig.defaults.custom.withBarAlignment(0)
-    + fieldConfig.defaults.custom.withDrawStyle('line')
-    + fieldConfig.defaults.custom.withFillOpacity(0)
-    + fieldConfig.defaults.custom.withGradientMode('none')
-    + fieldConfig.defaults.custom.withLineInterpolation('linear')
-    + fieldConfig.defaults.custom.withLineWidth(1)
-    + fieldConfig.defaults.custom.withPointSize(5)
-    + fieldConfig.defaults.custom.withShowPoints('auto')
-    + fieldConfig.defaults.custom.withSpanNulls(false)
-    + fieldConfig.defaults.custom.hideFrom.withLegend(false)
-    + fieldConfig.defaults.custom.hideFrom.withTooltip(false)
-    + fieldConfig.defaults.custom.hideFrom.withViz(false)
-    + fieldConfig.defaults.custom.scaleDistribution.withType('linear')
-    + fieldConfig.defaults.custom.stacking.withMode('none')
-    + fieldConfig.defaults.custom.thresholdsStyle.withMode('off')
-    + standardOptions.color.withMode('palette-classic'),
 
   makeGrid(panels)::
     std.foldl(
