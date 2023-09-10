@@ -179,14 +179,17 @@ local panel = grafonnet.panel;
       + options.withCellHeight('sm')
       + options.withFooter()
       + options.withShowHeader()
-      + standardOptions.color.withMode('fixed')
-      + table.fieldConfig.defaults.withCustom({
-        align: 'auto',
-        cellOptions: {
-          type: 'auto',
+      + standardOptions.color.withMode('fixed'),
+
+    withFilterable(filterable=false): {
+      fieldConfig+: {
+        defaults+: {
+          custom+: {
+            filterable: filterable,
+          },
         },
-        inspect: false,
-      }),
+      },
+    },
   },
 
   timeSeries: {

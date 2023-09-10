@@ -25,9 +25,7 @@ local timeSeries = grafonnet.panel.timeSeries;
         + stat.standardOptions.color.withFixedColor('text'),
 
         util.table.base('Disk Drives', queries.diskDrives, width=20)
-        + table.fieldConfig.defaults.withCustom({
-          filterable: true,
-        })
+        + util.table.withFilterable(true)
         + table.options.footer.TableFooterOptions.withEnablePagination(true)
         + table.queryOptions.withTransformations([
           table.transformation.withId('organize')

@@ -14,9 +14,7 @@ local timeSeries = grafonnet.panel.timeSeries;
     + dashboard.withPanels(
       util.makeGrid([
         util.table.base('Probes (Up/Down) - Current Status', queries.probesCurrentStatus)
-        + table.fieldConfig.defaults.withCustom({
-          filterable: true,
-        })
+        + util.table.withFilterable(true)
         + table.options.footer.TableFooterOptions.withEnablePagination(true)
         + table.queryOptions.withTransformations([
           table.transformation.withId('organize')
@@ -77,9 +75,7 @@ local timeSeries = grafonnet.panel.timeSeries;
         + timeSeries.standardOptions.withMin(0),
 
         util.table.base('SSL Certificate Expiry', queries.sslCertificateExpiry)
-        + table.fieldConfig.defaults.withCustom({
-          filterable: true,
-        })
+        + util.table.withFilterable(true)
         + table.options.footer.TableFooterOptions.withEnablePagination(true)
         + table.queryOptions.withTransformations([
           table.transformation.withId('organize')
