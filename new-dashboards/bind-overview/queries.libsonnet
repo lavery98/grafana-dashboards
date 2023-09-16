@@ -79,4 +79,25 @@ local prometheusQuery = grafonnet.query.prometheus;
     prometheusQuery.new('$datasource', 'irate(bind_resolver_query_edns0_errors_total{cluster=~"$cluster", namespace=~"$namespace", host=~"$host"}[$__rate_interval])')
     + prometheusQuery.withFormat('time_series')
     + prometheusQuery.withLegendFormat('EDNS(0) error {{ view }}'),
+
+  zoneSerials:
+    prometheusQuery.new('$datasource', 'bind_zone_serial{cluster=~"$cluster", namespace=~"$namespace", host=~"$host"}')
+    + prometheusQuery.withFormat('table')
+    + prometheusQuery.withInstant(true)
+    + prometheusQuery.withIntervalFactor(null),
+
+  zoneSerialChanges:
+    prometheusQuery.new('$datasource', 'rate(bind_zone_serial{cluster=~"$cluster", namespace=~"$namespace", host=~"$host"}[$__rate_interval])')
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{ zone_name }}'),
+
+  failedZoneTransfers:
+    prometheusQuery.new('$datasource', 'rate(bind_zone_transfer_failure_total{cluster=~"$cluster", namespace=~"$namespace", host=~"$host"}[$__rate_interval])')
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat(' '),
+
+  rejectedZoneTransfers:
+    prometheusQuery.new('$datasource', 'rate(bind_zone_transfer_rejected_total{cluster=~"$cluster", namespace=~"$namespace", host=~"$host"}[$__rate_interval])')
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat(' '),
 }

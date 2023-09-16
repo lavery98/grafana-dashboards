@@ -6,6 +6,8 @@ local queries = import './queries.libsonnet';
 local dashboard = grafonnet.dashboard;
 local row = grafonnet.panel.row;
 local stat = grafonnet.panel.stat;
+local stateTimeline = grafonnet.panel.stateTimeline;
+local table = grafonnet.panel.table;
 local timeSeries = grafonnet.panel.timeSeries;
 
 {
@@ -65,7 +67,77 @@ local timeSeries = grafonnet.panel.timeSeries;
           ])
         ),
 
+        util.row('Zones', collapsed=true)
+        + row.withPanels(
+          util.makeGrid([
+            util.table.base('Zone Serials', queries.zoneSerials)
+            + table.queryOptions.withTransformations([
+              table.transformation.withId('organize')
+              + table.transformation.withOptions({
+                excludeByName: {
+                  Time: true,
+                  __name__: true,
+                  cluster: true,
+                  host: true,
+                  instance: true,
+                  job: true,
+                  namespace: true,
+                  view: true,
+                },
+                indexByName: {},
+                renameByName: {
+                  zone_name: 'Zone',
+                  Value: 'SOA Serial',
+                },
+              }),
 
+              table.transformation.withId('filterByValue')
+              + table.transformation.withOptions({
+                filters: [
+                  {
+                    config: {
+                      id: 'greater',
+                      options: {
+                        value: 1000,
+                      },
+                    },
+                    fieldName: 'SOA Serial',
+                  },
+                ],
+                match: 'any',
+                type: 'include',
+              }),
+            ]),
+
+            util.timeSeries.base('Zone Serial Changes', queries.zoneSerialChanges)
+            + timeSeries.fieldConfig.defaults.custom.withFillOpacity(20)
+            + timeSeries.options.tooltip.withMode('multi'),
+
+            util.stateTimeline.base('Failed Zone Transfers', queries.failedZoneTransfers)
+            + stateTimeline.options.withShowValue('never')
+            + stateTimeline.options.legend.withShowLegend(false)
+            + stateTimeline.options.tooltip.withMode('none')
+            + stateTimeline.standardOptions.thresholds.withMode('absolute')
+            + stateTimeline.standardOptions.thresholds.withSteps([
+              stateTimeline.thresholdStep.withColor('green')
+              + stateTimeline.thresholdStep.withValue(null),
+              stateTimeline.thresholdStep.withColor('red')
+              + stateTimeline.thresholdStep.withValue(0.0001),
+            ]),
+
+            util.stateTimeline.base('Rejected Zone Transfers', queries.rejectedZoneTransfers)
+            + stateTimeline.options.withShowValue('never')
+            + stateTimeline.options.legend.withShowLegend(false)
+            + stateTimeline.options.tooltip.withMode('none')
+            + stateTimeline.standardOptions.thresholds.withMode('absolute')
+            + stateTimeline.standardOptions.thresholds.withSteps([
+              stateTimeline.thresholdStep.withColor('green')
+              + stateTimeline.thresholdStep.withValue(null),
+              stateTimeline.thresholdStep.withColor('red')
+              + stateTimeline.thresholdStep.withValue(0.0001),
+            ]),
+          ])
+        ),
       ]),
     )
   ),
