@@ -21,7 +21,7 @@ local panel = grafonnet.panel;
   addVariable(name, metric_name, label_name, hide=0, allValue=null, includeAll=false)::
     local variable = dashboard.variable;
 
-    dashboard.withVariables([
+    dashboard.withVariablesMixin([
       variable.query.new(name)
       + variable.query.withDatasource('prometheus', '${datasource}')
       + variable.query.withSort(1)
@@ -33,7 +33,7 @@ local panel = grafonnet.panel;
   addMultiVariable(name, metric_name, label_name, hide=0, allValue='.+')::
     local variable = dashboard.variable;
 
-    dashboard.withVariables([
+    dashboard.withVariablesMixin([
       variable.query.new(name)
       + variable.query.withDatasource('prometheus', '${datasource}')
       + variable.query.withSort(1)
@@ -58,10 +58,9 @@ local panel = grafonnet.panel;
 
     base(title, targets, height=8, width=12):
       barGauge.new(title)
-      + barGauge.datasource.withType('prometheus')
-      + barGauge.datasource.withUid('$datasource')
       + barGauge.gridPos.withH(height)
       + barGauge.gridPos.withW(width)
+      + barGauge.queryOptions.withDatasource('prometheus', '$datasource')
       + barGauge.queryOptions.withTargets(targets)
       // Default values
       + options.withDisplayMode('gradient')
@@ -85,10 +84,9 @@ local panel = grafonnet.panel;
 
     base(title, targets, height=8, width=12):
       gauge.new(title)
-      + gauge.datasource.withType('prometheus')
-      + gauge.datasource.withUid('$datasource')
       + gauge.gridPos.withH(height)
       + gauge.gridPos.withW(width)
+      + gauge.queryOptions.withDatasource('prometheus', '$datasource')
       + gauge.queryOptions.withTargets(targets)
       // Default values
       + options.withOrientation('auto')
@@ -109,10 +107,9 @@ local panel = grafonnet.panel;
 
     base(title, targets, height=3, width=6):
       stat.new(title)
-      + stat.datasource.withType('prometheus')
-      + stat.datasource.withUid('$datasource')
       + stat.gridPos.withH(height)
       + stat.gridPos.withW(width)
+      + stat.queryOptions.withDatasource('prometheus', '$datasource')
       + stat.queryOptions.withTargets(targets)
       // Default values
       + options.withColorMode('value')
@@ -143,10 +140,9 @@ local panel = grafonnet.panel;
 
     base(title, targets, height=8, width=12):
       stateTimeline.new(title)
-      + stateTimeline.datasource.withType('prometheus')
-      + stateTimeline.datasource.withUid('$datasource')
       + stateTimeline.gridPos.withH(height)
       + stateTimeline.gridPos.withW(width)
+      + stateTimeline.queryOptions.withDatasource('prometheus', '$datasource')
       + stateTimeline.queryOptions.withTargets(targets)
       // Default values
       + fieldConfig.defaults.custom.withFillOpacity(70)
@@ -170,10 +166,9 @@ local panel = grafonnet.panel;
 
     base(title, targets, height=8, width=12):
       table.new(title)
-      + table.datasource.withType('prometheus')
-      + table.datasource.withUid('$datasource')
       + table.gridPos.withH(height)
       + table.gridPos.withW(width)
+      + table.queryOptions.withDatasource('prometheus', '$datasource')
       + table.queryOptions.withTargets(targets)
       // Default values
       + options.withCellHeight('sm')
@@ -199,10 +194,9 @@ local panel = grafonnet.panel;
 
     base(title, targets, height=8, width=12):
       timeSeries.new(title)
-      + timeSeries.datasource.withType('prometheus')
-      + timeSeries.datasource.withUid('$datasource')
       + timeSeries.gridPos.withH(height)
       + timeSeries.gridPos.withW(width)
+      + timeSeries.queryOptions.withDatasource('prometheus', '$datasource')
       + timeSeries.queryOptions.withTargets(targets)
       // Default values
       + fieldConfig.defaults.custom.withAxisCenteredZero(false)
