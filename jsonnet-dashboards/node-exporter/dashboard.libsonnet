@@ -6,12 +6,99 @@ local nodeExporterFull = import 'node-exporter-full.json';
 
 local dashboard = grafonnet.dashboard;
 local prometheus = grafonnet.query.prometheus;
-local timeSeries = grafonnet.panel.timeSeries;
 local variable = grafonnet.dashboard.variable;
 
 {
   'node-exporter.json': (
-    util.dashboard('Node Exporter', tags=['generated', 'node_exporter'])
+    {
+      hiddentRows:: [],
+      hiddenPanels:: [],
+    }
+    + nodeExporterFull + {
+      __inputs: {},
+
+      local replaceMatchers(expr) =
+        std.strReplace(expr, 'instance="$node",job="$job"', 'cluster=~"$cluster",namespace=~"$namespace",host="$host"'),
+
+      local addDiskLabel(expr) =
+        expr + ' * on (device) group_left(device_label) node_disk_label_info{cluster=~"$cluster",namespace=~"$namespace",host="$host"} or on (device) label_replace(' + expr + ', "device_label", "$1", "device", "(.*)")',
+
+      local addDiskLabelToLegend(legendFormat) =
+        std.strReplace(legendFormat, '{{device}}', '{{device_label}}'),
+
+      local selectDatasource() = {
+        type: 'prometheus',
+        uid: '$datasource',
+      },
+
+      local isRowHidden(row) =
+        std.member(self.hiddentRows, row),
+
+      local isPanelHidden(panelTitle) =
+        std.member(self.hiddenPanels, panelTitle),
+
+      local replaceExpression(title, expr) =
+        if (
+          title == 'Disk IOps Completed' ||
+          title == 'Disk R/W Data' ||
+          title == 'Disk Average Wait Time' ||
+          title == 'Average Queue Size' ||
+          title == 'Disk R/W Merged' ||
+          title == 'Time Spent Doing I/Os' ||
+          title == 'Instantaneous Queue Size' ||
+          title == 'Disk IOps Discards completed / merged'
+        ) then
+          addDiskLabel(replaceMatchers(expr))
+        else
+          replaceMatchers(expr),
+
+      local replaceLegendFormat(title, legendFormat) =
+        if (
+          title == 'Disk IOps Completed' ||
+          title == 'Disk R/W Data' ||
+          title == 'Disk Average Wait Time' ||
+          title == 'Average Queue Size' ||
+          title == 'Disk R/W Merged' ||
+          title == 'Time Spent Doing I/Os' ||
+          title == 'Instantaneous Queue Size' ||
+          title == 'Disk IOps Discards completed / merged'
+        ) then
+          addDiskLabelToLegend(legendFormat)
+        else
+          legendFormat,
+
+      panels: [
+        p {
+          datasource: selectDatasource(),
+          [if std.objectHas(p, 'targets') then 'targets']: [
+            e {
+              datasource: selectDatasource(),
+              [if std.objectHas(e, 'expr') then 'expr']: replaceExpression(p.title, e.expr),
+              [if std.objectHas(e, 'legendFormat') then 'legendFormat']: replaceLegendFormat(p.title, e.legendFormat),
+            }
+            for e in p.targets
+          ],
+          [if std.objectHas(p, 'panels') then 'panels']: [
+            sp {
+              datasource: selectDatasource(),
+              [if std.objectHas(sp, 'targets') then 'targets']: [
+                e {
+                  datasource: selectDatasource(),
+                  [if std.objectHas(e, 'expr') then 'expr']: replaceExpression(sp.title, e.expr),
+                  [if std.objectHas(e, 'legendFormat') then 'legendFormat']: replaceLegendFormat(sp.title, e.legendFormat),
+                }
+                for e in sp.targets
+              ],
+            }
+            for sp in p.panels
+            if !(isPanelHidden(sp.title))
+          ],
+        }
+        for p in super.panels
+        if !(p.type == 'row' && isRowHidden(p.title)) && !(isPanelHidden(p.title))
+      ],
+    }
+    + util.dashboard('Node Exporter', tags=['generated', 'node_exporter'])
     + util.addMultiVariable('cluster', 'node_exporter_build_info', 'cluster')
     + util.addMultiVariable('namespace', 'node_exporter_build_info{cluster=~"$cluster"}', 'namespace')
     + util.addVariable('host', 'node_exporter_build_info{cluster=~"$cluster", namespace=~"$namespace"}', 'host')
@@ -21,43 +108,5 @@ local variable = grafonnet.dashboard.variable;
       + variable.custom.selectionOptions.withIncludeAll(false)
       + variable.custom.selectionOptions.withMulti(false),
     ])
-    + dashboard.withPanels(
-      // Modify the query targets and selectors
-      local ModifyTarget(target) = target
-                                   + prometheus.withDatasource('$datasource')
-                                   + (
-                                     if std.objectHas(target, 'expr') then {
-                                       expr: std.strReplace(target.expr, 'instance="$node",job="$job"', 'cluster=~"$cluster",namespace=~"$namespace",host="$host"'),
-                                     } else {}
-                                   );
-
-      // Modify each panel in the dashboard
-      local ModifyPanel(panel) = [
-        panel
-        + timeSeries.queryOptions.withDatasource('prometheus', '$datasource')
-        + timeSeries.queryOptions.withTargets([
-          ModifyTarget(t)
-          for t in panel.targets
-        ]) + (
-          if std.objectHas(panel, 'panels') then {
-            panels: [
-              p
-              + timeSeries.queryOptions.withDatasource('prometheus', '$datasource')
-              + timeSeries.queryOptions.withTargets([
-                ModifyTarget(t)
-                for t in p.targets
-              ])
-              for p in panel.panels
-            ],
-          } else {}
-        ),
-      ];
-
-      local modifiedPanels = std.flattenArrays([
-        ModifyPanel(p)
-        for p in nodeExporterFull.panels
-      ]);
-      modifiedPanels
-    )
   ),
 }
