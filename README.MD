@@ -13,7 +13,7 @@ They can be imported into Grafana by clicking Import and pasting the JSON into t
 | Blackbox Exporter Overview | generated |         |
 | Dnsmasq Overview           | generated |         |
 | Docker Overview            | generated |         |
-| [Node Exporter](https://grafana.com/grafana/dashboards/1860)              | modified | Added disk labels, lvm storage amounts, fan speed and hardware voltages. Modified from original using jsonnet |
+| [Node Exporter](https://grafana.com/grafana/dashboards/1860)              | modified | Added disk labels. Modified from original using jsonnet |
 | Smart Overview             | generated |         |
 | SNMP Interface Status      | generated |         |
 | UPS Overview               | generated |         |
