@@ -8,7 +8,7 @@ local row = grafonnet.panel.row;
 local table = grafonnet.panel.table;
 local timeSeries = grafonnet.panel.timeSeries;
 
-# Dashboards are from https://github.com/grafana/agent/blob/main/production/grafana-agent-mixin/dashboards.libsonnet
+// Dashboards are from https://github.com/grafana/agent/blob/main/production/grafana-agent-mixin/dashboards.libsonnet
 {
   'grafana-agent.json': (
     util.dashboard('Agent', tags=['generated', 'grafana-agent'])
@@ -26,19 +26,19 @@ local timeSeries = grafonnet.panel.timeSeries;
           + table.transformation.withOptions({
             excludeByName: {
               Time: true,
-              "Value #A": true
+              'Value #A': true,
             },
             indexByName: {
               cluster: 0,
               namespace: 1,
               instance: 2,
               version: 3,
-              "Value #B": 4
+              'Value #B': 4,
             },
             renameByName: {
-              "Value #B": "Uptime"
-            }
-          })
+              'Value #B': 'Uptime',
+            },
+          }),
         ])
         + table.standardOptions.withOverrides(
           table.fieldOverride.byName.new('Uptime')
@@ -57,7 +57,7 @@ local timeSeries = grafonnet.panel.timeSeries;
             + timeSeries.fieldConfig.defaults.custom.withFillOpacity(20)
             + timeSeries.fieldConfig.defaults.custom.withStacking(true)
             + timeSeries.options.tooltip.withMode('multi')
-            + timeSeries.options.tooltip.withSort('desc')
+            + timeSeries.options.tooltip.withSort('desc'),
           ])
         ),
 
@@ -67,7 +67,7 @@ local timeSeries = grafonnet.panel.timeSeries;
             util.timeSeries.base('Average Scrape Interval Duration', queries.averageScrapeDuration)
             + timeSeries.standardOptions.withUnit('ms'),
 
-            util.timeSeries.base('Scrape failures', [ queries.exceededSampleLimit, queries.sampleDuplicateTimestamp, queries.sampleOutOfBounds, queries.sampleOutOfOrder ])
+            util.timeSeries.base('Scrape failures', [queries.exceededSampleLimit, queries.sampleDuplicateTimestamp, queries.sampleOutOfBounds, queries.sampleOutOfOrder])
             + timeSeries.fieldConfig.defaults.custom.withFillOpacity(20)
             + timeSeries.fieldConfig.defaults.custom.withStacking(true)
             + timeSeries.options.tooltip.withMode('multi')
@@ -79,7 +79,7 @@ local timeSeries = grafonnet.panel.timeSeries;
             + timeSeries.options.tooltip.withMode('multi')
             + timeSeries.options.tooltip.withSort('desc'),
           ])
-        )
+        ),
       ])
     )
   ),
@@ -90,5 +90,5 @@ local timeSeries = grafonnet.panel.timeSeries;
 
   'grafana-agent-logs-pipeline.json': (
     util.dashboard('Agent Logs Pipeline', tags=['generated', 'grafana-agent'])
-  )
+  ),
 }
