@@ -10,10 +10,16 @@ local timeSeries = grafonnet.panel.timeSeries;
 
 // Dashboards are from https://github.com/grafana/agent/blob/main/production/grafana-agent-mixin/dashboards.libsonnet
 {
-  'grafana-agent.json': (
-    util.dashboard('Agent', tags=['generated', 'grafana-agent'])
+  'agent-overview.json': (
+    util.dashboard('Agent / Overview', tags=['generated', 'grafana-agent'])
     + util.addMultiVariable('cluster', 'agent_build_info', 'cluster')
     + util.addMultiVariable('namespace', 'agent_build_info{cluster=~"$cluster"}', 'namespace')
+    + dashboard.withLinks(
+      dashboard.link.dashboards.new('Grafana Agent Dashboards', ['grafana-agent'])
+      + dashboard.link.dashboards.options.withAsDropdown()
+      + dashboard.link.dashboards.options.withIncludeVars()
+      + dashboard.link.dashboards.options.withKeepTime()
+    )
     + dashboard.withPanels(
       util.makeGrid([
         util.row('Agent Stats'),
@@ -84,11 +90,117 @@ local timeSeries = grafonnet.panel.timeSeries;
     )
   ),
 
-  'grafana-agent-remote-write.json': (
-    util.dashboard('Agent Prometheus Remote Write', tags=['generated', 'grafana-agent'])
+  'agent-remote-write.json': (
+    util.dashboard('Agent / Prometheus Remote Write', tags=['generated', 'grafana-agent'])
+    + util.addMultiVariable('cluster', 'agent_build_info', 'cluster')
+    + util.addMultiVariable('namespace', 'agent_build_info{cluster=~"$cluster"}', 'namespace')
+    + dashboard.withLinks(
+      dashboard.link.dashboards.new('Grafana Agent Dashboards', ['grafana-agent'])
+      + dashboard.link.dashboards.options.withAsDropdown()
+      + dashboard.link.dashboards.options.withIncludeVars()
+      + dashboard.link.dashboards.options.withKeepTime()
+    )
+    + dashboard.withPanels(
+      util.makeGrid([
+        util.row('Timestamps'),
+
+        util.timeSeries.base('Highest Timestamp In vs. Highest Timestamp Sent', queries.timestampComparison, width=12)
+        + timeSeries.options.tooltip.withMode('multi')
+        + timeSeries.options.tooltip.withSort('desc'),
+
+        util.timeSeries.base('Latency [1m]', [queries.meanRemoteSendLatency, queries.p99RemoteSendLatency], width=12)
+        + timeSeries.options.tooltip.withMode('multi')
+        + timeSeries.options.tooltip.withSort('desc'),
+
+        util.row('Samples', collapsed=true)
+        + row.withPanels(
+          util.makeGrid([
+            util.timeSeries.base('Rate in [5m]', queries.samplesInRate, width=12)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+
+            util.timeSeries.base('Rate succeeded [5m]', queries.samplesOutRate, width=12)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+
+            util.timeSeries.base('Pending Samples', queries.pendingSamples, width=12)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+
+            util.timeSeries.base('Dropped Samples', queries.droppedSamples, width=12)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+
+            util.timeSeries.base('Failed Samples', queries.failedSamples, width=12)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+
+            util.timeSeries.base('Retried Samples', queries.retriedSamples, width=12)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+          ])
+        ),
+
+        util.row('Shards', collapsed=true)
+        + row.withPanels(
+          util.makeGrid([
+            util.timeSeries.base('Current Shards', queries.currentShards, width=12)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+
+            util.timeSeries.base('Max Shards', queries.maxShards, width=12)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+
+            util.timeSeries.base('Min Shards', queries.minShards, width=12)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+
+            util.timeSeries.base('Desired Shards', queries.desiredShards, width=12)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+          ])
+        ),
+
+        util.row('Shard Details', collapsed=true)
+        + row.withPanels(
+          util.makeGrid([
+            util.timeSeries.base('Shard Capacity', queries.shardsCapacity, width=12)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+          ])
+        ),
+
+        util.row('Segments', collapsed=true)
+        + row.withPanels(
+          util.makeGrid([
+            util.timeSeries.base('Remote Write Current Segment', queries.queueSegment, width=12)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+          ])
+        ),
+
+        util.row('Misc. Rates', collapsed=true)
+        + row.withPanels(
+          util.makeGrid([
+            util.timeSeries.base('Enqueue Retries', queries.enqueueRetries, width=12)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+          ])
+        ),
+      ])
+    )
   ),
 
-  'grafana-agent-logs-pipeline.json': (
+  'agent-logs-pipeline.json': (
     util.dashboard('Agent Logs Pipeline', tags=['generated', 'grafana-agent'])
+    + util.addMultiVariable('cluster', 'agent_build_info', 'cluster')
+    + util.addMultiVariable('namespace', 'agent_build_info{cluster=~"$cluster"}', 'namespace')
+    + dashboard.withLinks(
+      dashboard.link.dashboards.new('Grafana Agent Dashboards', ['grafana-agent'])
+      + dashboard.link.dashboards.options.withAsDropdown()
+      + dashboard.link.dashboards.options.withIncludeVars()
+      + dashboard.link.dashboards.options.withKeepTime()
+    )
   ),
 }
