@@ -193,7 +193,7 @@ local timeSeries = grafonnet.panel.timeSeries;
   ),
 
   'agent-logs-pipeline.json': (
-    util.dashboard('Agent Logs Pipeline', tags=['generated', 'grafana-agent'])
+    util.dashboard('Agent / Logs Pipeline', tags=['generated', 'grafana-agent'])
     + util.addMultiVariable('cluster', 'agent_build_info', 'cluster')
     + util.addMultiVariable('namespace', 'agent_build_info{cluster=~"$cluster"}', 'namespace')
     + dashboard.withLinks(
@@ -201,6 +201,75 @@ local timeSeries = grafonnet.panel.timeSeries;
       + dashboard.link.dashboards.options.withAsDropdown()
       + dashboard.link.dashboards.options.withIncludeVars()
       + dashboard.link.dashboards.options.withKeepTime()
+    )
+    + dashboard.withPanels(
+      util.makeGrid([
+        util.row('Errors'),
+
+        util.timeSeries.base('Dropped bytes rate [B/s]', queries.droppedBytes, width=12)
+        + timeSeries.fieldConfig.defaults.custom.withFillOpacity(20)
+        + timeSeries.fieldConfig.defaults.custom.withStacking(true)
+        + timeSeries.options.tooltip.withMode('multi')
+        + timeSeries.options.tooltip.withSort('desc')
+        + timeSeries.standardOptions.withUnit('Bps'),
+
+        util.timeSeries.base('Write requests success rate [%]', queries.requestSuccessRate, width=12)
+        + timeSeries.options.tooltip.withMode('multi')
+        + timeSeries.options.tooltip.withSort('desc')
+        + timeSeries.standardOptions.withMax(100)
+        + timeSeries.standardOptions.withUnit('percent'),
+
+        util.row('Latencies'),
+
+        util.timeSeries.base('Write latencies p99 [s]', queries.p99RequestDuration, width=12)
+        + timeSeries.options.tooltip.withMode('multi')
+        + timeSeries.options.tooltip.withSort('desc')
+        + timeSeries.standardOptions.withUnit('s'),
+
+        util.timeSeries.base('Write latencies p90 [s]', queries.p90RequestDuration, width=12)
+        + timeSeries.options.tooltip.withMode('multi')
+        + timeSeries.options.tooltip.withSort('desc')
+        + timeSeries.standardOptions.withUnit('s'),
+
+        util.timeSeries.base('Write latencies p50 [s]', queries.p50RequestDuration, width=12)
+        + timeSeries.options.tooltip.withMode('multi')
+        + timeSeries.options.tooltip.withSort('desc')
+        + timeSeries.standardOptions.withUnit('s'),
+
+        util.timeSeries.base('Write latencies average [s]', queries.averageRequestDuration, width=12)
+        + timeSeries.options.tooltip.withMode('multi')
+        + timeSeries.options.tooltip.withSort('desc')
+        + timeSeries.standardOptions.withUnit('s'),
+
+        util.row('Logs volume'),
+
+        util.timeSeries.base('Bytes read rate [B/s]', queries.bytesRead, width=12)
+        + timeSeries.fieldConfig.defaults.custom.withFillOpacity(20)
+        + timeSeries.fieldConfig.defaults.custom.withStacking(true)
+        + timeSeries.options.tooltip.withMode('multi')
+        + timeSeries.options.tooltip.withSort('desc')
+        + timeSeries.standardOptions.withUnit('Bps'),
+
+        util.timeSeries.base('Lines read rate [lines/s]', queries.linesRead, width=12)
+        + timeSeries.fieldConfig.defaults.custom.withFillOpacity(20)
+        + timeSeries.fieldConfig.defaults.custom.withStacking(true)
+        + timeSeries.options.tooltip.withMode('multi')
+        + timeSeries.options.tooltip.withSort('desc')
+        + timeSeries.standardOptions.withUnit('short'),
+
+        util.timeSeries.base('Active files count', queries.activeFilesCount, width=12)
+        + timeSeries.fieldConfig.defaults.custom.withFillOpacity(20)
+        + timeSeries.fieldConfig.defaults.custom.withStacking(true)
+        + timeSeries.options.tooltip.withMode('multi')
+        + timeSeries.options.tooltip.withSort('desc'),
+
+        util.timeSeries.base('Entries sent rate [entries/s]', queries.entriesSent, width=12)
+        + timeSeries.fieldConfig.defaults.custom.withFillOpacity(20)
+        + timeSeries.fieldConfig.defaults.custom.withStacking(true)
+        + timeSeries.options.tooltip.withMode('multi')
+        + timeSeries.options.tooltip.withSort('desc')
+        + timeSeries.standardOptions.withUnit('short'),
+      ])
     )
   ),
 }

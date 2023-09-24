@@ -147,4 +147,87 @@ local prometheusQuery = grafonnet.query.prometheus;
     + prometheusQuery.withFormat('time_series')
     + prometheusQuery.withLegendFormat('{{ cluster }}:{{ instance }}-{{ instance_group_name }}'),
 
+  droppedBytes:
+    prometheusQuery.new('$datasource', |||
+      sum by (instance) (rate(promtail_dropped_bytes_total{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/agent"}[$__rate_interval]))
+    |||)
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{ instance }}'),
+
+  requestSuccessRate:
+    prometheusQuery.new('$datasource', |||
+      sum by(instance) (rate(promtail_request_duration_seconds_bucket{status_code=~"2..", cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/agent"}[$__rate_interval]))
+      /
+      sum by(instance) (rate(promtail_request_duration_seconds_bucket{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/agent"}[$__rate_interval]))
+      * 100
+    |||)
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{ instance }}'),
+
+  p99RequestDuration:
+    prometheusQuery.new('$datasource', |||
+      histogram_quantile(
+        0.99,
+        sum by (le, instance) (rate(promtail_request_duration_seconds_bucket{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/agent"}[$__rate_interval]))
+      )
+    |||)
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{ instance }}'),
+
+  p90RequestDuration:
+    prometheusQuery.new('$datasource', |||
+      histogram_quantile(
+        0.90,
+        sum by (le, instance) (rate(promtail_request_duration_seconds_bucket{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/agent"}[$__rate_interval]))
+      )
+    |||)
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{ instance }}'),
+
+  p50RequestDuration:
+    prometheusQuery.new('$datasource', |||
+      histogram_quantile(
+        0.50,
+        sum by (le, instance) (rate(promtail_request_duration_seconds_bucket{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/agent"}[$__rate_interval]))
+      )
+    |||)
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{ instance }}'),
+
+  averageRequestDuration:
+    prometheusQuery.new('$datasource', |||
+      (sum by (le, instance) (rate(promtail_request_duration_seconds_sum{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/agent"}[$__rate_interval])))
+      /
+      (sum by (le, instance) (rate(promtail_request_duration_seconds_count{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/agent"}[$__rate_interval])))
+    |||)
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{ instance }}'),
+
+  bytesRead:
+    prometheusQuery.new('$datasource', |||
+      sum by (instance) (rate(promtail_read_bytes_total{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/agent"}[$__rate_interval]))
+    |||)
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{ instance }}'),
+
+  linesRead:
+    prometheusQuery.new('$datasource', |||
+      sum by (instance) (rate(promtail_read_lines_total{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/agent"}[$__rate_interval]))
+    |||)
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{ instance }}'),
+
+  activeFilesCount:
+    prometheusQuery.new('$datasource', |||
+      sum by(instance) (promtail_files_active_total{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/agent"})
+    |||)
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{ instance }}'),
+
+  entriesSent:
+    prometheusQuery.new('$datasource', |||
+      sum by (instance) (rate(promtail_sent_entries_total{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/agent"}[$__rate_interval]))
+    |||)
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{ instance }}'),
 }
