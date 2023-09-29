@@ -9,6 +9,9 @@ They can be imported into Grafana by clicking Import and pasting the JSON into t
 ## Available dashbords
 | Dashboard                  | Status    | Changes |
 | -------------------------- | --------- | ------- |
+| Agent / Logs Pipeline      | generated |         |
+| Agent / Overview           | generated |         |
+| Agent / Prometheus Remote Write | generated |         |
 | Bind Overview              | generated |         |
 | Blackbox Exporter Overview | generated |         |
 | Dnsmasq Overview           | generated |         |
