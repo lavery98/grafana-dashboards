@@ -9,15 +9,6 @@
         }
       },
       "version": "main"
-    },
-    {
-      "source": {
-        "git": {
-          "remote": "https://github.com/rhowe/grafonnet-lib.git",
-          "subdir": "grafonnet"
-        }
-      },
-      "version": "main"
     }
   ],
   "legacyImports": true
