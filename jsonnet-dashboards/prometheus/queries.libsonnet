@@ -84,4 +84,99 @@ local prometheusQuery = grafonnet.query.prometheus;
     prometheusQuery.new('$datasource', 'max by (slice) (prometheus_engine_query_duration_seconds{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus", quantile="0.9"}) * 1e3')
     + prometheusQuery.withFormat('time_series')
     + prometheusQuery.withLegendFormat('{{slice}}'),
+
+  timestampComparison:
+    prometheusQuery.new('$datasource', |||
+      (
+        prometheus_remote_storage_highest_timestamp_in_seconds{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus"}
+      -
+        ignoring(remote_name, url) group_right(cluster, namespace, instance) (prometheus_remote_storage_queue_highest_sent_timestamp_seconds{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus", url=~"$url"} != 0)
+      )
+    |||)
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{cluster}}:{{namespace}}:{{instance}} {{remote_name}}:{{url}}'),
+
+  timestampComparisonRate:
+    prometheusQuery.new('$datasource', |||
+      clamp_min(
+        rate(prometheus_remote_storage_highest_timestamp_in_seconds{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus"}[5m])
+      -
+        ignoring (remote_name, url) group_right(cluster, namespace, instance) rate(prometheus_remote_storage_queue_highest_sent_timestamp_seconds{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus", url=~"$url"}[5m])
+      , 0)
+    |||)
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{cluster}}:{{namespace}}:{{instance}} {{remote_name}}:{{url}}'),
+
+  samplesRate:
+    prometheusQuery.new('$datasource', |||
+      (
+        rate(prometheus_remote_storage_samples_in_total{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus"}[5m])
+      -
+        ignoring(remote_name, url) group_right(cluster, namespace, instance) (rate(prometheus_remote_storage_succeeded_samples_total{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus", url=~"$url"}[5m]) or rate(prometheus_remote_storage_samples_total{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus", url=~"$url"}[5m]))
+      -
+        (rate(prometheus_remote_storage_dropped_samples_total{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus", url=~"$url"}[5m]) or rate(prometheus_remote_storage_samples_dropped_total{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus", url=~"$url"}[5m]))
+      )
+    |||)
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{cluster}}:{{namespace}}:{{instance}} {{remote_name}}:{{url}}'),
+
+  currentShards:
+    prometheusQuery.new('$datasource', 'prometheus_remote_storage_shards{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus", url=~"$url"}')
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{cluster}}:{{namespace}}:{{instance}} {{remote_name}}:{{url}}'),
+
+  maxShards:
+    prometheusQuery.new('$datasource', 'prometheus_remote_storage_shards_max{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus", url=~"$url"}')
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{cluster}}:{{namespace}}:{{instance}} {{remote_name}}:{{url}}'),
+
+  minShards:
+    prometheusQuery.new('$datasource', 'prometheus_remote_storage_shards_min{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus", url=~"$url"}')
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{cluster}}:{{namespace}}:{{instance}} {{remote_name}}:{{url}}'),
+
+  desiredShards:
+    prometheusQuery.new('$datasource', 'prometheus_remote_storage_shards_desired{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus", url=~"$url"}')
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{cluster}}:{{namespace}}:{{instance}} {{remote_name}}:{{url}}'),
+
+  shardsCapacity:
+    prometheusQuery.new('$datasource', 'prometheus_remote_storage_shard_capacity{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus", url=~"$url"}')
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{cluster}}:{{namespace}}:{{instance}} {{remote_name}}:{{url}}'),
+
+  pendingSamples:
+    prometheusQuery.new('$datasource', 'prometheus_remote_storage_pending_samples{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus", url=~"$url"} or prometheus_remote_storage_samples_pending{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus", url=~"$url"}')
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{cluster}}:{{namespace}}:{{instance}} {{remote_name}}:{{url}}'),
+
+  walSegment:
+    prometheusQuery.new('$datasource', 'prometheus_tsdb_wal_segment_current{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus"}')
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{cluster}}:{{namespace}}:{{instance}}'),
+
+  queueSegment:
+    prometheusQuery.new('$datasource', 'prometheus_wal_watcher_current_segment{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus"}')
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{cluster}}:{{namespace}}:{{instance}} {{consumer}}'),
+
+  droppedSamples:
+    prometheusQuery.new('$datasource', 'rate(prometheus_remote_storage_dropped_samples_total{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus", url=~"$url"}[5m]) or rate(prometheus_remote_storage_samples_dropped_total{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus", url=~"$url"}[5m])')
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{cluster}}:{{namespace}}:{{instance}} {{remote_name}}:{{url}}'),
+
+  failedSamples:
+    prometheusQuery.new('$datasource', 'rate(prometheus_remote_storage_failed_samples_total{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus", url=~"$url"}[5m]) or rate(prometheus_remote_storage_samples_failed_total{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus", url=~"$url"}[5m])')
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{cluster}}:{{namespace}}:{{instance}} {{remote_name}}:{{url}}'),
+
+  retriedSamples:
+    prometheusQuery.new('$datasource', 'rate(prometheus_remote_storage_retried_samples_total{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus", url=~"$url"}[5m]) or rate(prometheus_remote_storage_samples_retried_total{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus", url=~"$url"}[5m])')
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{cluster}}:{{namespace}}:{{instance}} {{remote_name}}:{{url}}'),
+
+  enqueueRetries:
+    prometheusQuery.new('$datasource', 'rate(prometheus_remote_storage_enqueue_retries_total{cluster=~"$cluster", namespace=~"$namespace", job=~"${namespace}/prometheus", url=~"$url"}[5m])')
+    + prometheusQuery.withFormat('time_series')
+    + prometheusQuery.withLegendFormat('{{cluster}}:{{namespace}}:{{instance}} {{remote_name}}:{{url}}'),
 }

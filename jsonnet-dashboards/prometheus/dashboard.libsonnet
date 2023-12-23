@@ -125,6 +125,7 @@ local timeSeries = grafonnet.panel.timeSeries;
       ])
     )
   ),
+
   'prometheus-remote-write.json': (
     util.dashboard('Prometheus / Remote Write', tags=['generated', 'prometheus'])
     + util.addMultiVariable('cluster', 'prometheus_build_info', 'cluster')
@@ -135,6 +136,96 @@ local timeSeries = grafonnet.panel.timeSeries;
       + dashboard.link.dashboards.options.withAsDropdown()
       + dashboard.link.dashboards.options.withIncludeVars()
       + dashboard.link.dashboards.options.withKeepTime()
+    )
+    + dashboard.withPanels(
+      grid.wrapPanels([
+        util.row('Timestamps'),
+
+        util.timeSeries.base('Highest Timestamp In vs. Highest Timestamp Sent', queries.timestampComparison)
+        + timeSeries.options.tooltip.withMode('multi')
+        + timeSeries.options.tooltip.withSort('desc'),
+
+        util.timeSeries.base('Rate[5m]', queries.timestampComparisonRate)
+        + timeSeries.options.tooltip.withMode('multi')
+        + timeSeries.options.tooltip.withSort('desc'),
+
+        util.row('Samples', collapsed=true)
+        + row.withPanels(
+          grid.wrapPanels([
+            util.timeSeries.base('Rate, in vs. succeeded or dropped [5m]', queries.samplesRate, width=24)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+          ])
+        ),
+
+        util.row('Shards', collapsed=true)
+        + row.withPanels(
+          grid.wrapPanels([
+            util.timeSeries.base('Current Shards', queries.currentShards, width=24)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+
+            util.timeSeries.base('Max Shards', queries.maxShards, width=8)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+
+            util.timeSeries.base('Min Shards', queries.minShards, width=8)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+
+            util.timeSeries.base('Desired Shards', queries.desiredShards, width=8)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+          ])
+        ),
+
+        util.row('Shard Details', collapsed=true)
+        + row.withPanels(
+          grid.wrapPanels([
+            util.timeSeries.base('Shard Capacity', queries.shardsCapacity)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+
+            util.timeSeries.base('Pending Samples', queries.pendingSamples)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+          ])
+        ),
+
+        util.row('Segments', collapsed=true)
+        + row.withPanels(
+          grid.wrapPanels([
+            util.timeSeries.base('TSDB Current Segment', queries.walSegment)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+
+            util.timeSeries.base('Remote Write Current Segment', queries.queueSegment)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+          ])
+        ),
+
+        util.row('Misc. Rates', collapsed=true)
+        + row.withPanels(
+          grid.wrapPanels([
+            util.timeSeries.base('Dropped Samples', queries.droppedSamples)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+
+            util.timeSeries.base('Failed Samples', queries.failedSamples)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+
+            util.timeSeries.base('Retried Samples', queries.retriedSamples)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+
+            util.timeSeries.base('Enqueue Retries', queries.enqueueRetries)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.options.tooltip.withSort('desc'),
+          ])
+        ),
+      ])
     )
   ),
 }
