@@ -90,7 +90,7 @@ local timeSeries = grafonnet.panel.timeSeries;
         + row.withPanels(
           util.makeGrid([
             util.barGauge.base('Power On Hours', queries.powerOnHours)
-            + barGauge.options.withOrientation('horizontal')
+            + barGauge.options.withOrientation('auto')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.withUnit('h')
             + barGauge.standardOptions.color.withMode('thresholds')
@@ -105,7 +105,7 @@ local timeSeries = grafonnet.panel.timeSeries;
             ]),
 
             util.barGauge.base('Start Stop Count', queries.startStopCount)
-            + barGauge.options.withOrientation('horizontal')
+            + barGauge.options.withOrientation('auto')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.color.withMode('thresholds')
             + barGauge.standardOptions.thresholds.withMode('absolute')
@@ -119,7 +119,7 @@ local timeSeries = grafonnet.panel.timeSeries;
             ]),
 
             util.barGauge.base('Power Cycle Count', queries.powerCycleCount)
-            + barGauge.options.withOrientation('horizontal')
+            + barGauge.options.withOrientation('auto')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.color.withMode('thresholds')
             + barGauge.standardOptions.thresholds.withMode('absolute')
@@ -133,7 +133,7 @@ local timeSeries = grafonnet.panel.timeSeries;
             ]),
 
             util.barGauge.base('Load Cycle Count', queries.loadCycleCount)
-            + barGauge.options.withOrientation('horizontal')
+            + barGauge.options.withOrientation('auto')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.color.withMode('thresholds')
             + barGauge.standardOptions.thresholds.withMode('absolute')
@@ -147,7 +147,7 @@ local timeSeries = grafonnet.panel.timeSeries;
             ]),
 
             util.barGauge.base('Total Data Written', queries.totalDataWritten)
-            + barGauge.options.withOrientation('horizontal')
+            + barGauge.options.withOrientation('auto')
             + barGauge.panelOptions.withDescription('Please note: This may be slightly incorrect')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.withUnit('decbytes')
@@ -163,7 +163,7 @@ local timeSeries = grafonnet.panel.timeSeries;
             ]),
 
             util.barGauge.base('Reallocated Sector Events', queries.reallocatedSectorEvents)
-            + barGauge.options.withOrientation('horizontal')
+            + barGauge.options.withOrientation('auto')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.color.withMode('thresholds')
             + barGauge.standardOptions.thresholds.withMode('absolute')
@@ -180,7 +180,7 @@ local timeSeries = grafonnet.panel.timeSeries;
         + row.withPanels(
           util.makeGrid([
             util.barGauge.base('Raw Read Error', queries.rawReadError)
-            + barGauge.options.withOrientation('horizontal')
+            + barGauge.options.withOrientation('auto')
             + barGauge.standardOptions.withMax(100)
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.withUnit('percent')
@@ -194,7 +194,7 @@ local timeSeries = grafonnet.panel.timeSeries;
             ]),
 
             util.barGauge.base('Seek Error Rate', queries.seekErrorRate)
-            + barGauge.options.withOrientation('horizontal')
+            + barGauge.options.withOrientation('auto')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.color.withMode('thresholds')
             + barGauge.standardOptions.thresholds.withMode('absolute')
@@ -206,7 +206,7 @@ local timeSeries = grafonnet.panel.timeSeries;
             ]),
 
             util.barGauge.base('Spin Retry Count', queries.spinRetryCount)
-            + barGauge.options.withOrientation('horizontal')
+            + barGauge.options.withOrientation('auto')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.color.withMode('thresholds')
             + barGauge.standardOptions.thresholds.withMode('absolute')
@@ -220,7 +220,7 @@ local timeSeries = grafonnet.panel.timeSeries;
             ]),
 
             util.barGauge.base('Command Timeout Count', queries.commandTimeoutCount)
-            + barGauge.options.withOrientation('horizontal')
+            + barGauge.options.withOrientation('auto')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.color.withMode('thresholds')
             + barGauge.standardOptions.thresholds.withMode('absolute')
@@ -234,7 +234,7 @@ local timeSeries = grafonnet.panel.timeSeries;
             ]),
 
             util.barGauge.base('Current Pending Sector Count', queries.currentPendingSectorCount)
-            + barGauge.options.withOrientation('horizontal')
+            + barGauge.options.withOrientation('auto')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.color.withMode('thresholds')
             + barGauge.standardOptions.thresholds.withMode('absolute')
@@ -248,7 +248,7 @@ local timeSeries = grafonnet.panel.timeSeries;
             ]),
 
             util.barGauge.base('Offline Uncorrectable Sector Count', queries.offlineUncorrectableSectorCount)
-            + barGauge.options.withOrientation('horizontal')
+            + barGauge.options.withOrientation('auto')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.color.withMode('thresholds')
             + barGauge.standardOptions.thresholds.withMode('absolute')
@@ -262,7 +262,7 @@ local timeSeries = grafonnet.panel.timeSeries;
             ]),
 
             util.barGauge.base('Reported Uncorrectable Errors', queries.reportedUncorrectableErrors)
-            + barGauge.options.withOrientation('horizontal')
+            + barGauge.options.withOrientation('auto')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.color.withMode('thresholds')
             + barGauge.standardOptions.thresholds.withMode('absolute')
@@ -276,7 +276,7 @@ local timeSeries = grafonnet.panel.timeSeries;
             ]),
 
             util.barGauge.base('UltraDMA CRC Error', queries.ultradmaCrcError)
-            + barGauge.options.withOrientation('horizontal')
+            + barGauge.options.withOrientation('auto')
             + barGauge.standardOptions.withMin(0)
             + barGauge.standardOptions.color.withMode('thresholds')
             + barGauge.standardOptions.thresholds.withMode('absolute')
