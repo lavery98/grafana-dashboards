@@ -1,0 +1,89 @@
+/*
+ * Copyright 2023 Ashley Lavery
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+{
+  local withMultiSelectTemplate = function (t) t + (
+    if t.name == 'cluster' || t.name == 'namespace' then {
+      allValue: '.+',
+      current: {
+        selected: true,
+        text: 'All',
+        value: '$__all',
+      },
+      includeAll: true,
+      multi: true
+    } else {}
+  ),
+
+  local dropPanels = function(panels, dropList)
+    [
+      p
+      for p in panels
+      if !std.member(dropList, p.title)
+    ],
+
+  local mapTemplateParameters = function(ls)
+    [
+      std.foldl(function(x, fn) fn(x), [withMultiSelectTemplate], item)
+      for item in ls
+    ],
+
+  loki: {
+    grafanaDashboards+: {
+      'loki-chunks.json'+: {
+        labelsSelector:: 'cluster=~"$cluster", namespace=~"$namespace", job=~"($namespace)/loki"',
+
+        uid: '',
+        time: {
+          from: 'now-6h',
+          to: 'now'
+        },
+        refresh: '1m',
+        timezone: '',
+
+        templating+: {
+          list: mapTemplateParameters(super.list),
+        }
+      },
+
+      'loki-deletion.json'+: {
+        local dropList = ['Compactor CPU usage', 'Compactor memory usage (MiB)'],
+        rows: [
+          r {
+            panels: dropPanels(r.panels, dropList)
+          }
+          for r in super.rows
+        ]
+      },
+
+      // TODO
+      'loki-operational.json'+: {
+      },
+
+      // TODO
+      'loki-reads.json'+: {
+      },
+
+      // TODO
+      'loki-retention.json'+: {
+      },
+
+      // TODO
+      'loki-writes.json'+: {
+      },
+    }
+  }
+}
