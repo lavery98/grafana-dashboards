@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonnet');
+
 {
   local withMultiSelectTemplate = function (t) t + (
     if t.name == 'cluster' || t.name == 'namespace' then {
@@ -61,20 +63,68 @@
 
       'loki-deletion.json'+: {
         local dropList = ['Compactor CPU usage', 'Compactor memory usage (MiB)'],
+
+        uid: '',
+        time: {
+          from: 'now-6h',
+          to: 'now'
+        },
+        refresh: '1m',
+        timezone: '',
+
         rows: [
           r {
             panels: dropPanels(r.panels, dropList)
           }
           for r in super.rows
-        ]
+        ],
+
+        templating+: {
+          list: mapTemplateParameters(super.list),
+        }
+
+        // TODO
+        // - Fix last few panels in dashboard
       },
 
       // TODO
       'loki-operational.json'+: {
       },
 
-      // TODO
       'loki-reads.json'+: {
+        local dropList = ['Frontend (query-frontend)', 'Ingester - Zone Aware', 'BoltDB Shipper'],
+
+        matchers:: {
+          cortexgateway:: [],
+          queryFrontend:: [],
+          querier:: [
+            utils.selector.re('namespace', '$namespace'),
+            utils.selector.re('job', '($namespace)/loki'),
+          ],
+          ingester:: [
+            utils.selector.re('namespace', '$namespace'),
+            utils.selector.re('job', '($namespace)/loki'),
+          ],
+          ingesterZoneAware:: [],
+          querierOrIndexGateway:: [],
+        },
+
+        uid: '',
+        time: {
+          from: 'now-6h',
+          to: 'now'
+        },
+        refresh: '1m',
+        timezone: '',
+
+        rows: dropPanels(super.rows, dropList),
+
+        templating+: {
+          list: mapTemplateParameters(super.list),
+        }
+
+        // TODO
+        // - Change Per Pod Latency to per instance
       },
 
       // TODO
