@@ -131,8 +131,42 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
       'loki-retention.json'+: {
       },
 
-      // TODO
       'loki-writes.json'+: {
+        local dropList = ['Distributor - Structured Metadata', 'Ingester - Zone Aware', 'BoltDB Shipper'],
+
+        matchers:: {
+          cortexgateway:: [],
+          distributor:: [
+            utils.selector.re('namespace', '$namespace'),
+            utils.selector.re('job', '($namespace)/loki'),
+          ],
+          ingester:: [
+            utils.selector.re('namespace', '$namespace'),
+            utils.selector.re('job', '($namespace)/loki'),
+          ],
+          ingester_zone:: [],
+          any_ingester:: [
+            utils.selector.re('namespace', '$namespace'),
+            utils.selector.re('job', '($namespace)/loki'),
+          ],
+        },
+
+        uid: '',
+        time: {
+          from: 'now-6h',
+          to: 'now'
+        },
+        refresh: '1m',
+        timezone: '',
+
+        rows: dropPanels(super.rows, dropList),
+
+        templating+: {
+          list: mapTemplateParameters(super.list),
+        }
+
+        // TODO
+        // - Update rules to get latency working correctly
       },
     }
   }
