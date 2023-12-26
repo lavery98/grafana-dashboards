@@ -47,6 +47,12 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
     ],
 
   loki: {
+    _config+:: {
+      promtail: {
+        enabled: false,
+      }
+    },
+
     grafanaDashboards+: {
       'loki-chunks.json'+: {
         labelsSelector:: 'cluster=~"$cluster", namespace=~"$namespace", job=~"($namespace)/loki"',
@@ -90,8 +96,53 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
         // - Fix last few panels in dashboard
       },
 
-      // TODO
+      // TODO: Fix this to work. We may need to create our own dashboard based on theirs as it isn't very easy to modify
       'loki-operational.json'+: {
+        hiddenRows:: [
+          'Cassandra',
+          'GCS',
+          'Memcached',
+          'Consul',
+          'Big Table',
+          'Dynamo',
+          'Azure Blob',
+          'BoltDB Shipper',
+        ],
+
+        jobMatchers:: {
+          cortexgateway:: [
+            utils.selector.re('namespace', '$namespace'),
+            utils.selector.re('job', '($namespace)/loki'),
+          ],
+          distributor:: [
+            utils.selector.re('namespace', '$namespace'),
+            utils.selector.re('job', '($namespace)/loki'),
+          ],
+          ingester:: [
+            utils.selector.re('namespace', '$namespace'),
+            utils.selector.re('job', '($namespace)/loki'),
+          ],
+          querier:: [
+            utils.selector.re('namespace', '$namespace'),
+            utils.selector.re('job', '($namespace)/loki'),
+          ],
+          queryFrontend:: [
+            utils.selector.re('namespace', '$namespace'),
+            utils.selector.re('job', '($namespace)/loki'),
+          ],
+        },
+
+        uid: '',
+        time: {
+          from: 'now-6h',
+          to: 'now'
+        },
+        refresh: '1m',
+        timezone: '',
+
+        templating+: {
+          list: mapTemplateParameters(super.list),
+        }
       },
 
       'loki-reads.json'+: {
