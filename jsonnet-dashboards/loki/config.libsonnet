@@ -30,6 +30,7 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
     } else {}
   ),
 
+  // dropPanels removes unnecessary panels from the loki dashboards
   local dropPanels = function(panels, dropList)
     [
       p
@@ -37,6 +38,8 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
       if !std.member(dropList, p.title)
     ],
 
+  // mapTemplateParameters applies a static list of transformer functions to
+  // all dashboard template parameters.
   local mapTemplateParameters = function(ls)
     [
       std.foldl(function(x, fn) fn(x), [withMultiSelectTemplate], item)
@@ -127,8 +130,25 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
         // - Change Per Pod Latency to per instance
       },
 
-      // TODO
       'loki-retention.json'+: {
+        local dropList = ['Resource Usage'],
+
+        uid: '',
+        time: {
+          from: 'now-6h',
+          to: 'now'
+        },
+        refresh: '1m',
+        timezone: '',
+
+        rows: dropPanels(super.rows, dropList),
+
+        templating+: {
+          list: mapTemplateParameters(super.list),
+        }
+
+        // TODO
+        // - Work out if we should drop the retention row
       },
 
       'loki-writes.json'+: {
