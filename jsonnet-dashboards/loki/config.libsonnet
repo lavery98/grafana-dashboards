@@ -30,12 +30,48 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
     } else {}
   ),
 
+  local replaceTitle = function(title, replacement)
+    function (p) p + (
+      if p.title == title then {
+        title: replacement
+      } else {}
+    ),
+
+  local replaceMatchers = function(title, replacements)
+    function(p) p + (
+      if p.title == title then {
+        targets: [
+          t {
+            expr: std.foldl(function(x, rp) std.strReplace(x, rp.from, rp.to), replacements, t.expr),
+          }
+          for t in p.targets
+          if std.objectHas(p, 'targets')
+        ],
+      } else {}
+    ),
+
   // dropPanels removes unnecessary panels from the loki dashboards
   local dropPanels = function(panels, dropList)
     [
       p
       for p in panels
       if !std.member(dropList, p.title)
+    ],
+
+  // mapPanels applies recursively a set of functions over all panels.
+  // Note: A Grafana dashboard panel can include other panels.
+  local mapPanels = function(funcs, panels)
+    [
+      // Transform the current panel by applying all transformer funcs.
+      // Keep the last version after foldl ends.
+      std.foldl(function(agg, fn) fn(agg), funcs, p) + (
+        // Recursively apply all transformer functions to any
+        // children panels.
+        if std.objectHas(p, 'panels') then {
+          panels: mapPanels(funcs, p.panels),
+        } else {}
+      )
+      for p in panels
     ],
 
   // mapTemplateParameters applies a static list of transformer functions to
@@ -55,7 +91,7 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
 
     grafanaDashboards+: {
       'loki-chunks.json'+: {
-        labelsSelector:: 'cluster=~"$cluster", namespace=~"$namespace", job=~"($namespace)/loki"',
+        labelsSelector:: 'cluster=~"$cluster", job=~"($namespace)/loki"',
 
         uid: '',
         time: {
@@ -71,7 +107,7 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
       },
 
       'loki-deletion.json'+: {
-        local dropList = ['Compactor CPU usage', 'Compactor memory usage (MiB)'],
+        local dropList = ['Compactor CPU usage', 'Compactor memory usage (MiB)', 'List of deletion requests'],
 
         uid: '',
         time: {
@@ -85,15 +121,12 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
           r {
             panels: dropPanels(r.panels, dropList)
           }
-          for r in super.rows
+          for r in dropPanels(super.rows, dropList)
         ],
 
         templating+: {
           list: mapTemplateParameters(super.list),
         }
-
-        // TODO
-        // - Fix last few panels in dashboard
       },
 
       // TODO: Fix this to work. We may need to create our own dashboard based on theirs as it isn't very easy to modify
@@ -110,26 +143,11 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
         ],
 
         jobMatchers:: {
-          cortexgateway:: [
-            utils.selector.re('namespace', '$namespace'),
-            utils.selector.re('job', '($namespace)/loki'),
-          ],
-          distributor:: [
-            utils.selector.re('namespace', '$namespace'),
-            utils.selector.re('job', '($namespace)/loki'),
-          ],
-          ingester:: [
-            utils.selector.re('namespace', '$namespace'),
-            utils.selector.re('job', '($namespace)/loki'),
-          ],
-          querier:: [
-            utils.selector.re('namespace', '$namespace'),
-            utils.selector.re('job', '($namespace)/loki'),
-          ],
-          queryFrontend:: [
-            utils.selector.re('namespace', '$namespace'),
-            utils.selector.re('job', '($namespace)/loki'),
-          ],
+          cortexgateway:: [utils.selector.re('job', '($namespace)/loki')],
+          distributor:: [utils.selector.re('job', '($namespace)/loki')],
+          ingester:: [utils.selector.re('job', '($namespace)/loki')],
+          querier:: [utils.selector.re('job', '($namespace)/loki')],
+          queryFrontend:: [utils.selector.re('job', '($namespace)/loki')],
         },
 
         uid: '',
@@ -147,18 +165,15 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
 
       'loki-reads.json'+: {
         local dropList = ['Frontend (query-frontend)', 'Ingester - Zone Aware', 'BoltDB Shipper'],
+        local replacements = [
+          { from: 'pod', to: 'instance' },
+        ],
 
         matchers:: {
           cortexgateway:: [],
           queryFrontend:: [],
-          querier:: [
-            utils.selector.re('namespace', '$namespace'),
-            utils.selector.re('job', '($namespace)/loki'),
-          ],
-          ingester:: [
-            utils.selector.re('namespace', '$namespace'),
-            utils.selector.re('job', '($namespace)/loki'),
-          ],
+          querier:: [utils.selector.re('job', '($namespace)/loki')],
+          ingester:: [utils.selector.re('job', '($namespace)/loki')],
           ingesterZoneAware:: [],
           querierOrIndexGateway:: [],
         },
@@ -171,18 +186,20 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
         refresh: '1m',
         timezone: '',
 
-        rows: dropPanels(super.rows, dropList),
+        rows: [
+          r {
+            panels: mapPanels([replaceMatchers('Per Pod Latency (p99)', replacements), replaceTitle('Per Pod Latency (p99)', 'Per Instance Latency (p99)')], r.panels)
+          }
+          for r in dropPanels(super.rows, dropList)
+        ],
 
         templating+: {
           list: mapTemplateParameters(super.list),
         }
-
-        // TODO
-        // - Change Per Pod Latency to per instance
       },
 
       'loki-retention.json'+: {
-        local dropList = ['Resource Usage'],
+        local dropList = ['Resource Usage', 'Logs'],
 
         uid: '',
         time: {
@@ -194,12 +211,10 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
 
         rows: dropPanels(super.rows, dropList),
 
+        // TODO: remove loki datasource variable
         templating+: {
           list: mapTemplateParameters(super.list),
         }
-
-        // TODO
-        // - Work out if we should drop the retention row
       },
 
       'loki-writes.json'+: {
@@ -207,19 +222,10 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
 
         matchers:: {
           cortexgateway:: [],
-          distributor:: [
-            utils.selector.re('namespace', '$namespace'),
-            utils.selector.re('job', '($namespace)/loki'),
-          ],
-          ingester:: [
-            utils.selector.re('namespace', '$namespace'),
-            utils.selector.re('job', '($namespace)/loki'),
-          ],
+          distributor:: [utils.selector.re('job', '($namespace)/loki')],
+          ingester:: [utils.selector.re('job', '($namespace)/loki')],
           ingester_zone:: [],
-          any_ingester:: [
-            utils.selector.re('namespace', '$namespace'),
-            utils.selector.re('job', '($namespace)/loki'),
-          ],
+          any_ingester:: [utils.selector.re('job', '($namespace)/loki')],
         },
 
         uid: '',
@@ -235,9 +241,6 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
         templating+: {
           list: mapTemplateParameters(super.list),
         }
-
-        // TODO
-        // - Update rules to get latency working correctly
       },
     }
   }
