@@ -130,7 +130,7 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
       },
 
       // TODO: Fix this to work. We may need to create our own dashboard based on theirs as it isn't very easy to modify
-      'loki-operational.json'+: {
+      /*'loki-operational.json'+: {
         hiddenRows:: [
           'Cassandra',
           'GCS',
@@ -161,7 +161,7 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
         templating+: {
           list: mapTemplateParameters(super.list),
         }
-      },
+      },*/
 
       'loki-reads.json'+: {
         local dropList = ['Frontend (query-frontend)', 'Ingester - Zone Aware', 'BoltDB Shipper'],
