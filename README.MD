@@ -16,6 +16,12 @@ They can be imported into Grafana by clicking Import and pasting the JSON into t
 | Blackbox Exporter Overview | generated | N/A      |              |
 | Dnsmasq Overview           | generated | N/A      |              |
 | Docker Overview            | generated | N/A      |              |
+| Loki / Chunks              | modified  | [Loki Mixin](https://github.com/grafana/loki/tree/main/production/loki-mixin) | Modified original mixin using jsonnet to suit my needs |
+| Loki / Deletion            | modified  | [Loki Mixin](https://github.com/grafana/loki/tree/main/production/loki-mixin) | Modified original mixin using jsonnet to suit my needs |
+| Loki / Operation           | modified  | [Loki Mixin](https://github.com/grafana/loki/tree/main/production/loki-mixin) | TODO         |
+| Loki / Reads               | modified  | [Loki Mixin](https://github.com/grafana/loki/tree/main/production/loki-mixin) | Modified original mixin using jsonnet to suit my needs |
+| Loki / Retention           | modified  | [Loki Mixin](https://github.com/grafana/loki/tree/main/production/loki-mixin) | Modified original mixin using jsonnet to suit my needs |
+| Loki / Writes              | modified  | [Loki Mixin](https://github.com/grafana/loki/tree/main/production/loki-mixin) | Modified original mixin using jsonnet to suit my needs |
 | Node Exporter              | modified  | [Node Exporter](https://github.com/rfmoz/grafana-dashboards/blob/master/prometheus/node-exporter-full.json) | Added disk labels. Modified from original using jsonnet |
 | Prometheus / Overview      | modified  | [Prometheus Mixin](https://github.com/prometheus/prometheus/blob/main/documentation/prometheus-mixin/dashboards.libsonnet) | Original jsonnet is modified to suit my needs and uses the Grafonnet library |
 | Prometheus / Remote Write  | modified  | [Prometheus Mixin](https://github.com/prometheus/prometheus/blob/main/documentation/prometheus-mixin/dashboards.libsonnet) | Original jsonnet is modified to suit my needs and uses the Grafonnet library |
