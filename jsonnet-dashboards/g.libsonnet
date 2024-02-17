@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-(import 'github.com/grafana/grafonnet/gen/grafonnet-v10.1.0/main.libsonnet')
+(import 'github.com/grafana/grafonnet/gen/grafonnet-latest/main.libsonnet')

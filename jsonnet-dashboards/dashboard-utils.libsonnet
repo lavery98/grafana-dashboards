@@ -24,7 +24,6 @@ local panel = grafonnet.panel;
     dashboard.new(title)
     + dashboard.withEditable()
     + dashboard.withSchemaVersion()
-    + dashboard.withStyle()
     + dashboard.withTags(tags)
     + dashboard.withTimezone()
     + dashboard.withUid(uid)
