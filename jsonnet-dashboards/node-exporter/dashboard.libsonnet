@@ -24,8 +24,10 @@ local dashboard = grafonnet.dashboard;
 local prometheus = grafonnet.query.prometheus;
 local variable = grafonnet.dashboard.variable;
 
+local filename = 'node-exporter.json';
+
 {
-  'node-exporter.json': (
+  [filename]: (
     {
       hiddentRows:: [],
       hiddenPanels:: [],
@@ -33,8 +35,17 @@ local variable = grafonnet.dashboard.variable;
     + nodeExporterFull + {
       __inputs: {},
 
+      local replaceInstanceJobMatcher(expr) =
+        std.strReplace(std.strReplace(expr, 'instance="$node", job="$job"', 'cluster=~"$cluster",namespace=~"$namespace",host="$host"'), 'instance="$node",job="$job"', 'cluster=~"$cluster",namespace=~"$namespace",host="$host"'),
+
+      local replaceInstanceMatcher(expr) =
+        std.strReplace(expr, 'instance="$node"', 'cluster=~"$cluster",namespace=~"$namespace",host="$host"'),
+
+      local replaceInstanceGroupBy(expr) =
+        std.strReplace(expr, '(instance)', '(host)'),
+
       local replaceMatchers(expr) =
-        std.strReplace(expr, 'instance="$node",job="$job"', 'cluster=~"$cluster",namespace=~"$namespace",host="$host"'),
+        replaceInstanceGroupBy(replaceInstanceMatcher(replaceInstanceJobMatcher(expr))),
 
       local addDiskLabel(expr) =
         expr + ' * on (device) group_left(device_label) node_disk_label_info{cluster=~"$cluster",namespace=~"$namespace",host="$host"} or on (device) label_replace(' + expr + ', "device_label", "$1", "device", "(.*)")',
@@ -114,7 +125,7 @@ local variable = grafonnet.dashboard.variable;
         if !(p.type == 'row' && isRowHidden(p.title)) && !(isPanelHidden(p.title))
       ],
     }
-    + util.dashboard('Node Exporter', tags=['generated', 'node_exporter'])
+    + util.dashboard('Node Exporter', tags=['generated', 'node_exporter'], uid=std.md5(filename))
     + util.addMultiVariable('cluster', 'node_exporter_build_info', 'cluster')
     + util.addMultiVariable('namespace', 'node_exporter_build_info{cluster=~"$cluster"}', 'namespace')
     + util.addVariable('host', 'node_exporter_build_info{cluster=~"$cluster", namespace=~"$namespace"}', 'host')
