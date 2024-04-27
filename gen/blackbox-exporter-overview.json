@@ -12,9 +12,7 @@
                "color": {
                   "mode": "fixed"
                },
-               "custom": {
-                  "filterable": true
-               }
+               "filterable": true
             },
             "overrides": [
                {
@@ -75,7 +73,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "probe_success{cluster=~\"$cluster\"}",
+               "expr": "probe_success{cluster=~\"$cluster\", job=~\"$job\"}",
                "format": "table",
                "instant": true,
                "intervalFactor": null
@@ -181,7 +179,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "probe_success{cluster=~\"$cluster\"}",
+               "expr": "probe_success{cluster=~\"$cluster\", job=~\"$job\"}",
                "format": "time_series",
                "intervalFactor": 2,
                "legendFormat": "{{instance}}"
@@ -200,9 +198,7 @@
                "color": {
                   "mode": "thresholds"
                },
-               "custom": {
-                  "filterable": true
-               },
+               "filterable": true,
                "thresholds": {
                   "mode": "absolute",
                   "steps": [
@@ -266,7 +262,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "probe_ssl_earliest_cert_expiry{cluster=~\"$cluster\"} - time()",
+               "expr": "probe_ssl_earliest_cert_expiry{cluster=~\"$cluster\", job=~\"$job\"} - time()",
                "format": "table",
                "instant": true,
                "intervalFactor": null
@@ -357,7 +353,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "probe_dns_lookup_time_seconds{cluster=~\"$cluster\"}",
+               "expr": "probe_dns_lookup_time_seconds{cluster=~\"$cluster\", job=~\"$job\"}",
                "format": "time_series",
                "intervalFactor": 2,
                "legendFormat": "{{instance}}"
@@ -428,7 +424,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "probe_duration_seconds{cluster=~\"$cluster\"}",
+               "expr": "probe_duration_seconds{cluster=~\"$cluster\", job=~\"$job\"}",
                "format": "time_series",
                "intervalFactor": 2,
                "legendFormat": "{{instance}}"
@@ -464,6 +460,20 @@
             "refresh": 2,
             "sort": 1,
             "type": "query"
+         },
+         {
+            "allValue": ".+",
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": true,
+            "multi": true,
+            "name": "job",
+            "query": "label_values(probe_success{cluster=~\"$cluster\"}, job)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
          }
       ]
    },
@@ -473,5 +483,5 @@
    },
    "timezone": "browser",
    "title": "Blackbox Exporter Overview",
-   "uid": ""
+   "uid": "6f00ef1e2717eead8e3cbbc8ce64681d"
 }
