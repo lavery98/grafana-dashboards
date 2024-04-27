@@ -1,0 +1,1144 @@
+{
+   "editable": true,
+   "graphTooltip": 1,
+   "panels": [
+      {
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
+         },
+         "id": 1,
+         "title": "General",
+         "type": "row"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 20,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                     "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               }
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 1
+         },
+         "id": 2,
+         "options": {
+            "tooltip": {
+               "mode": "multi"
+            }
+         },
+         "pluginVersion": "v10.2.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(irate(bind_incoming_queries_total{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\"}[$__rate_interval]))",
+               "format": "time_series",
+               "legendFormat": "Incoming"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(irate(bind_resolver_queries_total{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\"}[$__rate_interval]))",
+               "format": "time_series",
+               "legendFormat": "Outgoing"
+            }
+         ],
+         "title": "All DNS Queries",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 20,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                     "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               }
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 9
+         },
+         "id": 3,
+         "options": {
+            "tooltip": {
+               "mode": "multi"
+            }
+         },
+         "pluginVersion": "v10.2.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "irate(bind_incoming_queries_total{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\"}[$__rate_interval])",
+               "format": "time_series",
+               "legendFormat": "{{ type }}"
+            }
+         ],
+         "title": "Incoming DNS Queries",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 20,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                     "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               }
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 9
+         },
+         "id": 4,
+         "options": {
+            "tooltip": {
+               "mode": "multi"
+            }
+         },
+         "pluginVersion": "v10.2.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "irate(bind_resolver_queries_total{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\"}[$__rate_interval])",
+               "format": "time_series",
+               "legendFormat": "{{ type }}"
+            }
+         ],
+         "title": "Outgoing DNS Queries",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 20,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                     "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               }
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 17
+         },
+         "id": 5,
+         "options": {
+            "tooltip": {
+               "mode": "multi"
+            }
+         },
+         "pluginVersion": "v10.2.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "irate(bind_incoming_requests_total{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\"}[$__rate_interval])",
+               "format": "time_series",
+               "legendFormat": "{{ opcode }}"
+            }
+         ],
+         "title": "Incoming Requests",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 20,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "auto",
+                  "spanNulls": false,
+                  "stacking": {
+                     "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               }
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 17
+         },
+         "id": 6,
+         "options": {
+            "tooltip": {
+               "mode": "multi"
+            }
+         },
+         "pluginVersion": "v10.2.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "irate(bind_responses_total{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\"}[$__rate_interval])",
+               "format": "time_series",
+               "legendFormat": "{{ result }}"
+            }
+         ],
+         "title": "Responses Sent",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+               },
+               "unit": "dateTimeAsIso"
+            }
+         },
+         "gridPos": {
+            "h": 3,
+            "w": 12,
+            "x": 0,
+            "y": 25
+         },
+         "id": 7,
+         "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "textMode": "auto"
+         },
+         "pluginVersion": "v10.2.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "bind_boot_time_seconds{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\"} * 1000",
+               "format": "time_series",
+               "instant": true,
+               "intervalFactor": null
+            }
+         ],
+         "title": "Last Restarted",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+               },
+               "unit": "dateTimeAsIso"
+            }
+         },
+         "gridPos": {
+            "h": 3,
+            "w": 12,
+            "x": 12,
+            "y": 25
+         },
+         "id": 8,
+         "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "textMode": "auto"
+         },
+         "pluginVersion": "v10.2.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "bind_config_time_seconds{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\"} * 1000",
+               "format": "time_series",
+               "instant": true,
+               "intervalFactor": null
+            }
+         ],
+         "title": "Last Reconfigured",
+         "type": "stat"
+      },
+      {
+         "collapsed": true,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 28
+         },
+         "id": 9,
+         "panels": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "palette-classic"
+                     },
+                     "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 20,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                           "legend": false,
+                           "tooltip": false,
+                           "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                           "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                           "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                           "mode": "off"
+                        }
+                     }
+                  }
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 0,
+                  "y": 0
+               },
+               "id": 10,
+               "options": {
+                  "tooltip": {
+                     "mode": "multi"
+                  }
+               },
+               "pluginVersion": "v10.2.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "irate(bind_resolver_query_retries_total{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\"}[$__rate_interval])",
+                     "format": "time_series",
+                     "legendFormat": "queries retried {{ view }}"
+                  }
+               ],
+               "title": "Resolver Query Retries",
+               "type": "timeseries"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "palette-classic"
+                     },
+                     "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 20,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                           "legend": false,
+                           "tooltip": false,
+                           "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                           "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                           "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                           "mode": "off"
+                        }
+                     }
+                  }
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 12,
+                  "y": 0
+               },
+               "id": 11,
+               "options": {
+                  "tooltip": {
+                     "mode": "multi"
+                  }
+               },
+               "pluginVersion": "v10.2.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "irate(bind_query_duplicates_total{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\"}[$__rate_interval])",
+                     "format": "time_series",
+                     "legendFormat": "Duplicated queries received"
+                  },
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "irate(bind_query_errors_total{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\"}[$__rate_interval])",
+                     "format": "time_series",
+                     "legendFormat": "{{ error }} queries"
+                  },
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "irate(bind_query_recursions_total{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\"}[$__rate_interval])",
+                     "format": "time_series",
+                     "legendFormat": "Queries causing recursionries received"
+                  }
+               ],
+               "title": "Query Issues",
+               "type": "timeseries"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "palette-classic"
+                     },
+                     "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 20,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                           "legend": false,
+                           "tooltip": false,
+                           "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                           "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                           "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                           "mode": "off"
+                        }
+                     }
+                  }
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 0,
+                  "y": 8
+               },
+               "id": 12,
+               "options": {
+                  "tooltip": {
+                     "mode": "multi"
+                  }
+               },
+               "pluginVersion": "v10.2.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "irate(bind_resolver_response_errors_total{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\"}[$__rate_interval])",
+                     "format": "time_series",
+                     "legendFormat": "{{ error }} {{ view }}"
+                  }
+               ],
+               "title": "Resolver Response Errors Received",
+               "type": "timeseries"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "palette-classic"
+                     },
+                     "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 20,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                           "legend": false,
+                           "tooltip": false,
+                           "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                           "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                           "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                           "mode": "off"
+                        }
+                     }
+                  }
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 12,
+                  "y": 8
+               },
+               "id": 13,
+               "options": {
+                  "tooltip": {
+                     "mode": "multi"
+                  }
+               },
+               "pluginVersion": "v10.2.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "irate(bind_resolver_query_errors_total{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\"}[$__rate_interval])",
+                     "format": "time_series",
+                     "legendFormat": "{{ error }} {{ view }}"
+                  },
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "irate(bind_resolver_query_edns0_errors_total{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\"}[$__rate_interval])",
+                     "format": "time_series",
+                     "legendFormat": "EDNS(0) error {{ view }}"
+                  }
+               ],
+               "title": "Resolver Queries Failed",
+               "type": "timeseries"
+            }
+         ],
+         "title": "Issues",
+         "type": "row"
+      },
+      {
+         "collapsed": true,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 29
+         },
+         "id": 14,
+         "panels": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "fixed"
+                     }
+                  }
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 0,
+                  "y": 0
+               },
+               "id": 15,
+               "options": {
+                  "cellHeight": "sm",
+                  "footer": {
+                     "countRows": false,
+                     "reducer": [ ],
+                     "show": false
+                  },
+                  "showHeader": true
+               },
+               "pluginVersion": "v10.2.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "bind_zone_serial{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\"}",
+                     "format": "table",
+                     "instant": true,
+                     "intervalFactor": null
+                  }
+               ],
+               "title": "Zone Serials",
+               "transformations": [
+                  {
+                     "id": "organize",
+                     "options": {
+                        "excludeByName": {
+                           "Time": true,
+                           "__name__": true,
+                           "cluster": true,
+                           "host": true,
+                           "instance": true,
+                           "job": true,
+                           "namespace": true,
+                           "view": true
+                        },
+                        "indexByName": { },
+                        "renameByName": {
+                           "Value": "SOA Serial",
+                           "zone_name": "Zone"
+                        }
+                     }
+                  },
+                  {
+                     "id": "filterByValue",
+                     "options": {
+                        "filters": [
+                           {
+                              "config": {
+                                 "id": "greater",
+                                 "options": {
+                                    "value": 1000
+                                 }
+                              },
+                              "fieldName": "SOA Serial"
+                           }
+                        ],
+                        "match": "any",
+                        "type": "include"
+                     }
+                  }
+               ],
+               "type": "table"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "palette-classic"
+                     },
+                     "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 20,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                           "legend": false,
+                           "tooltip": false,
+                           "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                           "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                           "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                           "mode": "off"
+                        }
+                     }
+                  }
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 12,
+                  "y": 0
+               },
+               "id": 16,
+               "options": {
+                  "tooltip": {
+                     "mode": "multi"
+                  }
+               },
+               "pluginVersion": "v10.2.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "rate(bind_zone_serial{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\"}[$__rate_interval])",
+                     "format": "time_series",
+                     "legendFormat": "{{ zone_name }}"
+                  }
+               ],
+               "title": "Zone Serial Changes",
+               "type": "timeseries"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "thresholds"
+                     },
+                     "custom": {
+                        "fillOpacity": 70,
+                        "lineWidth": 0
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "green",
+                              "value": null
+                           },
+                           {
+                              "color": "red",
+                              "value": 0.0001
+                           }
+                        ]
+                     }
+                  }
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 0,
+                  "y": 8
+               },
+               "id": 17,
+               "options": {
+                  "alignValue": "left",
+                  "legend": {
+                     "displayMode": "list",
+                     "placement": "bottom",
+                     "showLegend": false
+                  },
+                  "mergeValues": true,
+                  "rowHeight": 0.90000000000000002,
+                  "showValue": "never",
+                  "tooltip": {
+                     "mode": "none",
+                     "sort": "none"
+                  }
+               },
+               "pluginVersion": "v10.2.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "rate(bind_zone_transfer_failure_total{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\"}[$__rate_interval])",
+                     "format": "time_series",
+                     "legendFormat": " "
+                  }
+               ],
+               "title": "Failed Zone Transfers",
+               "type": "state-timeline"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "thresholds"
+                     },
+                     "custom": {
+                        "fillOpacity": 70,
+                        "lineWidth": 0
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "green",
+                              "value": null
+                           },
+                           {
+                              "color": "red",
+                              "value": 0.0001
+                           }
+                        ]
+                     }
+                  }
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 12,
+                  "y": 8
+               },
+               "id": 18,
+               "options": {
+                  "alignValue": "left",
+                  "legend": {
+                     "displayMode": "list",
+                     "placement": "bottom",
+                     "showLegend": false
+                  },
+                  "mergeValues": true,
+                  "rowHeight": 0.90000000000000002,
+                  "showValue": "never",
+                  "tooltip": {
+                     "mode": "none",
+                     "sort": "none"
+                  }
+               },
+               "pluginVersion": "v10.2.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "rate(bind_zone_transfer_rejected_total{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\"}[$__rate_interval])",
+                     "format": "time_series",
+                     "legendFormat": " "
+                  }
+               ],
+               "title": "Rejected Zone Transfers",
+               "type": "state-timeline"
+            }
+         ],
+         "title": "Zones",
+         "type": "row"
+      }
+   ],
+   "schemaVersion": 36,
+   "tags": [
+      "generated",
+      "bind"
+   ],
+   "templating": {
+      "list": [
+         {
+            "label": "Data source",
+            "name": "datasource",
+            "query": "prometheus",
+            "type": "datasource"
+         },
+         {
+            "allValue": ".+",
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": true,
+            "multi": true,
+            "name": "cluster",
+            "query": "label_values(bind_up, cluster)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "allValue": ".+",
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": true,
+            "multi": true,
+            "name": "namespace",
+            "query": "label_values(bind_up{cluster=~\"$cluster\"}, namespace)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "allValue": ".+",
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": true,
+            "multi": true,
+            "name": "host",
+            "query": "label_values(bind_up{cluster=~\"$cluster\", namespace=~\"$namespace\"}, host)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         }
+      ]
+   },
+   "time": {
+      "from": "now-6h",
+      "to": "now"
+   },
+   "timezone": "browser",
+   "title": "Bind Overview",
+   "uid": ""
+}

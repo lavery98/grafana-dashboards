@@ -1,0 +1,1338 @@
+{
+   "editable": true,
+   "graphTooltip": 1,
+   "panels": [
+      {
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
+         },
+         "id": 1,
+         "title": "Overview",
+         "type": "row"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+               },
+               "unit": "none"
+            }
+         },
+         "gridPos": {
+            "h": 4,
+            "w": 4,
+            "x": 0,
+            "y": 1
+         },
+         "id": 2,
+         "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "textMode": "auto"
+         },
+         "pluginVersion": "v10.2.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(smartmon_device_active{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\"})",
+               "format": "time_series",
+               "instant": true,
+               "intervalFactor": null
+            }
+         ],
+         "title": "Disks Monitored",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "fixed"
+               },
+               "custom": {
+                  "filterable": true
+               }
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 20,
+            "x": 4,
+            "y": 1
+         },
+         "id": 3,
+         "options": {
+            "cellHeight": "sm",
+            "footer": {
+               "countRows": false,
+               "enablePagination": true,
+               "reducer": [ ],
+               "show": false
+            },
+            "showHeader": true
+         },
+         "pluginVersion": "v10.2.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "smartmon_device_info{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\"}",
+               "format": "table",
+               "instant": true,
+               "intervalFactor": null
+            }
+         ],
+         "title": "Disk Drives",
+         "transformations": [
+            {
+               "id": "organize",
+               "options": {
+                  "excludeByName": {
+                     "Time": true,
+                     "Value": true,
+                     "__name__": true,
+                     "agent_hostname": true,
+                     "cluster": true,
+                     "host": true,
+                     "instance": true,
+                     "job": true,
+                     "lun_id": true,
+                     "namespace": true,
+                     "product": true,
+                     "revision": true,
+                     "vendor": true
+                  },
+                  "indexByName": { },
+                  "renameByName": {
+                     "device": "Device",
+                     "device_model": "Device Model",
+                     "disk": "Disk",
+                     "firmware_version": "Firmware",
+                     "model_family": "Model Family",
+                     "serial_number": "Serial Number"
+                  }
+               }
+            }
+         ],
+         "type": "table"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "text",
+                  "mode": "thresholds"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "green",
+                        "value": null
+                     },
+                     {
+                        "color": "red",
+                        "value": 1
+                     }
+                  ]
+               },
+               "unit": "none"
+            }
+         },
+         "gridPos": {
+            "h": 4,
+            "w": 4,
+            "x": 0,
+            "y": 9
+         },
+         "id": 4,
+         "options": {
+            "colorMode": "background",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "textMode": "auto"
+         },
+         "pluginVersion": "v10.2.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(smartmon_device_smart_enabled{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\"})-sum(smartmon_device_smart_healthy{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\"})",
+               "format": "time_series",
+               "instant": true,
+               "intervalFactor": null
+            }
+         ],
+         "title": "Unhealthy Disks",
+         "type": "stat"
+      },
+      {
+         "collapsed": true,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 4,
+            "y": 9
+         },
+         "id": 5,
+         "panels": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "palette-classic"
+                     },
+                     "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                           "legend": false,
+                           "tooltip": false,
+                           "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                           "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                           "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                           "mode": "off"
+                        }
+                     },
+                     "unit": "celsius"
+                  }
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 24
+               },
+               "id": 6,
+               "options": {
+                  "legend": {
+                     "calcs": [
+                        "mean",
+                        "min",
+                        "max",
+                        "lastNotNull"
+                     ],
+                     "displayMode": "table",
+                     "placement": "right",
+                     "showLegend": true
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "none"
+                  }
+               },
+               "pluginVersion": "v10.2.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "smartmon_attr_raw_value{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\", name=\"temperature_celsius\"}",
+                     "format": "time_series",
+                     "legendFormat": "{{device}} {{disk}}"
+                  }
+               ],
+               "title": "Temperature History",
+               "type": "timeseries"
+            }
+         ],
+         "title": "Temperature",
+         "type": "row"
+      },
+      {
+         "collapsed": true,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 13
+         },
+         "id": 7,
+         "panels": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "thresholds"
+                     },
+                     "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "green",
+                              "value": null
+                           },
+                           {
+                              "color": "orange",
+                              "value": 17520
+                           },
+                           {
+                              "color": "red",
+                              "value": 35040
+                           }
+                        ]
+                     },
+                     "unit": "h"
+                  }
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 0,
+                  "y": 0
+               },
+               "id": 8,
+               "options": {
+                  "displayMode": "gradient",
+                  "minVizHeight": 10,
+                  "minVizWidth": 0,
+                  "orientation": "auto",
+                  "reduceOptions": {
+                     "calcs": [
+                        "lastNotNull"
+                     ],
+                     "fields": "",
+                     "values": false
+                  },
+                  "showUnfilled": true,
+                  "valueMode": "color"
+               },
+               "pluginVersion": "v10.2.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "smartmon_attr_raw_value{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\", name=\"power_on_hours\"}",
+                     "instant": true,
+                     "intervalFactor": null,
+                     "legendFormat": "{{device}} {{disk}}"
+                  }
+               ],
+               "title": "Power On Hours",
+               "type": "bargauge"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "thresholds"
+                     },
+                     "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "green",
+                              "value": null
+                           },
+                           {
+                              "color": "orange",
+                              "value": 750
+                           },
+                           {
+                              "color": "red",
+                              "value": 1500
+                           }
+                        ]
+                     }
+                  }
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 12,
+                  "y": 0
+               },
+               "id": 9,
+               "options": {
+                  "displayMode": "gradient",
+                  "minVizHeight": 10,
+                  "minVizWidth": 0,
+                  "orientation": "auto",
+                  "reduceOptions": {
+                     "calcs": [
+                        "lastNotNull"
+                     ],
+                     "fields": "",
+                     "values": false
+                  },
+                  "showUnfilled": true,
+                  "valueMode": "color"
+               },
+               "pluginVersion": "v10.2.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "smartmon_attr_raw_value{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\", name=\"start_stop_count\"}",
+                     "instant": true,
+                     "intervalFactor": null,
+                     "legendFormat": "{{device}} {{disk}}"
+                  }
+               ],
+               "title": "Start Stop Count",
+               "type": "bargauge"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "thresholds"
+                     },
+                     "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "green",
+                              "value": null
+                           },
+                           {
+                              "color": "orange",
+                              "value": 1000
+                           },
+                           {
+                              "color": "red",
+                              "value": 2000
+                           }
+                        ]
+                     }
+                  }
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 0,
+                  "y": 8
+               },
+               "id": 10,
+               "options": {
+                  "displayMode": "gradient",
+                  "minVizHeight": 10,
+                  "minVizWidth": 0,
+                  "orientation": "auto",
+                  "reduceOptions": {
+                     "calcs": [
+                        "lastNotNull"
+                     ],
+                     "fields": "",
+                     "values": false
+                  },
+                  "showUnfilled": true,
+                  "valueMode": "color"
+               },
+               "pluginVersion": "v10.2.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "smartmon_attr_raw_value{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\", name=\"power_cycle_count\"}",
+                     "instant": true,
+                     "intervalFactor": null,
+                     "legendFormat": "{{device}} {{disk}}"
+                  }
+               ],
+               "title": "Power Cycle Count",
+               "type": "bargauge"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "thresholds"
+                     },
+                     "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "green",
+                              "value": null
+                           },
+                           {
+                              "color": "orange",
+                              "value": 5000
+                           },
+                           {
+                              "color": "red",
+                              "value": 10000
+                           }
+                        ]
+                     }
+                  }
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 12,
+                  "y": 8
+               },
+               "id": 11,
+               "options": {
+                  "displayMode": "gradient",
+                  "minVizHeight": 10,
+                  "minVizWidth": 0,
+                  "orientation": "auto",
+                  "reduceOptions": {
+                     "calcs": [
+                        "lastNotNull"
+                     ],
+                     "fields": "",
+                     "values": false
+                  },
+                  "showUnfilled": true,
+                  "valueMode": "color"
+               },
+               "pluginVersion": "v10.2.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "smartmon_attr_raw_value{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\", name=\"load_cycle_count\"}",
+                     "instant": true,
+                     "intervalFactor": null,
+                     "legendFormat": "{{device}} {{disk}}"
+                  }
+               ],
+               "title": "Load Cycle Count",
+               "type": "bargauge"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "Please note: This may be slightly incorrect",
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "thresholds"
+                     },
+                     "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "green",
+                              "value": null
+                           },
+                           {
+                              "color": "orange",
+                              "value": 40000000000000
+                           },
+                           {
+                              "color": "red",
+                              "value": 60000000000000
+                           }
+                        ]
+                     },
+                     "unit": "decbytes"
+                  }
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 0,
+                  "y": 16
+               },
+               "id": 12,
+               "options": {
+                  "displayMode": "gradient",
+                  "minVizHeight": 10,
+                  "minVizWidth": 0,
+                  "orientation": "auto",
+                  "reduceOptions": {
+                     "calcs": [
+                        "lastNotNull"
+                     ],
+                     "fields": "",
+                     "values": false
+                  },
+                  "showUnfilled": true,
+                  "valueMode": "color"
+               },
+               "pluginVersion": "v10.2.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "smartmon_attr_raw_value{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\", name=\"total_lbas_written\"} * 512",
+                     "instant": true,
+                     "intervalFactor": null,
+                     "legendFormat": "{{device}} {{disk}}"
+                  }
+               ],
+               "title": "Total Data Written",
+               "type": "bargauge"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "thresholds"
+                     },
+                     "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "green",
+                              "value": null
+                           },
+                           {
+                              "color": "red",
+                              "value": 1
+                           }
+                        ]
+                     }
+                  }
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 12,
+                  "y": 16
+               },
+               "id": 13,
+               "options": {
+                  "displayMode": "gradient",
+                  "minVizHeight": 10,
+                  "minVizWidth": 0,
+                  "orientation": "auto",
+                  "reduceOptions": {
+                     "calcs": [
+                        "lastNotNull"
+                     ],
+                     "fields": "",
+                     "values": false
+                  },
+                  "showUnfilled": true,
+                  "valueMode": "color"
+               },
+               "pluginVersion": "v10.2.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "smartmon_attr_raw_value{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\", name=\"reallocated_event_count\"}",
+                     "instant": true,
+                     "intervalFactor": null,
+                     "legendFormat": "{{device}} {{disk}}"
+                  }
+               ],
+               "title": "Reallocated Sector Events",
+               "type": "bargauge"
+            }
+         ],
+         "title": "Wear & Tear",
+         "type": "row"
+      },
+      {
+         "collapsed": true,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 14
+         },
+         "id": 14,
+         "panels": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "thresholds"
+                     },
+                     "max": 100,
+                     "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "red",
+                              "value": null
+                           },
+                           {
+                              "color": "green",
+                              "value": 100
+                           }
+                        ]
+                     },
+                     "unit": "percent"
+                  }
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 0,
+                  "y": 0
+               },
+               "id": 15,
+               "options": {
+                  "displayMode": "gradient",
+                  "minVizHeight": 10,
+                  "minVizWidth": 0,
+                  "orientation": "auto",
+                  "reduceOptions": {
+                     "calcs": [
+                        "lastNotNull"
+                     ],
+                     "fields": "",
+                     "values": false
+                  },
+                  "showUnfilled": true,
+                  "valueMode": "color"
+               },
+               "pluginVersion": "v10.2.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "smartmon_attr_value{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\", name=\"raw_read_error_rate\"}",
+                     "instant": true,
+                     "intervalFactor": null,
+                     "legendFormat": "{{device}} {{disk}}"
+                  }
+               ],
+               "title": "Raw Read Error",
+               "type": "bargauge"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "thresholds"
+                     },
+                     "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "red",
+                              "value": null
+                           },
+                           {
+                              "color": "green",
+                              "value": 60
+                           }
+                        ]
+                     }
+                  }
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 12,
+                  "y": 0
+               },
+               "id": 16,
+               "options": {
+                  "displayMode": "gradient",
+                  "minVizHeight": 10,
+                  "minVizWidth": 0,
+                  "orientation": "auto",
+                  "reduceOptions": {
+                     "calcs": [
+                        "lastNotNull"
+                     ],
+                     "fields": "",
+                     "values": false
+                  },
+                  "showUnfilled": true,
+                  "valueMode": "color"
+               },
+               "pluginVersion": "v10.2.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "smartmon_attr_value{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\", name=\"seek_error_rate\"}",
+                     "instant": true,
+                     "intervalFactor": null,
+                     "legendFormat": "{{device}} {{disk}}"
+                  }
+               ],
+               "title": "Seek Error Rate",
+               "type": "bargauge"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "thresholds"
+                     },
+                     "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "green",
+                              "value": null
+                           },
+                           {
+                              "color": "orange",
+                              "value": 1
+                           },
+                           {
+                              "color": "red",
+                              "value": 10
+                           }
+                        ]
+                     }
+                  }
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 0,
+                  "y": 8
+               },
+               "id": 17,
+               "options": {
+                  "displayMode": "gradient",
+                  "minVizHeight": 10,
+                  "minVizWidth": 0,
+                  "orientation": "auto",
+                  "reduceOptions": {
+                     "calcs": [
+                        "lastNotNull"
+                     ],
+                     "fields": "",
+                     "values": false
+                  },
+                  "showUnfilled": true,
+                  "valueMode": "color"
+               },
+               "pluginVersion": "v10.2.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "smartmon_attr_raw_value{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\", name=\"spin_retry_count\"}",
+                     "instant": true,
+                     "intervalFactor": null,
+                     "legendFormat": "{{device}} {{disk}}"
+                  }
+               ],
+               "title": "Spin Retry Count",
+               "type": "bargauge"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "thresholds"
+                     },
+                     "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "green",
+                              "value": null
+                           },
+                           {
+                              "color": "orange",
+                              "value": 1
+                           },
+                           {
+                              "color": "red",
+                              "value": 10
+                           }
+                        ]
+                     }
+                  }
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 12,
+                  "y": 8
+               },
+               "id": 18,
+               "options": {
+                  "displayMode": "gradient",
+                  "minVizHeight": 10,
+                  "minVizWidth": 0,
+                  "orientation": "auto",
+                  "reduceOptions": {
+                     "calcs": [
+                        "lastNotNull"
+                     ],
+                     "fields": "",
+                     "values": false
+                  },
+                  "showUnfilled": true,
+                  "valueMode": "color"
+               },
+               "pluginVersion": "v10.2.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "smartmon_attr_raw_value{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\", name=\"command_timeout\"}",
+                     "instant": true,
+                     "intervalFactor": null,
+                     "legendFormat": "{{device}} {{disk}}"
+                  }
+               ],
+               "title": "Command Timeout Count",
+               "type": "bargauge"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "thresholds"
+                     },
+                     "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "green",
+                              "value": null
+                           },
+                           {
+                              "color": "orange",
+                              "value": 1
+                           },
+                           {
+                              "color": "red",
+                              "value": 10
+                           }
+                        ]
+                     }
+                  }
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 0,
+                  "y": 16
+               },
+               "id": 19,
+               "options": {
+                  "displayMode": "gradient",
+                  "minVizHeight": 10,
+                  "minVizWidth": 0,
+                  "orientation": "auto",
+                  "reduceOptions": {
+                     "calcs": [
+                        "lastNotNull"
+                     ],
+                     "fields": "",
+                     "values": false
+                  },
+                  "showUnfilled": true,
+                  "valueMode": "color"
+               },
+               "pluginVersion": "v10.2.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "smartmon_attr_raw_value{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\", name=\"current_pending_sector\"}",
+                     "instant": true,
+                     "intervalFactor": null,
+                     "legendFormat": "{{device}} {{disk}}"
+                  }
+               ],
+               "title": "Current Pending Sector Count",
+               "type": "bargauge"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "thresholds"
+                     },
+                     "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "green",
+                              "value": null
+                           },
+                           {
+                              "color": "orange",
+                              "value": 1
+                           },
+                           {
+                              "color": "red",
+                              "value": 10
+                           }
+                        ]
+                     }
+                  }
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 12,
+                  "y": 16
+               },
+               "id": 20,
+               "options": {
+                  "displayMode": "gradient",
+                  "minVizHeight": 10,
+                  "minVizWidth": 0,
+                  "orientation": "auto",
+                  "reduceOptions": {
+                     "calcs": [
+                        "lastNotNull"
+                     ],
+                     "fields": "",
+                     "values": false
+                  },
+                  "showUnfilled": true,
+                  "valueMode": "color"
+               },
+               "pluginVersion": "v10.2.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "smartmon_attr_raw_value{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\", name=\"offline_uncorrectable\"}",
+                     "instant": true,
+                     "intervalFactor": null,
+                     "legendFormat": "{{device}} {{disk}}"
+                  }
+               ],
+               "title": "Offline Uncorrectable Sector Count",
+               "type": "bargauge"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "thresholds"
+                     },
+                     "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "green",
+                              "value": null
+                           },
+                           {
+                              "color": "orange",
+                              "value": 1
+                           },
+                           {
+                              "color": "red",
+                              "value": 10
+                           }
+                        ]
+                     }
+                  }
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 0,
+                  "y": 24
+               },
+               "id": 21,
+               "options": {
+                  "displayMode": "gradient",
+                  "minVizHeight": 10,
+                  "minVizWidth": 0,
+                  "orientation": "auto",
+                  "reduceOptions": {
+                     "calcs": [
+                        "lastNotNull"
+                     ],
+                     "fields": "",
+                     "values": false
+                  },
+                  "showUnfilled": true,
+                  "valueMode": "color"
+               },
+               "pluginVersion": "v10.2.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "smartmon_attr_raw_value{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\", name=\"reported_uncorrect\"}",
+                     "instant": true,
+                     "intervalFactor": null,
+                     "legendFormat": "{{device}} {{disk}}"
+                  }
+               ],
+               "title": "Reported Uncorrectable Errors",
+               "type": "bargauge"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "mode": "thresholds"
+                     },
+                     "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "green",
+                              "value": null
+                           },
+                           {
+                              "color": "red",
+                              "value": 1
+                           }
+                        ]
+                     }
+                  }
+               },
+               "gridPos": {
+                  "h": 8,
+                  "w": 12,
+                  "x": 12,
+                  "y": 24
+               },
+               "id": 22,
+               "options": {
+                  "displayMode": "gradient",
+                  "minVizHeight": 10,
+                  "minVizWidth": 0,
+                  "orientation": "auto",
+                  "reduceOptions": {
+                     "calcs": [
+                        "lastNotNull"
+                     ],
+                     "fields": "",
+                     "values": false
+                  },
+                  "showUnfilled": true,
+                  "valueMode": "color"
+               },
+               "pluginVersion": "v10.2.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "smartmon_attr_raw_value{cluster=~\"$cluster\", namespace=~\"$namespace\", host=~\"$host\", name=\"udma_crc_error_count\"}",
+                     "instant": true,
+                     "intervalFactor": null,
+                     "legendFormat": "{{device}} {{disk}}"
+                  }
+               ],
+               "title": "UltraDMA CRC Error",
+               "type": "bargauge"
+            }
+         ],
+         "title": "Errors",
+         "type": "row"
+      }
+   ],
+   "schemaVersion": 36,
+   "tags": [
+      "generated",
+      "smart"
+   ],
+   "templating": {
+      "list": [
+         {
+            "label": "Data source",
+            "name": "datasource",
+            "query": "prometheus",
+            "type": "datasource"
+         },
+         {
+            "allValue": ".+",
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": true,
+            "multi": true,
+            "name": "cluster",
+            "query": "label_values(smartmon_smartctl_version, cluster)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "allValue": ".+",
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": true,
+            "multi": true,
+            "name": "namespace",
+            "query": "label_values(smartmon_smartctl_version{cluster=~\"$cluster\"}, namespace)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "allValue": ".+",
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": true,
+            "multi": true,
+            "name": "host",
+            "query": "label_values(smartmon_smartctl_version{cluster=~\"$cluster\", namespace=~\"$namespace\"}, host)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         }
+      ]
+   },
+   "time": {
+      "from": "now-6h",
+      "to": "now"
+   },
+   "timezone": "browser",
+   "title": "SMART Overview",
+   "uid": ""
+}
