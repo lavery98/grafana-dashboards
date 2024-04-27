@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Ashley Lavery
+ * Copyright 2024 Ashley Lavery
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -191,6 +191,7 @@ local panel = grafonnet.panel;
       + options.withShowHeader()
       + standardOptions.color.withMode('fixed'),
 
+    // TODO: Remove as this is now included in grafonnet
     withFilterable(filterable=false): {
       fieldConfig+: {
         defaults+: {
