@@ -17,7 +17,7 @@
 local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonnet');
 
 {
-  local withMultiSelectTemplate = function (t) t + (
+  local withMultiSelectTemplate = function(t) t + (
     if t.name == 'cluster' || t.name == 'namespace' then {
       allValue: '.+',
       current: {
@@ -26,14 +26,14 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
         value: '$__all',
       },
       includeAll: true,
-      multi: true
+      multi: true,
     } else {}
   ),
 
   local replaceTitle = function(title, replacement)
-    function (p) p + (
+    function(p) p + (
       if p.title == title then {
-        title: replacement
+        title: replacement,
       } else {}
     ),
 
@@ -86,7 +86,7 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
     _config+:: {
       promtail: {
         enabled: false,
-      }
+      },
     },
 
     grafanaDashboards+: {
@@ -96,14 +96,14 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
         uid: '',
         time: {
           from: 'now-6h',
-          to: 'now'
+          to: 'now',
         },
         refresh: '1m',
         timezone: '',
 
         templating+: {
           list: mapTemplateParameters(super.list),
-        }
+        },
       },
 
       'loki-deletion.json'+: {
@@ -112,21 +112,21 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
         uid: '',
         time: {
           from: 'now-6h',
-          to: 'now'
+          to: 'now',
         },
         refresh: '1m',
         timezone: '',
 
         rows: [
           r {
-            panels: dropPanels(r.panels, dropList)
+            panels: dropPanels(r.panels, dropList),
           }
           for r in dropPanels(super.rows, dropList)
         ],
 
         templating+: {
           list: mapTemplateParameters(super.list),
-        }
+        },
       },
 
       // TODO: Fix this to work. We may need to create our own dashboard based on theirs as it isn't very easy to modify
@@ -181,21 +181,21 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
         uid: '',
         time: {
           from: 'now-6h',
-          to: 'now'
+          to: 'now',
         },
         refresh: '1m',
         timezone: '',
 
         rows: [
           r {
-            panels: mapPanels([replaceMatchers('Per Pod Latency (p99)', replacements), replaceTitle('Per Pod Latency (p99)', 'Per Instance Latency (p99)')], r.panels)
+            panels: mapPanels([replaceMatchers('Per Pod Latency (p99)', replacements), replaceTitle('Per Pod Latency (p99)', 'Per Instance Latency (p99)')], r.panels),
           }
           for r in dropPanels(super.rows, dropList)
         ],
 
         templating+: {
           list: mapTemplateParameters(super.list),
-        }
+        },
       },
 
       'loki-retention.json'+: {
@@ -204,7 +204,7 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
         uid: '',
         time: {
           from: 'now-6h',
-          to: 'now'
+          to: 'now',
         },
         refresh: '1m',
         timezone: '',
@@ -214,7 +214,7 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
         // TODO: remove loki datasource variable
         templating+: {
           list: mapTemplateParameters(super.list),
-        }
+        },
       },
 
       'loki-writes.json'+: {
@@ -231,7 +231,7 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
         uid: '',
         time: {
           from: 'now-6h',
-          to: 'now'
+          to: 'now',
         },
         refresh: '1m',
         timezone: '',
@@ -240,8 +240,8 @@ local utils = (import 'github.com/grafana/jsonnet-libs/mixin-utils/utils.libsonn
 
         templating+: {
           list: mapTemplateParameters(super.list),
-        }
+        },
       },
-    }
-  }
+    },
+  },
 }

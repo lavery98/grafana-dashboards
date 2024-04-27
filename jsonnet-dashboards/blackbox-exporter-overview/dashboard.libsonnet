@@ -20,17 +20,21 @@ local grafonnet = import '../g.libsonnet';
 local queries = import './queries.libsonnet';
 
 local dashboard = grafonnet.dashboard;
+local grid = grafonnet.util.grid;
 local table = grafonnet.panel.table;
 local timeSeries = grafonnet.panel.timeSeries;
 
+local filename = 'blackbox-exporter-overview.json';
+
 {
-  'blackbox-exporter-overview.json': (
-    util.dashboard('Blackbox Exporter Overview', tags=['generated', 'blackbox_exporter'])
+  [filename]: (
+    util.dashboard('Blackbox Exporter Overview', tags=['generated', 'blackbox_exporter'], uid=std.md5(filename))
     + util.addMultiVariable('cluster', 'probe_success', 'cluster')
+    + util.addMultiVariable('job', 'probe_success{cluster=~"$cluster"}', 'job')
     + dashboard.withPanels(
-      util.makeGrid([
+      grid.wrapPanels([
         util.table.base('Probes (Up/Down) - Current Status', queries.probesCurrentStatus)
-        + util.table.withFilterable(true)
+        + table.standardOptions.withFilterable(true)
         + table.options.footer.TableFooterOptions.withEnablePagination(true)
         + table.queryOptions.withTransformations([
           table.transformation.withId('organize')
@@ -91,7 +95,7 @@ local timeSeries = grafonnet.panel.timeSeries;
         + timeSeries.standardOptions.withMin(0),
 
         util.table.base('SSL Certificate Expiry', queries.sslCertificateExpiry)
-        + util.table.withFilterable(true)
+        + table.standardOptions.withFilterable(true)
         + table.options.footer.TableFooterOptions.withEnablePagination(true)
         + table.queryOptions.withTransformations([
           table.transformation.withId('organize')

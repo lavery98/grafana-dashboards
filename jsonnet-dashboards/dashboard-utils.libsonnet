@@ -191,6 +191,7 @@ local panel = grafonnet.panel;
       + options.withShowHeader()
       + standardOptions.color.withMode('fixed'),
 
+    // TODO: Remove as this is now included in grafonnet
     withFilterable(filterable=false): {
       fieldConfig+: {
         defaults+: {
