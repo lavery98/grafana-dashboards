@@ -100,6 +100,16 @@
       },
       "version": "f752c172f1d1c457b4edb6f08e8705ee81a05851",
       "sum": "QKRgrgEZ3k9nLmLCrDBaeIGVqQZf+AvZTcnhdLk3TrA="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/prometheus/prometheus.git",
+          "subdir": "documentation/prometheus-mixin"
+        }
+      },
+      "version": "93be83069e3ec4b572b1db1d49e08b4ebb68e563",
+      "sum": "u/Fpz2MPkezy71/q+c7mF0vc3hE9fWt2W/YbvF0LP/8="
     }
   ],
   "legacyImports": false
