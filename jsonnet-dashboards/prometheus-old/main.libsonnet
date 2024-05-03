@@ -14,11 +14,4 @@
  * limitations under the License.
  */
 
-local config = (import 'config.libsonnet');
-local prometheusMixin = (import 'github.com/prometheus/prometheus/documentation/prometheus-mixin/mixin.libsonnet') + config;
-local dashboards = prometheusMixin.grafanaDashboards;
-
-{
-  [name]: dashboards[name]
-  for name in std.objectFields(dashboards)
-}
+(import 'dashboard.libsonnet')
