@@ -55,5 +55,9 @@ jobs:
       - name: Generate dashboards
         run: |
           make generate
-          ls -al gen
+      - name: Push generated dashboards
+        run: |
+          git add gen/.
+          git commit -m "Auto-update generated dashboards"
+          git push
       
