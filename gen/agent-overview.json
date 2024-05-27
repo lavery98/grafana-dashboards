@@ -68,7 +68,7 @@
             },
             "showHeader": true
          },
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -177,7 +177,7 @@
                   "y": 0
                },
                "id": 4,
-               "pluginVersion": "v10.2.0",
+               "pluginVersion": "v10.4.0",
                "targets": [
                   {
                      "datasource": {
@@ -244,7 +244,7 @@
                      "sort": "desc"
                   }
                },
-               "pluginVersion": "v10.2.0",
+               "pluginVersion": "v10.4.0",
                "targets": [
                   {
                      "datasource": {
@@ -322,7 +322,7 @@
                   "y": 0
                },
                "id": 7,
-               "pluginVersion": "v10.2.0",
+               "pluginVersion": "v10.4.0",
                "targets": [
                   {
                      "datasource": {
@@ -389,7 +389,7 @@
                      "sort": "desc"
                   }
                },
-               "pluginVersion": "v10.2.0",
+               "pluginVersion": "v10.4.0",
                "targets": [
                   {
                      "datasource": {
@@ -483,7 +483,7 @@
                      "sort": "desc"
                   }
                },
-               "pluginVersion": "v10.2.0",
+               "pluginVersion": "v10.4.0",
                "targets": [
                   {
                      "datasource": {

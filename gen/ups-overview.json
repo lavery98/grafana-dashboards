@@ -52,7 +52,7 @@
             },
             "textMode": "auto"
          },
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -117,7 +117,7 @@
             "showThresholdLabels": false,
             "showThresholdMarkers": true
          },
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -185,7 +185,7 @@
             },
             "textMode": "auto"
          },
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -236,7 +236,7 @@
             },
             "textMode": "auto"
          },
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -303,7 +303,7 @@
                "sort": "none"
             }
          },
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -386,7 +386,7 @@
             "y": 5
          },
          "id": 6,
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -450,7 +450,7 @@
             "y": 5
          },
          "id": 7,
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -514,7 +514,7 @@
             "y": 5
          },
          "id": 8,
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -578,7 +578,7 @@
             "y": 13
          },
          "id": 9,
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -642,7 +642,7 @@
             "y": 21
          },
          "id": 10,
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {

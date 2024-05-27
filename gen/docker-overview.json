@@ -37,7 +37,7 @@
             },
             "textMode": "auto"
          },
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -88,7 +88,7 @@
             },
             "textMode": "auto"
          },
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -138,7 +138,7 @@
             },
             "textMode": "auto"
          },
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -188,7 +188,7 @@
             },
             "textMode": "auto"
          },
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -238,7 +238,7 @@
             },
             "textMode": "auto"
          },
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -288,7 +288,7 @@
             },
             "textMode": "auto"
          },
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -361,7 +361,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -435,7 +435,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -509,7 +509,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -583,7 +583,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -657,7 +657,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -731,7 +731,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {

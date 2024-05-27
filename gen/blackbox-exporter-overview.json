@@ -66,7 +66,7 @@
             },
             "showHeader": true
          },
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -172,7 +172,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -255,7 +255,7 @@
             },
             "showHeader": true
          },
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -346,7 +346,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {
@@ -417,7 +417,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.2.0",
+         "pluginVersion": "v10.4.0",
          "targets": [
             {
                "datasource": {

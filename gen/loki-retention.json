@@ -135,35 +135,41 @@
                ]
             },
             {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
                "datasource": "$datasource",
-               "fill": 1,
-               "id": 5,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "none"
+                        }
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
+                     "unit": "s"
+                  },
+                  "overrides": [ ]
                },
-               "lines": true,
-               "linewidth": 1,
+               "id": 5,
                "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
+               "options": {
+                  "legend": {
+                     "showLegend": true
+                  },
+                  "tooltip": {
+                     "mode": "single",
+                     "sort": "none"
+                  }
+               },
                "span": 6,
-               "stack": false,
-               "steppedLine": false,
                "targets": [
                   {
                      "expr": "loki_boltdb_shipper_compact_tables_operation_duration_seconds{cluster=~\"$cluster\", namespace=~\"$namespace\"}",
@@ -172,41 +178,8 @@
                      "legendLink": null
                   }
                ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
                "title": "Compact Tables Operations Duration",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 2,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "s",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
+               "type": "timeseries"
             }
          ],
          "repeat": null,
@@ -221,35 +194,41 @@
          "height": "250px",
          "panels": [
             {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
                "datasource": "$datasource",
-               "fill": 1,
-               "id": 6,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "none"
+                        }
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
+                     "unit": "short"
+                  },
+                  "overrides": [ ]
                },
-               "lines": true,
-               "linewidth": 1,
+               "id": 6,
                "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
+               "options": {
+                  "legend": {
+                     "showLegend": true
+                  },
+                  "tooltip": {
+                     "mode": "single",
+                     "sort": "none"
+                  }
+               },
                "span": 6,
-               "stack": false,
-               "steppedLine": false,
                "targets": [
                   {
                      "expr": "sum(increase(loki_compactor_skipped_compacting_locked_table_total{cluster=~\"$cluster\", namespace=~\"$namespace\"}[$__range]))",
@@ -258,72 +237,45 @@
                      "legendLink": null
                   }
                ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
                "title": "Number of times Tables were skipped during Compaction",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 2,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
+               "type": "timeseries"
             },
             {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
                "datasource": "$datasource",
-               "fill": 1,
-               "id": 7,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "none"
+                        }
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
+                     "unit": "short"
+                  },
+                  "overrides": [ ]
                },
-               "lines": true,
-               "linewidth": 1,
+               "id": 7,
                "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
+               "options": {
+                  "legend": {
+                     "showLegend": true
+                  },
+                  "tooltip": {
+                     "mode": "single",
+                     "sort": "none"
+                  }
+               },
                "span": 6,
-               "stack": false,
-               "steppedLine": false,
                "targets": [
                   {
                      "expr": "sum by (status)(rate(loki_boltdb_shipper_compact_tables_operation_total{cluster=~\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval]))",
@@ -332,41 +284,8 @@
                      "legendLink": null
                   }
                ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
                "title": "Compact Tables Operations Per Status",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 2,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
+               "type": "timeseries"
             }
          ],
          "repeat": null,
@@ -489,35 +408,41 @@
                ]
             },
             {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
                "datasource": "$datasource",
-               "fill": 1,
-               "id": 9,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "none"
+                        }
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
+                     "unit": "s"
+                  },
+                  "overrides": [ ]
                },
-               "lines": true,
-               "linewidth": 1,
+               "id": 9,
                "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
+               "options": {
+                  "legend": {
+                     "showLegend": true
+                  },
+                  "tooltip": {
+                     "mode": "single",
+                     "sort": "none"
+                  }
+               },
                "span": 4,
-               "stack": false,
-               "steppedLine": false,
                "targets": [
                   {
                      "expr": "loki_compactor_apply_retention_operation_duration_seconds{cluster=~\"$cluster\", namespace=~\"$namespace\"}",
@@ -526,72 +451,45 @@
                      "legendLink": null
                   }
                ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
                "title": "Mark Operations Duration",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 2,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "s",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
+               "type": "timeseries"
             },
             {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
                "datasource": "$datasource",
-               "fill": 1,
-               "id": 10,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "none"
+                        }
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
+                     "unit": "short"
+                  },
+                  "overrides": [ ]
                },
-               "lines": true,
-               "linewidth": 1,
+               "id": 10,
                "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
+               "options": {
+                  "legend": {
+                     "showLegend": true
+                  },
+                  "tooltip": {
+                     "mode": "single",
+                     "sort": "none"
+                  }
+               },
                "span": 4,
-               "stack": false,
-               "steppedLine": false,
                "targets": [
                   {
                      "expr": "sum by (status)(rate(loki_compactor_apply_retention_operation_total{cluster=~\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval]))",
@@ -600,41 +498,8 @@
                      "legendLink": null
                   }
                ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
                "title": "Mark Operations Per Status",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 2,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
+               "type": "timeseries"
             }
          ],
          "repeat": null,
@@ -649,35 +514,41 @@
          "height": "250px",
          "panels": [
             {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
                "datasource": "$datasource",
-               "fill": 10,
-               "id": 11,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "drawStyle": "line",
+                        "fillOpacity": 100,
+                        "lineWidth": 0,
+                        "pointSize": 5,
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "normal"
+                        }
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
+                     "unit": "short"
+                  },
+                  "overrides": [ ]
                },
-               "lines": true,
-               "linewidth": 0,
+               "id": 11,
                "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
+               "options": {
+                  "legend": {
+                     "showLegend": true
+                  },
+                  "tooltip": {
+                     "mode": "single",
+                     "sort": "none"
+                  }
+               },
                "span": 4,
-               "stack": true,
-               "steppedLine": false,
                "targets": [
                   {
                      "expr": "count by(action)(loki_boltdb_shipper_retention_marker_table_processed_total{cluster=~\"$cluster\", namespace=~\"$namespace\"})",
@@ -686,72 +557,45 @@
                      "legendLink": null
                   }
                ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
                "title": "Processed Tables Per Action",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 2,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
+               "type": "timeseries"
             },
             {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
                "datasource": "$datasource",
-               "fill": 10,
-               "id": 12,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "drawStyle": "line",
+                        "fillOpacity": 100,
+                        "lineWidth": 0,
+                        "pointSize": 5,
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "normal"
+                        }
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
+                     "unit": "short"
+                  },
+                  "overrides": [ ]
                },
-               "lines": true,
-               "linewidth": 0,
+               "id": 12,
                "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
+               "options": {
+                  "legend": {
+                     "showLegend": true
+                  },
+                  "tooltip": {
+                     "mode": "single",
+                     "sort": "none"
+                  }
+               },
                "span": 4,
-               "stack": true,
-               "steppedLine": false,
                "targets": [
                   {
                      "expr": "count by(table,action)(loki_boltdb_shipper_retention_marker_table_processed_total{cluster=~\"$cluster\", namespace=~\"$namespace\" , action=~\"modified|deleted\"})",
@@ -760,72 +604,45 @@
                      "legendLink": null
                   }
                ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
                "title": "Modified Tables",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 2,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
+               "type": "timeseries"
             },
             {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
                "datasource": "$datasource",
-               "fill": 10,
-               "id": 13,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "drawStyle": "line",
+                        "fillOpacity": 100,
+                        "lineWidth": 0,
+                        "pointSize": 5,
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "normal"
+                        }
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
+                     "unit": "short"
+                  },
+                  "overrides": [ ]
                },
-               "lines": true,
-               "linewidth": 0,
+               "id": 13,
                "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
+               "options": {
+                  "legend": {
+                     "showLegend": true
+                  },
+                  "tooltip": {
+                     "mode": "single",
+                     "sort": "none"
+                  }
+               },
                "span": 4,
-               "stack": true,
-               "steppedLine": false,
                "targets": [
                   {
                      "expr": "sum by (table)(rate(loki_boltdb_shipper_retention_marker_count_total{cluster=~\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])) >0",
@@ -834,41 +651,8 @@
                      "legendLink": null
                   }
                ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
                "title": "Marks Creation Rate Per Table",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 2,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
+               "type": "timeseries"
             }
          ],
          "repeat": null,
@@ -883,36 +667,42 @@
          "height": "250px",
          "panels": [
             {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
                "datasource": "$datasource",
-               "fill": 1,
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "none"
+                        }
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
+                     "unit": "short"
+                  },
+                  "overrides": [ ]
+               },
                "format": "short",
                "id": 14,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
                "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
+               "options": {
+                  "legend": {
+                     "showLegend": true
+                  },
+                  "tooltip": {
+                     "mode": "single",
+                     "sort": "none"
+                  }
+               },
                "span": 6,
-               "stack": false,
-               "steppedLine": false,
                "targets": [
                   {
                      "expr": "sum (increase(loki_boltdb_shipper_retention_marker_count_total{cluster=~\"$cluster\", namespace=~\"$namespace\"}[24h]))",
@@ -922,71 +712,46 @@
                   }
                ],
                "thresholds": "70,80",
-               "timeFrom": null,
-               "timeShift": null,
                "title": "Marked Chunks (24h)",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 2,
-                  "value_type": "individual"
-               },
-               "type": "singlestat",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
+               "type": "singlestat"
             },
             {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
                "datasource": "$datasource",
-               "fill": 1,
-               "id": 15,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "none"
+                        }
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
+                     "unit": "short"
+                  },
+                  "overrides": [ ]
                },
-               "lines": true,
-               "linewidth": 1,
+               "id": 15,
                "links": [ ],
                "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
+               "options": {
+                  "legend": {
+                     "showLegend": true
+                  },
+                  "tooltip": {
+                     "mode": "single",
+                     "sort": "none"
+                  }
+               },
                "span": 6,
-               "stack": false,
-               "steppedLine": false,
                "targets": [
                   {
                      "expr": "histogram_quantile(0.99, sum(rate(loki_boltdb_shipper_retention_marker_table_processed_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])) by (le)) * 1e3",
@@ -1007,23 +772,8 @@
                      "refId": "C"
                   }
                ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
                "title": "Mark Table Latency",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 2,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
+               "type": "timeseries",
                "yaxes": [
                   {
                      "format": "ms",
@@ -1056,36 +806,42 @@
          "height": "250px",
          "panels": [
             {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
                "datasource": "$datasource",
-               "fill": 1,
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "none"
+                        }
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
+                     "unit": "short"
+                  },
+                  "overrides": [ ]
+               },
                "format": "short",
                "id": 16,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
                "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
+               "options": {
+                  "legend": {
+                     "showLegend": true
+                  },
+                  "tooltip": {
+                     "mode": "single",
+                     "sort": "none"
+                  }
+               },
                "span": 6,
-               "stack": false,
-               "steppedLine": false,
                "targets": [
                   {
                      "expr": "sum (increase(loki_boltdb_shipper_retention_sweeper_chunk_deleted_duration_seconds_count{cluster=~\"$cluster\", namespace=~\"$namespace\"}[24h]))",
@@ -1095,71 +851,46 @@
                   }
                ],
                "thresholds": "70,80",
-               "timeFrom": null,
-               "timeShift": null,
                "title": "Delete Chunks (24h)",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 2,
-                  "value_type": "individual"
-               },
-               "type": "singlestat",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
+               "type": "singlestat"
             },
             {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
                "datasource": "$datasource",
-               "fill": 1,
-               "id": 17,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "none"
+                        }
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
+                     "unit": "short"
+                  },
+                  "overrides": [ ]
                },
-               "lines": true,
-               "linewidth": 1,
+               "id": 17,
                "links": [ ],
                "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
+               "options": {
+                  "legend": {
+                     "showLegend": true
+                  },
+                  "tooltip": {
+                     "mode": "single",
+                     "sort": "none"
+                  }
+               },
                "span": 6,
-               "stack": false,
-               "steppedLine": false,
                "targets": [
                   {
                      "expr": "histogram_quantile(0.99, sum(rate(loki_boltdb_shipper_retention_sweeper_chunk_deleted_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])) by (le)) * 1e3",
@@ -1180,23 +911,8 @@
                      "refId": "C"
                   }
                ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
                "title": "Delete Latency",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 2,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
+               "type": "timeseries",
                "yaxes": [
                   {
                      "format": "ms",
@@ -1229,35 +945,41 @@
          "height": "250px",
          "panels": [
             {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
                "datasource": "$datasource",
-               "fill": 1,
-               "id": 18,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "none"
+                        }
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
+                     "unit": "s"
+                  },
+                  "overrides": [ ]
                },
-               "lines": true,
-               "linewidth": 1,
+               "id": 18,
                "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
+               "options": {
+                  "legend": {
+                     "showLegend": true
+                  },
+                  "tooltip": {
+                     "mode": "single",
+                     "sort": "none"
+                  }
+               },
                "span": 4,
-               "stack": false,
-               "steppedLine": false,
                "targets": [
                   {
                      "expr": "time() - (loki_boltdb_shipper_retention_sweeper_marker_file_processing_current_time{cluster=~\"$cluster\", namespace=~\"$namespace\"} > 0)",
@@ -1266,72 +988,45 @@
                      "legendLink": null
                   }
                ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
                "title": "Sweeper Lag",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 2,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "s",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
+               "type": "timeseries"
             },
             {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
                "datasource": "$datasource",
-               "fill": 1,
-               "id": 19,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "none"
+                        }
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
+                     "unit": "short"
+                  },
+                  "overrides": [ ]
                },
-               "lines": true,
-               "linewidth": 1,
+               "id": 19,
                "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
+               "options": {
+                  "legend": {
+                     "showLegend": true
+                  },
+                  "tooltip": {
+                     "mode": "single",
+                     "sort": "none"
+                  }
+               },
                "span": 4,
-               "stack": false,
-               "steppedLine": false,
                "targets": [
                   {
                      "expr": "sum(loki_boltdb_shipper_retention_sweeper_marker_files_current{cluster=~\"$cluster\", namespace=~\"$namespace\"})",
@@ -1340,72 +1035,45 @@
                      "legendLink": null
                   }
                ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
                "title": "Marks Files to Process",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 2,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
+               "type": "timeseries"
             },
             {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
                "datasource": "$datasource",
-               "fill": 1,
-               "id": 20,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                           "group": "A",
+                           "mode": "none"
+                        }
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
+                     "unit": "short"
+                  },
+                  "overrides": [ ]
                },
-               "lines": true,
-               "linewidth": 1,
+               "id": 20,
                "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
+               "options": {
+                  "legend": {
+                     "showLegend": true
+                  },
+                  "tooltip": {
+                     "mode": "single",
+                     "sort": "none"
+                  }
+               },
                "span": 4,
-               "stack": false,
-               "steppedLine": false,
                "targets": [
                   {
                      "expr": "sum by (status)(rate(loki_boltdb_shipper_retention_sweeper_chunk_deleted_duration_seconds_count{cluster=~\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval]))",
@@ -1414,41 +1082,8 @@
                      "legendLink": null
                   }
                ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
                "title": "Delete Rate Per Status",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 2,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
+               "type": "timeseries"
             }
          ],
          "repeat": null,
