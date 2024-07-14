@@ -4,16 +4,6 @@
     {
       "source": {
         "git": {
-          "remote": "https://github.com/grafana/grafonnet-lib.git",
-          "subdir": "grafonnet"
-        }
-      },
-      "version": "a1d61cce1da59c71409b99b5c7568511fec661ea",
-      "sum": "342u++/7rViR/zj2jeJOjshzglkZ1SY+hFNuyCBFMdc="
-    },
-    {
-      "source": {
-        "git": {
           "remote": "https://github.com/grafana/grafonnet.git",
           "subdir": "gen/grafonnet-latest"
         }
@@ -34,46 +24,6 @@
     {
       "source": {
         "git": {
-          "remote": "https://github.com/grafana/jsonnet-libs.git",
-          "subdir": "grafana-builder"
-        }
-      },
-      "version": "cee0123922f4877b37804d95f3ee2c975a66b31e",
-      "sum": "+z5VY+bPBNqXcmNAV8xbJcbsRA+pro1R3IM7aIY8OlU="
-    },
-    {
-      "source": {
-        "git": {
-          "remote": "https://github.com/grafana/jsonnet-libs.git",
-          "subdir": "mixin-utils"
-        }
-      },
-      "version": "cee0123922f4877b37804d95f3ee2c975a66b31e",
-      "sum": "wi1o6t5nUZVcsatqMdGLOWIv1HxNnlaE84oRE0Cl0ec="
-    },
-    {
-      "source": {
-        "git": {
-          "remote": "https://github.com/grafana/loki.git",
-          "subdir": "production/loki-mixin"
-        }
-      },
-      "version": "13d45bc5127adc3ec55848ee4b5e25cc597d309b",
-      "sum": "poponbHA5aiE9loWWsqmgd8zqGASayqJr3IxHwcjkdU="
-    },
-    {
-      "source": {
-        "git": {
-          "remote": "https://github.com/grafana/mimir.git",
-          "subdir": "operations/mimir-mixin"
-        }
-      },
-      "version": "b5eec99cf7799b9877293468acb482bb66cb1593",
-      "sum": "alqhsC4PW8hitSK7wLbT5OhAQeUhLpS2MNZCBFRcCjU="
-    },
-    {
-      "source": {
-        "git": {
           "remote": "https://github.com/jsonnet-libs/docsonnet.git",
           "subdir": "doc-util"
         }
@@ -90,16 +40,6 @@
       },
       "version": "63d430b69a95741061c2f7fc9d84b1a778511d9c",
       "sum": "qiZi3axUSXCVzKUF83zSAxklwrnitMmrDK4XAfjPMdE="
-    },
-    {
-      "source": {
-        "git": {
-          "remote": "https://github.com/prometheus-operator/kube-prometheus.git",
-          "subdir": "jsonnet/kube-prometheus/lib"
-        }
-      },
-      "version": "f752c172f1d1c457b4edb6f08e8705ee81a05851",
-      "sum": "QKRgrgEZ3k9nLmLCrDBaeIGVqQZf+AvZTcnhdLk3TrA="
     }
   ],
   "legacyImports": false
