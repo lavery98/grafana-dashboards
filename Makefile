@@ -14,18 +14,22 @@
 # limitations under the License.
 #
 
-.PHONY: clean generate lint fmt
+.PHONY: clean generate generate-mixin lint fmt
 
 JSONNET_BIN ?= jsonnet
 JSONNET_FMT := jsonnetfmt -n 2 --max-blank-lines 2 --string-style s --comment-style s
 
 JSONNET_FILE := generate.jsonnet
+MIXIN_FILE := mixin.libsonnet
 
 clean:
 	rm -rf gen
 
 generate: clean
 	${JSONNET_BIN} -J vendor -m gen -c $(JSONNET_FILE)
+
+generate-mixin: clean
+	${JSONNET_BIN} -J vendor -m gen -c -e '(import "$(MIXIN_FILE)").grafanaDashboards'
 
 lint:
 	@RESULT=0; \
