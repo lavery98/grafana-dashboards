@@ -21,6 +21,8 @@ local grid = grafonnet.util.grid;
 local prometheus = grafonnet.query.prometheus;
 local row = grafonnet.panel.row;
 local stat = grafonnet.panel.stat;
+local stateTimeline = grafonnet.panel.stateTimeline;
+local table = grafonnet.panel.table;
 local timeSeries = grafonnet.panel.timeSeries;
 local variable = grafonnet.dashboard.variable;
 
@@ -210,7 +212,102 @@ local variable = grafonnet.dashboard.variable;
           row.new('Zones')
           + row.withCollapsed(true)
           + row.withPanels([
+            table.new('Zone Serials')
+            + table.gridPos.withH(8)
+            + table.gridPos.withW(12)
+            + table.queryOptions.withDatasource('prometheus', '${datasource}')
+            + table.queryOptions.withTargets([
+              prometheus.new('$datasource', 'bind_zone_serial{cluster=~"$cluster", namespace=~"$namespace", host=~"$host"}')
+              + prometheus.withFormat('table')
+              + prometheus.withInstant(true),
+            ])
+            + table.queryOptions.withTransformations([
+              table.transformation.withId('organize')
+              + table.transformation.withOptions({
+                excludeByName: {
+                  Time: true,
+                  __name__: true,
+                  cluster: true,
+                  host: true,
+                  instance: true,
+                  job: true,
+                  namespace: true,
+                  view: true,
+                },
+                indexByName: {},
+                renameByName: {
+                  zone_name: 'Zone',
+                  Value: 'SOA Serial',
+                },
+              }),
 
+              table.transformation.withId('filterByValue')
+              + table.transformation.withOptions({
+                filters: [
+                  {
+                    config: {
+                      id: 'greater',
+                      options: {
+                        value: 1000,
+                      },
+                    },
+                    fieldName: 'SOA Serial',
+                  },
+                ],
+                match: 'any',
+                type: 'include',
+              }),
+            ]),
+
+            timeSeries.new('Zone Serial Changes')
+            + timeSeries.fieldConfig.defaults.custom.withFillOpacity(10)
+            + timeSeries.fieldConfig.defaults.custom.withShowPoints('never')
+            + timeSeries.gridPos.withH(8)
+            + timeSeries.gridPos.withW(12)
+            + timeSeries.options.tooltip.withMode('multi')
+            + timeSeries.queryOptions.withDatasource('prometheus', '${datasource}')
+            + timeSeries.queryOptions.withTargets([
+              prometheus.new('$datasource', 'increase(bind_zone_serial{cluster=~"$cluster", namespace=~"$namespace", host=~"$host"}[$__rate_interval])')
+              + prometheus.withLegendFormat('{{ zone_name }}'),
+            ]),
+
+            stateTimeline.new('Failed Zone Transfers')
+            + stateTimeline.gridPos.withH(8)
+            + stateTimeline.gridPos.withW(12)
+            + stateTimeline.options.withShowValue('never')
+            + stateTimeline.options.legend.withShowLegend(false)
+            + stateTimeline.options.tooltip.withMode('none')
+            + stateTimeline.queryOptions.withDatasource('prometheus', '${datasource}')
+            + stateTimeline.queryOptions.withTargets([
+              prometheus.new('$datasource', 'rate(bind_zone_transfer_failure_total{cluster=~"$cluster", namespace=~"$namespace", host=~"$host"}[$__rate_interval])')
+              + prometheus.withLegendFormat('\u007f'),
+            ])
+            + stateTimeline.standardOptions.thresholds.withMode('absolute')
+            + stateTimeline.standardOptions.thresholds.withSteps([
+              stateTimeline.thresholdStep.withColor('green')
+              + stateTimeline.thresholdStep.withValue(null),
+              stateTimeline.thresholdStep.withColor('red')
+              + stateTimeline.thresholdStep.withValue(0.0001),
+            ]),
+
+            stateTimeline.new('Rejected Zone Transfers')
+            + stateTimeline.gridPos.withH(8)
+            + stateTimeline.gridPos.withW(12)
+            + stateTimeline.options.withShowValue('never')
+            + stateTimeline.options.legend.withShowLegend(false)
+            + stateTimeline.options.tooltip.withMode('none')
+            + stateTimeline.queryOptions.withDatasource('prometheus', '${datasource}')
+            + stateTimeline.queryOptions.withTargets([
+              prometheus.new('$datasource', 'rate(bind_zone_transfer_rejected_total{cluster=~"$cluster", namespace=~"$namespace", host=~"$host"}[$__rate_interval])')
+              + prometheus.withLegendFormat('\u007f'),
+            ])
+            + stateTimeline.standardOptions.thresholds.withMode('absolute')
+            + stateTimeline.standardOptions.thresholds.withSteps([
+              stateTimeline.thresholdStep.withColor('green')
+              + stateTimeline.thresholdStep.withValue(null),
+              stateTimeline.thresholdStep.withColor('red')
+              + stateTimeline.thresholdStep.withValue(0.0001),
+            ]),
           ]),
         ])
       ),
