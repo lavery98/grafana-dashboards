@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-(import 'jsonnet-dashboards/bind-overview/main.libsonnet') +
 (import 'jsonnet-dashboards/blackbox-exporter-overview/main.libsonnet') +
 (import 'jsonnet-dashboards/dnsmasq-overview/main.libsonnet') +
 (import 'jsonnet-dashboards/docker-overview/main.libsonnet') +
