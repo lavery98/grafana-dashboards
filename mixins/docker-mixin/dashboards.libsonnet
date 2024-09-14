@@ -63,7 +63,7 @@ local variable = grafonnet.dashboard.variable;
           + stat.queryOptions.withDatasource('prometheus', '${datasource}')
           + stat.queryOptions.withTargets([
             prometheus.new('$datasource', 'count(container_start_time_seconds{cluster=~"$cluster", namespace=~"$namespace", host=~"$host", name=~".+"})')
-            + prometheus.withInstant(true)
+            + prometheus.withInstant(true),
           ])
           + stat.standardOptions.color.withFixedColor('text')
           + stat.standardOptions.color.withMode('fixed'),
@@ -73,7 +73,7 @@ local variable = grafonnet.dashboard.variable;
           + stat.gridPos.withW(4)
           + stat.queryOptions.withDatasource('prometheus', '${datasource}')
           + stat.queryOptions.withTargets([
-            prometheus.new('$datasource', 'sum(rate(container_cpu_usage_seconds_total{cluster=~"$cluster", namespace=~"$namespace", host=~"$host", name=~".+"}[$__rate_interval])) * 100')
+            prometheus.new('$datasource', 'sum(rate(container_cpu_usage_seconds_total{cluster=~"$cluster", namespace=~"$namespace", host=~"$host", name=~".+"}[$__rate_interval])) * 100'),
           ])
           + stat.standardOptions.withMin(0)
           + stat.standardOptions.withUnit('percent')
@@ -84,7 +84,7 @@ local variable = grafonnet.dashboard.variable;
           + stat.gridPos.withW(4)
           + stat.queryOptions.withDatasource('prometheus', '${datasource}')
           + stat.queryOptions.withTargets([
-            prometheus.new('$datasource', 'sum(container_memory_rss{cluster=~"$cluster", namespace=~"$namespace", host=~"$host", name=~".+"})')
+            prometheus.new('$datasource', 'sum(container_memory_rss{cluster=~"$cluster", namespace=~"$namespace", host=~"$host", name=~".+"})'),
           ])
           + stat.standardOptions.withMin(0)
           + stat.standardOptions.withUnit('bytes')
@@ -95,7 +95,7 @@ local variable = grafonnet.dashboard.variable;
           + stat.gridPos.withW(4)
           + stat.queryOptions.withDatasource('prometheus', '${datasource}')
           + stat.queryOptions.withTargets([
-            prometheus.new('$datasource', 'sum(container_memory_swap{cluster=~"$cluster", namespace=~"$namespace", host=~"$host", name=~".+"})')
+            prometheus.new('$datasource', 'sum(container_memory_swap{cluster=~"$cluster", namespace=~"$namespace", host=~"$host", name=~".+"})'),
           ])
           + stat.standardOptions.withMin(0)
           + stat.standardOptions.withUnit('bytes')
@@ -106,7 +106,7 @@ local variable = grafonnet.dashboard.variable;
           + stat.gridPos.withW(4)
           + stat.queryOptions.withDatasource('prometheus', '${datasource}')
           + stat.queryOptions.withTargets([
-            prometheus.new('$datasource', 'sum(rate(container_network_receive_bytes_total{cluster=~"$cluster", namespace=~"$namespace", host=~"$host", name=~".+"}[$__rate_interval]))')
+            prometheus.new('$datasource', 'sum(rate(container_network_receive_bytes_total{cluster=~"$cluster", namespace=~"$namespace", host=~"$host", name=~".+"}[$__rate_interval]))'),
           ])
           + stat.standardOptions.withMin(0)
           + stat.standardOptions.withUnit('Bps')
@@ -117,7 +117,7 @@ local variable = grafonnet.dashboard.variable;
           + stat.gridPos.withW(4)
           + stat.queryOptions.withDatasource('prometheus', '${datasource}')
           + stat.queryOptions.withTargets([
-            prometheus.new('$datasource', 'sum(rate(container_network_transmit_bytes_total{cluster=~"$cluster", namespace=~"$namespace", host=~"$host", name=~".+"}[$__rate_interval]))')
+            prometheus.new('$datasource', 'sum(rate(container_network_transmit_bytes_total{cluster=~"$cluster", namespace=~"$namespace", host=~"$host", name=~".+"}[$__rate_interval]))'),
           ])
           + stat.standardOptions.withMin(0)
           + stat.standardOptions.withUnit('Bps')
@@ -135,7 +135,7 @@ local variable = grafonnet.dashboard.variable;
           + timeSeries.queryOptions.withDatasource('prometheus', '${datasource}')
           + timeSeries.queryOptions.withTargets([
             prometheus.new('$datasource', 'sum(rate(container_cpu_usage_seconds_total{cluster=~"$cluster", namespace=~"$namespace", host=~"$host", name=~".+"}[$__rate_interval])) by (name) * 100')
-            + prometheus.withLegendFormat('{{ name }}')
+            + prometheus.withLegendFormat('{{ name }}'),
           ])
           + timeSeries.standardOptions.withUnit('percent'),
 
@@ -151,7 +151,7 @@ local variable = grafonnet.dashboard.variable;
           + timeSeries.queryOptions.withDatasource('prometheus', '${datasource}')
           + timeSeries.queryOptions.withTargets([
             prometheus.new('$datasource', 'sum(container_memory_rss{cluster=~"$cluster", namespace=~"$namespace", host=~"$host", name=~".+"}) by (name)')
-            + prometheus.withLegendFormat('{{ name }}')
+            + prometheus.withLegendFormat('{{ name }}'),
           ])
           + timeSeries.standardOptions.withUnit('bytes'),
 
@@ -167,7 +167,7 @@ local variable = grafonnet.dashboard.variable;
           + timeSeries.queryOptions.withDatasource('prometheus', '${datasource}')
           + timeSeries.queryOptions.withTargets([
             prometheus.new('$datasource', 'sum(rate(container_network_receive_bytes_total{cluster=~"$cluster", namespace=~"$namespace", host=~"$host", name=~".+"}[$__rate_interval])) by (name)')
-            + prometheus.withLegendFormat('{{ name }}')
+            + prometheus.withLegendFormat('{{ name }}'),
           ])
           + timeSeries.standardOptions.withUnit('Bps'),
 
@@ -183,7 +183,7 @@ local variable = grafonnet.dashboard.variable;
           + timeSeries.queryOptions.withDatasource('prometheus', '${datasource}')
           + timeSeries.queryOptions.withTargets([
             prometheus.new('$datasource', 'sum(rate(container_network_transmit_bytes_total{cluster=~"$cluster", namespace=~"$namespace", host=~"$host", name=~".+"}[$__rate_interval])) by (name)')
-            + prometheus.withLegendFormat('{{ name }}')
+            + prometheus.withLegendFormat('{{ name }}'),
           ])
           + timeSeries.standardOptions.withUnit('Bps'),
 
@@ -199,7 +199,7 @@ local variable = grafonnet.dashboard.variable;
           + timeSeries.queryOptions.withDatasource('prometheus', '${datasource}')
           + timeSeries.queryOptions.withTargets([
             prometheus.new('$datasource', 'sum(rate(container_fs_reads_bytes_total{cluster=~"$cluster", namespace=~"$namespace", host=~"$host", name=~".+"}[$__rate_interval])) by (name)')
-            + prometheus.withLegendFormat('{{ name }}')
+            + prometheus.withLegendFormat('{{ name }}'),
           ])
           + timeSeries.standardOptions.withUnit('Bps'),
 
@@ -215,10 +215,10 @@ local variable = grafonnet.dashboard.variable;
           + timeSeries.queryOptions.withDatasource('prometheus', '${datasource}')
           + timeSeries.queryOptions.withTargets([
             prometheus.new('$datasource', 'sum(rate(container_fs_writes_bytes_total{cluster=~"$cluster", namespace=~"$namespace", host=~"$host", name=~".+"}[$__rate_interval])) by (name)')
-            + prometheus.withLegendFormat('{{ name }}')
+            + prometheus.withLegendFormat('{{ name }}'),
           ])
-          + timeSeries.standardOptions.withUnit('Bps')
+          + timeSeries.standardOptions.withUnit('Bps'),
         ])
-      )
-  }
+      ),
+  },
 }
