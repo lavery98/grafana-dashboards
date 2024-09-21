@@ -14,5 +14,4 @@
  * limitations under the License.
  */
 
-(import 'jsonnet-dashboards/blackbox-exporter-overview/main.libsonnet') +
-(import 'jsonnet-dashboards/smart-overview/main.libsonnet')
+(import 'jsonnet-dashboards/blackbox-exporter-overview/main.libsonnet')
