@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-(import 'github.com/grafana/grafonnet/gen/grafonnet-latest/main.libsonnet')
+(import 'dashboards.libsonnet')
