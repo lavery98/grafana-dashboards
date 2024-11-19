@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-(import 'config.libsonnet') +
-(import 'dashboards.libsonnet')
+{
+  _config+:: {
+    // numberOfCpus is used to calculate the CPU usage percentage
+    // TODO: this should probably be calculated for each host based on the number of cpus available
+    numberOfCpus: 6,
+  }
+}
