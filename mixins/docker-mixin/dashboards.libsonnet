@@ -23,6 +23,7 @@ local stat = grafonnet.panel.stat;
 local timeSeries = grafonnet.panel.timeSeries;
 local variable = grafonnet.dashboard.variable;
 
+(import './config.libsonnet') +
 {
   grafanaDashboards+:: {
     'docker-overview.json':
@@ -140,8 +141,12 @@ local variable = grafonnet.dashboard.variable;
           + timeSeries.standardOptions.withUnit('percent'),
 
           timeSeries.new('CPU Limit per Container')
+          + timeSeries.fieldConfig.defaults.custom.withShowPoints('never')
           + timeSeries.gridPos.withH(8)
           + timeSeries.gridPos.withW(12)
+          + timeSeries.options.legend.withPlacement('right')
+          + timeSeries.options.tooltip.withMode('multi')
+          + timeSeries.options.tooltip.withSort('desc')
           + timeSeries.queryOptions.withDatasource('prometheus', '${datasource}')
           + timeSeries.queryOptions.withTargets([
             prometheus.new('$datasource', 'sum(container_spec_cpu_quota{cluster=~"$cluster", host=~"$host", container_label_com_docker_compose_project=~"$compose_project", name!=""}) by (name)')
@@ -161,6 +166,20 @@ local variable = grafonnet.dashboard.variable;
           + timeSeries.queryOptions.withDatasource('prometheus', '${datasource}')
           + timeSeries.queryOptions.withTargets([
             prometheus.new('$datasource', 'sum(container_memory_rss{cluster=~"$cluster", host=~"$host", container_label_com_docker_compose_project=~"$compose_project", name!=""}) by (name)')
+            + prometheus.withLegendFormat('{{ name }}'),
+          ])
+          + timeSeries.standardOptions.withUnit('bytes'),
+
+          timeSeries.new('Memory Limit per Container')
+          + timeSeries.fieldConfig.defaults.custom.withShowPoints('never')
+          + timeSeries.gridPos.withH(8)
+          + timeSeries.gridPos.withW(12)
+          + timeSeries.options.legend.withPlacement('right')
+          + timeSeries.options.tooltip.withMode('multi')
+          + timeSeries.options.tooltip.withSort('desc')
+          + timeSeries.queryOptions.withDatasource('prometheus', '${datasource}')
+          + timeSeries.queryOptions.withTargets([
+            prometheus.new('$datasource', 'sum(container_spec_memory_limit_bytes{cluster=~"$cluster", host=~"$host", container_label_com_docker_compose_project=~"$compose_project", name!=""}) by (name)')
             + prometheus.withLegendFormat('{{ name }}'),
           ])
           + timeSeries.standardOptions.withUnit('bytes'),

@@ -14,5 +14,4 @@
  * limitations under the License.
  */
 
-(import 'config.libsonnet') +
 (import 'dashboards.libsonnet')
